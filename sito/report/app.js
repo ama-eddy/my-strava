@@ -70,12 +70,23 @@ function cifra(etichetta, valore, nota) {
 const badgeStato = (stato) => h("span", { class: `stato ${stato}` }, h("span", { "aria-hidden": "true" }, STATI[stato][0]), ` ${STATI[stato][1]}`);
 const badgeEsito = (esito) => esito ? h("span", { class: `esito ${esito}` }, h("span", { "aria-hidden": "true" }, ESITI[esito][0]), ` ${ESITI[esito][1]}`) : null;
 
+const NOMI_RITMO = { soglia: "soglia", ripetute: "ripetute", gara: "ritmo gara" };
+
+// "ritmo 6:30–7:00/km", oppure "ripetute 5:25–5:35/km · 1000 m · indicativo"
+function testoObiettivo(o) {
+  const valori = o.min === o.max ? ritmo(o.min) : `${ritmo(o.min)}–${ritmo(o.max)}`;
+  return [`${o.nome ? NOMI_RITMO[o.nome] : "ritmo"} ${valori}/km`, o.nota, o.indicativo ? "indicativo" : null].filter(Boolean).join(" · ");
+}
+
 function previsto(s) {
   return h("div", {},
     h("strong", {}, NOMI_TIPO[s.tipo]),
     s.corsa ? ` · ${km(s.distanza_m)} km · ${s.numero_piano}/${ultimo.piano.totale_corse}` : "",
     s.descrizione !== NOMI_TIPO[s.tipo] ? h("div", { class: "tenue piccolo" }, s.descrizione) : null,
-    s.obiettivo ? h("div", { class: "tenue piccolo" }, `ritmo ${s.obiettivo.min === s.obiettivo.max ? ritmo(s.obiettivo.min) : `${ritmo(s.obiettivo.min)}–${ritmo(s.obiettivo.max)}`}/km`) : null,
+    s.obiettivo ? h("div", {
+      class: "tenue piccolo",
+      title: s.obiettivo.indicativo ? "Senza esito: il ritmo medio di Strava include riscaldamento e recuperi" : null,
+    }, testoObiettivo(s.obiettivo)) : null,
   );
 }
 

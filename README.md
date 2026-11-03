@@ -60,6 +60,10 @@ Per ora l'editor salva scaricando `piano.json`, da copiare in `data/` del repo d
   - **dati di base**: sedute, settimane, fasi con i ritmi, gara, settimana tipo e regole;
   - **campi ricavati**: giorno, settimana e fase di ogni seduta, km settimanali, `numero_piano` delle corse.
 - Le corse sono numerate in ordine di data: togliendone una, le successive scalano di uno.
+- **Il ritmo obiettivo.** Una seduta di qualità, test o gara può avere un campo `ritmo` facoltativo: `soglia`, `ripetute` o `gara`, cioè quale ritmo della sua fase vale. Si sceglie nel dialogo dell'editor.
+  - **Controlli:** `piano.py` e l'editor danno errore se la seduta non è di qualità, test o gara, oppure se la fase non ha quel ritmo.
+  - **Nel report**, per qualità e test il ritmo si vede ma senza esito, perché il ritmo medio di Strava include riscaldamento e recuperi.
+  - **Le gare intermedie** hanno un esito: si confrontano con quel ritmo, oppure con il ritmo gara della fase.
 - **Il collegamento tra piano e attività**:
   - **le corse** si collegano sul numero nel titolo dell'attività su Strava: `10/36` è la decima corsa del piano;
   - **le altre sedute** si collegano sullo sport di Strava: `Volleyball` → gioco di squadra, `WeightTraining` → forza, `Yoga` → mobilità, `Walk` → camminata, `Hike` → trekking. Si cerca prima un'attività lo stesso giorno, poi nella stessa settimana.

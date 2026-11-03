@@ -33,6 +33,9 @@ TIPI_ALTRI = {"volley", "forza", "mobilita", "camminata", "trekking"}
 TIPI_SEDUTA = TIPI_CORSA | TIPI_ALTRI
 TIPI_SETTIMANA = {None, "scarico", "test", "gara"}
 RITMI = ("facile_lungo", "soglia", "ripetute", "gara")
+# Il campo facoltativo `ritmo` di una seduta: quale ritmo della fase vale per qualità, test e gara.
+RITMI_SEDUTA = ("soglia", "ripetute", "gara")
+TIPI_CON_RITMO = {"qualita", "test", "gara"}
 GIORNI = ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"]
 RITMO = re.compile(r"^\d{1,2}:[0-5]\d$")
 
@@ -79,7 +82,7 @@ def espandi(piano):
         corsa = s["tipo"] in TIPI_CORSA
         if corsa:
             numero += 1
-        sedute.append({
+        seduta = {
             "id": s["id"],
             "data": s["data"],
             "giorno": GIORNI[_data(s["data"]).weekday()],
@@ -91,7 +94,10 @@ def espandi(piano):
             "corsa": corsa,
             "numero_piano": numero if corsa else None,
             "distanza_m": s.get("distanza_m"),
-        })
+        }
+        if s.get("ritmo") is not None:  # solo se c'è, così i piani senza ritmo non cambiano
+            seduta["ritmo"] = s["ritmo"]
+        sedute.append(seduta)
     settimane = []
     for w in piano["settimane"]:
         n = w["settimana"]
@@ -197,6 +203,16 @@ def controlla(piano):
                 err(f"{sid}: una corsa deve avere distanza_m intera positiva")
         elif km is not None:
             err(f"{sid}: solo le corse hanno distanza_m")
+        r = s.get("ritmo")
+        if r is not None:
+            n = fase_di(piano, settimana_di(piano, s["data"]))
+            fase = next((f for f in piano["fasi"] if f.get("fase") == n), None)
+            if s.get("tipo") not in TIPI_CON_RITMO:
+                err(f"{sid}: solo qualità, test e gara hanno un ritmo")
+            elif r not in RITMI_SEDUTA:
+                err(f"{sid}: ritmo '{r}' non valido")
+            elif fase is not None and not fase.get("ritmi", {}).get(r):
+                err(f"{sid}: la fase {n} non ha il ritmo {r}")
 
     if not any(s["tipo"] == "gara" and s["data"] == piano["gara"]["data"] for s in piano["sedute"]):
         err(f"nessuna seduta di tipo gara il {piano['gara']['data']}")
