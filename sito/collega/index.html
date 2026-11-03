@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Collega il repo di dati</title>
+  <link rel="stylesheet" href="../comune/base.css">
+  <script type="module" src="collega.js"></script>
+</head>
+<body>
+  <main>
+    <p><a href="../">← my-strava</a></p>
+    <h1>Collega il repo di dati</h1>
+    <p class="tenue">Report ed editor leggono e salvano il piano e le attività nel tuo repo di dati su GitHub. Servono il nome del repo e un token che può leggerlo e scriverlo.</p>
+
+    <section id="collegato" class="scheda" hidden>
+      <p><strong>Collegato a <span id="repo-collegato"></span></strong></p>
+      <p id="dettaglio" class="tenue"></p>
+      <p class="azioni"><a class="pulsante primario" href="../report/">Report</a> <a class="pulsante" href="../editor/">Editor</a> <button id="scollega" type="button">Scollega</button></p>
+    </section>
+
+    <form id="modulo" class="scheda">
+      <label>Repo di dati
+        <input id="repo" name="repo" placeholder="utente/nome-repo" autocomplete="off" autocapitalize="off" spellcheck="false" required pattern="[\w.\-]+/[\w.\-]+">
+      </label>
+      <label>Token
+        <input id="token" name="token" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false" required>
+      </label>
+      <p id="errore" class="errore" hidden></p>
+      <p class="azioni"><button class="primario" type="submit">Collega</button></p>
+    </form>
+
+    <section class="scheda">
+      <h2>Come creare il token</h2>
+      <ol>
+        <li>Apri <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token</a>.</li>
+        <li>Dagli un nome, per esempio <em>my-strava</em>, e una scadenza.</li>
+        <li><strong>Repository access</strong>: <em>Only select repositories</em> e scegli solo il repo di dati.</li>
+        <li><strong>Permissions → Repository permissions → Contents</strong>: <em>Read and write</em>. Non serve altro.</li>
+        <li>Genera il token, copialo e incollalo qui sopra.</li>
+      </ol>
+      <p class="tenue">Il token resta solo in questo browser: non va sul sito né su GitHub. Chi usa questo browser può modificare il repo di dati, e nient'altro. Puoi revocarlo quando vuoi da <a href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener">Fine-grained tokens</a>. Su ogni dispositivo, computer o telefono, il collegamento si fa una volta.</p>
+    </section>
+  </main>
+</body>
+</html>

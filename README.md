@@ -13,7 +13,7 @@ Qui c'è solo il codice. I dati di ognuno (piano e attività) stanno nel suo rep
 | `scripts/piano.py` | Valida `data/piano.json` (`controlla`), ricalcola i campi ricavati (`aggiorna`), confronta le corse del piano con le attività (`collega`), stampa i km per fase e settimana (`riepilogo`) |
 | `scripts/strava_auth.ps1` | Genera il refresh token di Strava; si lancia a mano, una volta sola, vedi [setup.md](setup.md) |
 | `scripts/crea_esempio.py` | Rigenera i dati di esempio |
-| `sito/` | Le pagine: `report/`, `editor/` e una pagina iniziale. HTML e JavaScript senza build e senza librerie |
+| `sito/` | Le pagine: `report/`, `editor/`, `collega/` per il repo di dati e una pagina iniziale. HTML e JavaScript senza build e senza librerie |
 | `sito/esempio/` | Un piano finto di 12 settimane per una 10 km e le attività delle prime sei: servono per provare le pagine e per i test |
 | `scripts/confronta_editor.mjs` | Controlla che l'editor dia su un piano gli stessi risultati di `piano.py` |
 | `modello/` | Il punto di partenza di un repo di dati: i due workflow che richiamano quelli di qui e il CSV delle attività manuali |
@@ -52,7 +52,16 @@ Poi apri <http://localhost:8000>. Ci sono due modi per vederle con dei dati:
 
 `?oggi=2027-02-11` mostra le pagine come in un altro giorno.
 
-Per ora l'editor salva scaricando `piano.json`, da copiare in `data/` del repo di dati. La lettura e la scrittura diretta nel repo di dati arriveranno con un token GitHub. Il codice da cambiare sta in `sito/*/fonte.js`.
+### Collegare il repo di dati
+
+Nella pagina **Collega** (`sito/collega/`) si inseriscono il nome del repo di dati e un token GitHub *fine-grained* con un solo permesso: *Contents: Read and write* sul solo repo di dati. La pagina spiega come crearlo.
+
+- **Il report** legge `data/piano.json` e `data/attivita.json` dal repo.
+- **L'editor** legge `data/piano.json` e lo salva con un commit, *Piano: modifiche dall'editor*. Il commit fa partire Check Piano nel repo di dati.
+- **Se il piano è cambiato su GitHub dopo che l'hai aperto**, il salvataggio si ferma. Ricaricando la pagina, la bozza viene riproposta.
+- **Il token resta solo nel browser** (`localStorage`): non va sul sito né in nessun repo. Il collegamento si fa una volta per dispositivo.
+
+Senza collegamento le pagine usano una copia locale in `dati/`, i file scelti a mano o i dati di esempio. In quel caso l'editor salva scaricando `piano.json`. Tutto questo sta in `sito/*/fonte.js` e `sito/comune/github.js`.
 
 ## Il piano e le attività
 

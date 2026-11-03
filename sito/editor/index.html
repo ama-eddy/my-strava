@@ -24,9 +24,11 @@
   <main>
     <section id="apri" hidden>
       <h2>Apri il piano</h2>
-      <p>Scegli <code>data/piano.json</code> dal tuo repo di dati.</p>
-      <p class="tenue">Oppure prova con i <a href="?esempio&amp;oggi=2027-02-11">dati di esempio</a>.</p>
+      <p id="errore-apri" class="errore" hidden></p>
+      <p><a href="../collega/">Collega il tuo repo di dati</a> per leggere e salvare il piano su GitHub, anche dal telefono.</p>
+      <p>Oppure scegli <code>data/piano.json</code> dal tuo repo di dati; salvando lo scarichi:</p>
       <input type="file" id="file" accept=".json,application/json">
+      <p class="tenue">Oppure prova con i <a href="?esempio&amp;oggi=2027-02-11">dati di esempio</a>.</p>
     </section>
 
     <section id="editor" hidden>

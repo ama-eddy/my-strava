@@ -4,25 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>my-strava</title>
-  <style>
-    :root { color-scheme: light dark; --sfondo: #f6f6f3; --carta: #fff; --testo: #1d1d1b; --tenue: #6b6b66; --bordo: #deded8; --accento: #2f5fd0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
-    @media (prefers-color-scheme: dark) { :root { --sfondo: #121211; --carta: #1c1c1b; --testo: #ecece8; --tenue: #a3a39d; --bordo: #343432; --accento: #7fa2f0; } }
-    body { margin: 0; background: var(--sfondo); color: var(--testo); line-height: 1.45; }
-    main { max-width: 640px; margin: 0 auto; padding: 32px 16px; }
-    h1 { margin: 0 0 4px; font-size: 1.5rem; }
-    p { margin: 4px 0; }
-    .tenue { color: var(--tenue); }
-    .pagine { display: grid; gap: 12px; margin: 24px 0; }
-    .pagina { display: block; background: var(--carta); border: 1px solid var(--bordo); border-radius: 10px; padding: 16px; color: inherit; text-decoration: none; }
-    .pagina:hover, .pagina:focus-visible { border-color: var(--accento); }
-    .pagina strong { color: var(--accento); font-size: 1.1rem; }
-    a { color: var(--accento); }
-  </style>
+  <link rel="stylesheet" href="comune/base.css">
+  <script type="module">
+    import { collegamento } from "./comune/github.js";
+    const c = collegamento();
+    document.getElementById("stato").replaceChildren(...(c
+      ? [`Dati da ${c.repo} · `, Object.assign(document.createElement("a"), { href: "collega/", textContent: "cambia" })]
+      : [Object.assign(document.createElement("a"), { href: "collega/", textContent: "Collega il tuo repo di dati" }), " per vedere i tuoi dati."]));
+  </script>
 </head>
 <body>
   <main>
     <h1>my-strava</h1>
     <p class="tenue">Piano di allenamento e attività Strava, a confronto.</p>
+    <p id="stato"></p>
     <nav class="pagine">
       <a class="pagina" href="report/"><strong>Report</strong><p class="tenue">Cosa prevedeva il piano e cosa hai fatto: settimana corrente, volume, lungo, ritmi e test.</p></a>
       <a class="pagina" href="editor/"><strong>Editor del piano</strong><p class="tenue">Sposta, aggiungi e modifica le sedute, con gli stessi controlli di <code>piano.py</code>.</p></a>

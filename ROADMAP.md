@@ -32,7 +32,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 |---|---|---|
 | 1 | **Un repo pubblico con tutto il codice**: script, pagine, dati di esempio e test, compreso il confronto tra `piano.js` e `piano.py` | Fatto ([#1]) |
 | 2 | **Workflow riutilizzabili** Sync Strava e Check Piano, `modello/` per un repo di dati, sito pubblicato con GitHub Pages | Fatto ([#2]) |
-| 3 | **Lettura e scrittura diretta nel repo di dati** con un token GitHub fine-grained, salvato solo nel browser: il report legge, l'editor salva con un commit. Cambia `sito/*/fonte.js` più una schermata per repo e token | Da fare |
+| 3 | **Lettura e scrittura diretta nel repo di dati** con un token GitHub fine-grained, salvato solo nel browser: il report legge, l'editor salva con un commit. Pagina **Collega** per repo e token | Fatto ([#3]) |
 | 4 | **Collegare il primo repo di dati** (strava-database): i workflow diventano i due file di `modello/`, il codice esce da lì | Da fare |
 | 5 | **Ritmo obiettivo per qualità, test e gare intermedie**: un campo facoltativo `ritmo` (`soglia`, `ripetute` o `gara`) sulle sedute di `piano.json`. È controllato da `piano.py` e `piano.js` e si sceglie nel dialogo dell'editor. Il report lo mostra senza esito, perché il ritmo medio di Strava include riscaldamento e recuperi | Da fare |
 | 6 | **Andamento dei test, con il suggerimento di ricalibrare i ritmi** della fase dopo ogni test. La tabella dei test nel report c'è già; il suggerimento manca | Da fare |
@@ -40,6 +40,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 
 [#1]: https://github.com/ama-eddy/my-strava/pull/1
 [#2]: https://github.com/ama-eddy/my-strava/pull/2
+[#3]: https://github.com/ama-eddy/my-strava/pull/3
 
 ## Fatto finora nel report e nell'editor
 
