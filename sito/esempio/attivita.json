@@ -8,12 +8,34 @@
     "numero_piano": 1,
     "sport": "Run",
     "distanza_m": 3927,
-    "tempo_movimento_s": 1590,
-    "tempo_totale_s": 1650,
+    "tempo_movimento_s": 1589,
+    "tempo_totale_s": 1649,
     "ritmo_s_km": 405,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 407,
+        "ritmo_s_km": 407
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 401,
+        "ritmo_s_km": 401
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 402,
+        "ritmo_s_km": 402
+      },
+      {
+        "distanza_m": 927,
+        "tempo_s": 379,
+        "ritmo_s_km": 409
+      }
+    ]
   },
   {
     "id": 1002,
@@ -39,13 +61,35 @@
     "nome": "2/36",
     "numero_piano": 2,
     "sport": "Run",
-    "distanza_m": 4183,
-    "tempo_movimento_s": 1715,
-    "tempo_totale_s": 1775,
-    "ritmo_s_km": 410,
+    "distanza_m": 4000,
+    "tempo_movimento_s": 1559,
+    "tempo_totale_s": 1619,
+    "ritmo_s_km": 390,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 387,
+        "ritmo_s_km": 387
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 395,
+        "ritmo_s_km": 395
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 390,
+        "ritmo_s_km": 390
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 387,
+        "ritmo_s_km": 387
+      }
+    ]
   },
   {
     "id": 1004,
@@ -71,13 +115,45 @@
     "nome": "3/36",
     "numero_piano": 3,
     "sport": "Run",
-    "distanza_m": 5887,
-    "tempo_movimento_s": 2284,
-    "tempo_totale_s": 2344,
-    "ritmo_s_km": 388,
+    "distanza_m": 6000,
+    "tempo_movimento_s": 2341,
+    "tempo_totale_s": 2401,
+    "ritmo_s_km": 390,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 392,
+        "ritmo_s_km": 392
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 387,
+        "ritmo_s_km": 387
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 389,
+        "ritmo_s_km": 389
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 387,
+        "ritmo_s_km": 387
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 394,
+        "ritmo_s_km": 394
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 392,
+        "ritmo_s_km": 392
+      }
+    ]
   },
   {
     "id": 1006,
@@ -87,13 +163,40 @@
     "nome": "4/36",
     "numero_piano": 4,
     "sport": "Run",
-    "distanza_m": 3898,
-    "tempo_movimento_s": 1633,
-    "tempo_totale_s": 1693,
-    "ritmo_s_km": 419,
+    "distanza_m": 4139,
+    "tempo_movimento_s": 1599,
+    "tempo_totale_s": 1659,
+    "ritmo_s_km": 386,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 385,
+        "ritmo_s_km": 385
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 387,
+        "ritmo_s_km": 387
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 384,
+        "ritmo_s_km": 384
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 390,
+        "ritmo_s_km": 390
+      },
+      {
+        "distanza_m": 139,
+        "tempo_s": 53,
+        "ritmo_s_km": 381
+      }
+    ]
   },
   {
     "id": 1007,
@@ -119,13 +222,40 @@
     "nome": "5/36",
     "numero_piano": 5,
     "sport": "Run",
-    "distanza_m": 4648,
-    "tempo_movimento_s": 1896,
-    "tempo_totale_s": 1956,
-    "ritmo_s_km": 408,
+    "distanza_m": 4373,
+    "tempo_movimento_s": 1748,
+    "tempo_totale_s": 1808,
+    "ritmo_s_km": 400,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 403,
+        "ritmo_s_km": 403
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 397,
+        "ritmo_s_km": 397
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 399,
+        "ritmo_s_km": 399
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 401,
+        "ritmo_s_km": 401
+      },
+      {
+        "distanza_m": 373,
+        "tempo_s": 148,
+        "ritmo_s_km": 397
+      }
+    ]
   },
   {
     "id": 1009,
@@ -151,13 +281,50 @@
     "nome": "6/36",
     "numero_piano": 6,
     "sport": "Run",
-    "distanza_m": 7109,
-    "tempo_movimento_s": 2758,
-    "tempo_totale_s": 2818,
-    "ritmo_s_km": 388,
+    "distanza_m": 6910,
+    "tempo_movimento_s": 2892,
+    "tempo_totale_s": 2952,
+    "ritmo_s_km": 419,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 419,
+        "ritmo_s_km": 419
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 423,
+        "ritmo_s_km": 423
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 417,
+        "ritmo_s_km": 417
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 416,
+        "ritmo_s_km": 416
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 418,
+        "ritmo_s_km": 418
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 420,
+        "ritmo_s_km": 420
+      },
+      {
+        "distanza_m": 910,
+        "tempo_s": 379,
+        "ritmo_s_km": 416
+      }
+    ]
   },
   {
     "id": 1011,
@@ -167,13 +334,40 @@
     "nome": "7/36",
     "numero_piano": 7,
     "sport": "Run",
-    "distanza_m": 4369,
-    "tempo_movimento_s": 1739,
-    "tempo_totale_s": 1799,
-    "ritmo_s_km": 398,
+    "distanza_m": 4714,
+    "tempo_movimento_s": 1978,
+    "tempo_totale_s": 2038,
+    "ritmo_s_km": 420,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 417,
+        "ritmo_s_km": 417
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 416,
+        "ritmo_s_km": 416
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 419,
+        "ritmo_s_km": 419
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 423,
+        "ritmo_s_km": 423
+      },
+      {
+        "distanza_m": 714,
+        "tempo_s": 303,
+        "ritmo_s_km": 424
+      }
+    ]
   },
   {
     "id": 1012,
@@ -199,13 +393,45 @@
     "nome": "8/36",
     "numero_piano": 8,
     "sport": "Run",
-    "distanza_m": 5072,
-    "tempo_movimento_s": 1978,
-    "tempo_totale_s": 2038,
-    "ritmo_s_km": 390,
+    "distanza_m": 5247,
+    "tempo_movimento_s": 2170,
+    "tempo_totale_s": 2230,
+    "ritmo_s_km": 414,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 413,
+        "ritmo_s_km": 413
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 415,
+        "ritmo_s_km": 415
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 415,
+        "ritmo_s_km": 415
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 413,
+        "ritmo_s_km": 413
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 412,
+        "ritmo_s_km": 412
+      },
+      {
+        "distanza_m": 247,
+        "tempo_s": 102,
+        "ritmo_s_km": 413
+      }
+    ]
   },
   {
     "id": 1014,
@@ -231,13 +457,60 @@
     "nome": "9/36",
     "numero_piano": 9,
     "sport": "Run",
-    "distanza_m": 7885,
-    "tempo_movimento_s": 3241,
-    "tempo_totale_s": 3301,
-    "ritmo_s_km": 411,
+    "distanza_m": 8207,
+    "tempo_movimento_s": 3256,
+    "tempo_totale_s": 3316,
+    "ritmo_s_km": 397,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 395,
+        "ritmo_s_km": 395
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 393,
+        "ritmo_s_km": 393
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 396,
+        "ritmo_s_km": 396
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 400,
+        "ritmo_s_km": 400
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 399,
+        "ritmo_s_km": 399
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 397,
+        "ritmo_s_km": 397
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 399,
+        "ritmo_s_km": 399
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 396,
+        "ritmo_s_km": 396
+      },
+      {
+        "distanza_m": 207,
+        "tempo_s": 81,
+        "ritmo_s_km": 391
+      }
+    ]
   },
   {
     "id": 1016,
@@ -247,13 +520,40 @@
     "nome": "10/36",
     "numero_piano": 10,
     "sport": "Run",
-    "distanza_m": 3896,
-    "tempo_movimento_s": 1558,
-    "tempo_totale_s": 1618,
-    "ritmo_s_km": 400,
+    "distanza_m": 4112,
+    "tempo_movimento_s": 1611,
+    "tempo_totale_s": 1671,
+    "ritmo_s_km": 392,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 394,
+        "ritmo_s_km": 394
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 390,
+        "ritmo_s_km": 390
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 393,
+        "ritmo_s_km": 393
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 390,
+        "ritmo_s_km": 390
+      },
+      {
+        "distanza_m": 112,
+        "tempo_s": 44,
+        "ritmo_s_km": 393
+      }
+    ]
   },
   {
     "id": 1017,
@@ -279,13 +579,35 @@
     "nome": "11/36",
     "numero_piano": 11,
     "sport": "Run",
-    "distanza_m": 4067,
-    "tempo_movimento_s": 1708,
-    "tempo_totale_s": 1768,
-    "ritmo_s_km": 420,
+    "distanza_m": 3870,
+    "tempo_movimento_s": 1593,
+    "tempo_totale_s": 1653,
+    "ritmo_s_km": 412,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 408,
+        "ritmo_s_km": 408
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 415,
+        "ritmo_s_km": 415
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 412,
+        "ritmo_s_km": 412
+      },
+      {
+        "distanza_m": 870,
+        "tempo_s": 358,
+        "ritmo_s_km": 411
+      }
+    ]
   },
   {
     "id": 1019,
@@ -327,13 +649,50 @@
     "nome": "12/36",
     "numero_piano": 12,
     "sport": "Run",
-    "distanza_m": 6139,
-    "tempo_movimento_s": 2382,
-    "tempo_totale_s": 2442,
-    "ritmo_s_km": 388,
+    "distanza_m": 6154,
+    "tempo_movimento_s": 2507,
+    "tempo_totale_s": 2567,
+    "ritmo_s_km": 407,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 410,
+        "ritmo_s_km": 410
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 410,
+        "ritmo_s_km": 410
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 404,
+        "ritmo_s_km": 404
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 404,
+        "ritmo_s_km": 404
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 407,
+        "ritmo_s_km": 407
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 410,
+        "ritmo_s_km": 410
+      },
+      {
+        "distanza_m": 154,
+        "tempo_s": 62,
+        "ritmo_s_km": 403
+      }
+    ]
   },
   {
     "id": 1022,
@@ -343,13 +702,45 @@
     "nome": "13/36",
     "numero_piano": 13,
     "sport": "Run",
-    "distanza_m": 4964,
-    "tempo_movimento_s": 1946,
-    "tempo_totale_s": 2006,
-    "ritmo_s_km": 392,
+    "distanza_m": 5224,
+    "tempo_movimento_s": 2032,
+    "tempo_totale_s": 2092,
+    "ritmo_s_km": 389,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 388,
+        "ritmo_s_km": 388
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 391,
+        "ritmo_s_km": 391
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 388,
+        "ritmo_s_km": 388
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 390,
+        "ritmo_s_km": 390
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 389,
+        "ritmo_s_km": 389
+      },
+      {
+        "distanza_m": 224,
+        "tempo_s": 86,
+        "ritmo_s_km": 384
+      }
+    ]
   },
   {
     "id": 1023,
@@ -359,13 +750,45 @@
     "nome": "14/36",
     "numero_piano": 14,
     "sport": "Run",
-    "distanza_m": 6171,
-    "tempo_movimento_s": 2388,
-    "tempo_totale_s": 2448,
-    "ritmo_s_km": 387,
+    "distanza_m": 6000,
+    "tempo_movimento_s": 2249,
+    "tempo_totale_s": 2309,
+    "ritmo_s_km": 375,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 374,
+        "ritmo_s_km": 374
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 373,
+        "ritmo_s_km": 373
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 379,
+        "ritmo_s_km": 379
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 372,
+        "ritmo_s_km": 372
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 375,
+        "ritmo_s_km": 375
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 376,
+        "ritmo_s_km": 376
+      }
+    ]
   },
   {
     "id": 1024,
@@ -391,18 +814,990 @@
     "nome": "16/36",
     "numero_piano": 16,
     "sport": "Run",
-    "distanza_m": 4881,
-    "tempo_movimento_s": 2060,
-    "tempo_totale_s": 2120,
-    "ritmo_s_km": 422,
+    "distanza_m": 5228,
+    "tempo_movimento_s": 2057,
+    "tempo_totale_s": 2117,
+    "ritmo_s_km": 393,
     "dislivello_m": 20,
     "fc_media": null,
-    "fc_max": null
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 392,
+        "ritmo_s_km": 392
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 395,
+        "ritmo_s_km": 395
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 395,
+        "ritmo_s_km": 395
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 396,
+        "ritmo_s_km": 396
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 390,
+        "ritmo_s_km": 390
+      },
+      {
+        "distanza_m": 228,
+        "tempo_s": 89,
+        "ritmo_s_km": 390
+      }
+    ]
   },
   {
     "id": 1026,
     "origine": "strava",
     "data": "2027-02-09",
+    "ora": "18:30",
+    "nome": "Gioco di squadra",
+    "numero_piano": null,
+    "sport": "Volleyball",
+    "distanza_m": null,
+    "tempo_movimento_s": 3600,
+    "tempo_totale_s": 3660,
+    "ritmo_s_km": null,
+    "dislivello_m": null,
+    "fc_media": null,
+    "fc_max": null
+  },
+  {
+    "id": 1027,
+    "origine": "strava",
+    "data": "2027-02-11",
+    "ora": "18:30",
+    "nome": "17/36",
+    "numero_piano": 17,
+    "sport": "Run",
+    "distanza_m": 5000,
+    "tempo_movimento_s": 1883,
+    "tempo_totale_s": 1943,
+    "ritmo_s_km": 377,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 379,
+        "ritmo_s_km": 379
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 375,
+        "ritmo_s_km": 375
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 373,
+        "ritmo_s_km": 373
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 377,
+        "ritmo_s_km": 377
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 379,
+        "ritmo_s_km": 379
+      }
+    ]
+  },
+  {
+    "id": 1028,
+    "origine": "strava",
+    "data": "2027-02-12",
+    "ora": "18:30",
+    "nome": "Forza leggera, 30 minuti",
+    "numero_piano": null,
+    "sport": "WeightTraining",
+    "distanza_m": null,
+    "tempo_movimento_s": 2700,
+    "tempo_totale_s": 2760,
+    "ritmo_s_km": null,
+    "dislivello_m": null,
+    "fc_media": null,
+    "fc_max": null
+  },
+  {
+    "id": 1029,
+    "origine": "strava",
+    "data": "2027-02-14",
+    "ora": "18:30",
+    "nome": "18/36",
+    "numero_piano": 18,
+    "sport": "Run",
+    "distanza_m": 8000,
+    "tempo_movimento_s": 2912,
+    "tempo_totale_s": 2972,
+    "ritmo_s_km": 364,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 415,
+        "ritmo_s_km": 415
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 417,
+        "ritmo_s_km": 417
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 333,
+        "ritmo_s_km": 333
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 334,
+        "ritmo_s_km": 334
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 331,
+        "ritmo_s_km": 331
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 330,
+        "ritmo_s_km": 330
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 329,
+        "ritmo_s_km": 329
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 423,
+        "ritmo_s_km": 423
+      }
+    ]
+  },
+  {
+    "id": 1030,
+    "origine": "strava",
+    "data": "2027-02-15",
+    "ora": "18:30",
+    "nome": "19/36",
+    "numero_piano": 19,
+    "sport": "Run",
+    "distanza_m": 4968,
+    "tempo_movimento_s": 1953,
+    "tempo_totale_s": 2013,
+    "ritmo_s_km": 393,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 393,
+        "ritmo_s_km": 393
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 390,
+        "ritmo_s_km": 390
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 397,
+        "ritmo_s_km": 397
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 392,
+        "ritmo_s_km": 392
+      },
+      {
+        "distanza_m": 968,
+        "tempo_s": 381,
+        "ritmo_s_km": 394
+      }
+    ]
+  },
+  {
+    "id": 1031,
+    "origine": "strava",
+    "data": "2027-02-16",
+    "ora": "18:30",
+    "nome": "Gioco di squadra",
+    "numero_piano": null,
+    "sport": "Volleyball",
+    "distanza_m": null,
+    "tempo_movimento_s": 3600,
+    "tempo_totale_s": 3660,
+    "ritmo_s_km": null,
+    "dislivello_m": null,
+    "fc_media": null,
+    "fc_max": null
+  },
+  {
+    "id": 1032,
+    "origine": "strava",
+    "data": "2027-02-18",
+    "ora": "18:30",
+    "nome": "20/36",
+    "numero_piano": 20,
+    "sport": "Run",
+    "distanza_m": 5852,
+    "tempo_movimento_s": 2140,
+    "tempo_totale_s": 2200,
+    "ritmo_s_km": 366,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 363,
+        "ritmo_s_km": 363
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 367,
+        "ritmo_s_km": 367
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 369,
+        "ritmo_s_km": 369
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 366,
+        "ritmo_s_km": 366
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 366,
+        "ritmo_s_km": 366
+      },
+      {
+        "distanza_m": 852,
+        "tempo_s": 309,
+        "ritmo_s_km": 363
+      }
+    ]
+  },
+  {
+    "id": 1033,
+    "origine": "strava",
+    "data": "2027-02-19",
+    "ora": "18:30",
+    "nome": "Forza, 45 minuti",
+    "numero_piano": null,
+    "sport": "WeightTraining",
+    "distanza_m": null,
+    "tempo_movimento_s": 2700,
+    "tempo_totale_s": 2760,
+    "ritmo_s_km": null,
+    "dislivello_m": null,
+    "fc_media": null,
+    "fc_max": null
+  },
+  {
+    "id": 1034,
+    "origine": "strava",
+    "data": "2027-02-21",
+    "ora": "18:30",
+    "nome": "21/36",
+    "numero_piano": 21,
+    "sport": "Run",
+    "distanza_m": 10166,
+    "tempo_movimento_s": 4252,
+    "tempo_totale_s": 4312,
+    "ritmo_s_km": 418,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 413,
+        "ritmo_s_km": 413
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 420,
+        "ritmo_s_km": 420
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 421,
+        "ritmo_s_km": 421
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 419,
+        "ritmo_s_km": 419
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 419,
+        "ritmo_s_km": 419
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 419,
+        "ritmo_s_km": 419
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 419,
+        "ritmo_s_km": 419
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 414,
+        "ritmo_s_km": 414
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 420,
+        "ritmo_s_km": 420
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 419,
+        "ritmo_s_km": 419
+      },
+      {
+        "distanza_m": 166,
+        "tempo_s": 69,
+        "ritmo_s_km": 416
+      }
+    ]
+  },
+  {
+    "id": 1035,
+    "origine": "strava",
+    "data": "2027-02-22",
+    "ora": "18:30",
+    "nome": "22/36",
+    "numero_piano": 22,
+    "sport": "Run",
+    "distanza_m": 3884,
+    "tempo_movimento_s": 1539,
+    "tempo_totale_s": 1599,
+    "ritmo_s_km": 396,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 396,
+        "ritmo_s_km": 396
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 400,
+        "ritmo_s_km": 400
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 395,
+        "ritmo_s_km": 395
+      },
+      {
+        "distanza_m": 884,
+        "tempo_s": 348,
+        "ritmo_s_km": 394
+      }
+    ]
+  },
+  {
+    "id": 1036,
+    "origine": "strava",
+    "data": "2027-02-23",
+    "ora": "18:30",
+    "nome": "Gioco di squadra",
+    "numero_piano": null,
+    "sport": "Volleyball",
+    "distanza_m": null,
+    "tempo_movimento_s": 3600,
+    "tempo_totale_s": 3660,
+    "ritmo_s_km": null,
+    "dislivello_m": null,
+    "fc_media": null,
+    "fc_max": null
+  },
+  {
+    "id": 1037,
+    "origine": "strava",
+    "data": "2027-02-25",
+    "ora": "18:30",
+    "nome": "23/36",
+    "numero_piano": 23,
+    "sport": "Run",
+    "distanza_m": 5157,
+    "tempo_movimento_s": 1888,
+    "tempo_totale_s": 1948,
+    "ritmo_s_km": 366,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 364,
+        "ritmo_s_km": 364
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 365,
+        "ritmo_s_km": 365
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 364,
+        "ritmo_s_km": 364
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 366,
+        "ritmo_s_km": 366
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 372,
+        "ritmo_s_km": 372
+      },
+      {
+        "distanza_m": 157,
+        "tempo_s": 57,
+        "ritmo_s_km": 363
+      }
+    ]
+  },
+  {
+    "id": 1038,
+    "origine": "strava",
+    "data": "2027-02-26",
+    "ora": "18:30",
+    "nome": "Forza leggera, 30 minuti",
+    "numero_piano": null,
+    "sport": "WeightTraining",
+    "distanza_m": null,
+    "tempo_movimento_s": 2700,
+    "tempo_totale_s": 2760,
+    "ritmo_s_km": null,
+    "dislivello_m": null,
+    "fc_media": null,
+    "fc_max": null
+  },
+  {
+    "id": 1039,
+    "origine": "strava",
+    "data": "2027-02-28",
+    "ora": "18:30",
+    "nome": "24/36",
+    "numero_piano": 24,
+    "sport": "Run",
+    "distanza_m": 7164,
+    "tempo_movimento_s": 2916,
+    "tempo_totale_s": 2976,
+    "ritmo_s_km": 407,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 404,
+        "ritmo_s_km": 404
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 405,
+        "ritmo_s_km": 405
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 407,
+        "ritmo_s_km": 407
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 410,
+        "ritmo_s_km": 410
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 406,
+        "ritmo_s_km": 406
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 408,
+        "ritmo_s_km": 408
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 409,
+        "ritmo_s_km": 409
+      },
+      {
+        "distanza_m": 164,
+        "tempo_s": 67,
+        "ritmo_s_km": 409
+      }
+    ]
+  },
+  {
+    "id": 1040,
+    "origine": "strava",
+    "data": "2027-03-01",
+    "ora": "18:30",
+    "nome": "25/36",
+    "numero_piano": 25,
+    "sport": "Run",
+    "distanza_m": 4912,
+    "tempo_movimento_s": 2047,
+    "tempo_totale_s": 2107,
+    "ritmo_s_km": 417,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 412,
+        "ritmo_s_km": 412
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 418,
+        "ritmo_s_km": 418
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 418,
+        "ritmo_s_km": 418
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 418,
+        "ritmo_s_km": 418
+      },
+      {
+        "distanza_m": 912,
+        "tempo_s": 381,
+        "ritmo_s_km": 418
+      }
+    ]
+  },
+  {
+    "id": 1041,
+    "origine": "strava",
+    "data": "2027-03-02",
+    "ora": "18:30",
+    "nome": "Gioco di squadra",
+    "numero_piano": null,
+    "sport": "Volleyball",
+    "distanza_m": null,
+    "tempo_movimento_s": 3600,
+    "tempo_totale_s": 3660,
+    "ritmo_s_km": null,
+    "dislivello_m": null,
+    "fc_media": null,
+    "fc_max": null
+  },
+  {
+    "id": 1042,
+    "origine": "strava",
+    "data": "2027-03-04",
+    "ora": "18:30",
+    "nome": "26/36",
+    "numero_piano": 26,
+    "sport": "Run",
+    "distanza_m": 6893,
+    "tempo_movimento_s": 2523,
+    "tempo_totale_s": 2583,
+    "ritmo_s_km": 366,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 364,
+        "ritmo_s_km": 364
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 363,
+        "ritmo_s_km": 363
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 367,
+        "ritmo_s_km": 367
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 366,
+        "ritmo_s_km": 366
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 369,
+        "ritmo_s_km": 369
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 364,
+        "ritmo_s_km": 364
+      },
+      {
+        "distanza_m": 893,
+        "tempo_s": 330,
+        "ritmo_s_km": 370
+      }
+    ]
+  },
+  {
+    "id": 1043,
+    "origine": "strava",
+    "data": "2027-03-05",
+    "ora": "18:30",
+    "nome": "Forza, 45 minuti",
+    "numero_piano": null,
+    "sport": "WeightTraining",
+    "distanza_m": null,
+    "tempo_movimento_s": 2700,
+    "tempo_totale_s": 2760,
+    "ritmo_s_km": null,
+    "dislivello_m": null,
+    "fc_media": null,
+    "fc_max": null
+  },
+  {
+    "id": 1044,
+    "origine": "strava",
+    "data": "2027-03-07",
+    "ora": "18:30",
+    "nome": "27/36",
+    "numero_piano": 27,
+    "sport": "Run",
+    "distanza_m": 10955,
+    "tempo_movimento_s": 4238,
+    "tempo_totale_s": 4298,
+    "ritmo_s_km": 387,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 390,
+        "ritmo_s_km": 390
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 387,
+        "ritmo_s_km": 387
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 384,
+        "ritmo_s_km": 384
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 390,
+        "ritmo_s_km": 390
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 382,
+        "ritmo_s_km": 382
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 390,
+        "ritmo_s_km": 390
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 386,
+        "ritmo_s_km": 386
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 383,
+        "ritmo_s_km": 383
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 386,
+        "ritmo_s_km": 386
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 390,
+        "ritmo_s_km": 390
+      },
+      {
+        "distanza_m": 955,
+        "tempo_s": 370,
+        "ritmo_s_km": 387
+      }
+    ]
+  },
+  {
+    "id": 1045,
+    "origine": "strava",
+    "data": "2027-03-08",
+    "ora": "18:30",
+    "nome": "28/36",
+    "numero_piano": 28,
+    "sport": "Run",
+    "distanza_m": 5000,
+    "tempo_movimento_s": 1987,
+    "tempo_totale_s": 2047,
+    "ritmo_s_km": 397,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 394,
+        "ritmo_s_km": 394
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 399,
+        "ritmo_s_km": 399
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 399,
+        "ritmo_s_km": 399
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 399,
+        "ritmo_s_km": 399
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 396,
+        "ritmo_s_km": 396
+      }
+    ]
+  },
+  {
+    "id": 1046,
+    "origine": "strava",
+    "data": "2027-03-09",
+    "ora": "18:30",
+    "nome": "Gioco di squadra",
+    "numero_piano": null,
+    "sport": "Volleyball",
+    "distanza_m": null,
+    "tempo_movimento_s": 3600,
+    "tempo_totale_s": 3660,
+    "ritmo_s_km": null,
+    "dislivello_m": null,
+    "fc_media": null,
+    "fc_max": null
+  },
+  {
+    "id": 1047,
+    "origine": "strava",
+    "data": "2027-03-11",
+    "ora": "18:30",
+    "nome": "29/36",
+    "numero_piano": 29,
+    "sport": "Run",
+    "distanza_m": 6964,
+    "tempo_movimento_s": 2700,
+    "tempo_totale_s": 2760,
+    "ritmo_s_km": 388,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 386,
+        "ritmo_s_km": 386
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 386,
+        "ritmo_s_km": 386
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 389,
+        "ritmo_s_km": 389
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 386,
+        "ritmo_s_km": 386
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 386,
+        "ritmo_s_km": 386
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 391,
+        "ritmo_s_km": 391
+      },
+      {
+        "distanza_m": 964,
+        "tempo_s": 376,
+        "ritmo_s_km": 390
+      }
+    ]
+  },
+  {
+    "id": 1048,
+    "origine": "strava",
+    "data": "2027-03-12",
+    "ora": "18:30",
+    "nome": "Forza leggera, 30 minuti",
+    "numero_piano": null,
+    "sport": "WeightTraining",
+    "distanza_m": null,
+    "tempo_movimento_s": 2700,
+    "tempo_totale_s": 2760,
+    "ritmo_s_km": null,
+    "dislivello_m": null,
+    "fc_media": null,
+    "fc_max": null
+  },
+  {
+    "id": 1049,
+    "origine": "strava",
+    "data": "2027-03-14",
+    "ora": "18:30",
+    "nome": "30/36",
+    "numero_piano": 30,
+    "sport": "Run",
+    "distanza_m": 8000,
+    "tempo_movimento_s": 2851,
+    "tempo_totale_s": 2911,
+    "ritmo_s_km": 356,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 416,
+        "ritmo_s_km": 416
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 411,
+        "ritmo_s_km": 411
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 316,
+        "ritmo_s_km": 316
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 320,
+        "ritmo_s_km": 320
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 323,
+        "ritmo_s_km": 323
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 320,
+        "ritmo_s_km": 320
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 319,
+        "ritmo_s_km": 319
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 426,
+        "ritmo_s_km": 426
+      }
+    ]
+  },
+  {
+    "id": 1050,
+    "origine": "strava",
+    "data": "2027-03-15",
+    "ora": "18:30",
+    "nome": "31/36",
+    "numero_piano": 31,
+    "sport": "Run",
+    "distanza_m": 5220,
+    "tempo_movimento_s": 2151,
+    "tempo_totale_s": 2211,
+    "ritmo_s_km": 412,
+    "dislivello_m": 20,
+    "fc_media": null,
+    "fc_max": null,
+    "giri": [
+      {
+        "distanza_m": 1000,
+        "tempo_s": 414,
+        "ritmo_s_km": 414
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 414,
+        "ritmo_s_km": 414
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 410,
+        "ritmo_s_km": 410
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 412,
+        "ritmo_s_km": 412
+      },
+      {
+        "distanza_m": 1000,
+        "tempo_s": 410,
+        "ritmo_s_km": 410
+      },
+      {
+        "distanza_m": 220,
+        "tempo_s": 91,
+        "ritmo_s_km": 414
+      }
+    ]
+  },
+  {
+    "id": 1051,
+    "origine": "strava",
+    "data": "2027-03-16",
     "ora": "18:30",
     "nome": "Gioco di squadra",
     "numero_piano": null,

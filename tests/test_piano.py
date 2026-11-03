@@ -65,6 +65,28 @@ class PianoTest(unittest.TestCase):
     def test_ritmo_invertito(self):
         self.assertTrue(self._errori(lambda p: p["fasi"][0]["ritmi"]["facile_lungo"].update(min="7:30")))
 
+    def _seduta(self, p, id):
+        return next(s for s in p["sedute"] if s["id"] == id)
+
+    def test_ritmo_resta_e_solo_dove_c_e(self):
+        x = P.espandi(self.piano)
+        self.assertEqual(self._seduta(x, "w7s3")["ritmo"], "ripetute")
+        self.assertNotIn("ritmo", self._seduta(x, "w6s3"))  # qualità senza ritmo
+
+    def test_ritmo_non_valido(self):
+        errori = self._errori(lambda p: self._seduta(p, "w5s3").update(ritmo="facile_lungo"))
+        self.assertEqual(errori, ["w5s3: ritmo 'facile_lungo' non valido"])
+
+    def test_ritmo_su_una_corsa_facile(self):
+        errori = self._errori(lambda p: self._seduta(p, "w5s1").update(ritmo="soglia"))
+        self.assertEqual(errori, ["w5s1: solo qualità, test e gara hanno un ritmo"])
+
+    def test_ritmo_che_la_fase_non_ha(self):
+        # w10s3 è in fase 3, che non ha le ripetute; w2s3 in fase 1, che non ha la soglia
+        errori = self._errori(lambda p: (self._seduta(p, "w10s3").update(ritmo="ripetute"),
+                                         self._seduta(p, "w2s3").update(tipo="qualita", ritmo="soglia")))
+        self.assertEqual(errori, ["w2s3: la fase 1 non ha il ritmo soglia", "w10s3: la fase 3 non ha il ritmo ripetute"])
+
     def test_buco_tra_fasi(self):
         self.assertTrue(self._errori(lambda p: p["fasi"][1].update(settimane=[6, 9])))
 
@@ -115,7 +137,7 @@ class CollegaTest(unittest.TestCase):
     def test_esempio(self):
         with (ESEMPIO / "attivita.json").open(encoding="utf-8") as f:
             coppie, errori, avvisi = P.collega(self.piano, json.load(f))
-        self.assertEqual((len(coppie), errori, len(avvisi)), (15, [], 1))
+        self.assertEqual((len(coppie), errori, len(avvisi)), (30, [], 1))
 
 
 class BuildDatiTest(unittest.TestCase):
@@ -125,6 +147,31 @@ class BuildDatiTest(unittest.TestCase):
 
     def test_secondi(self):
         self.assertEqual((B.secondi("1:02:03"), B.secondi("27:00"), B.secondi("")), (3723, 1620, None))
+
+    def test_giri(self):
+        laps = [{"distance": 1000.4, "moving_time": 330}, {"distance": 500, "moving_time": 170}]
+        self.assertEqual(B.giri(laps), [{"distanza_m": 1000, "tempo_s": 330, "ritmo_s_km": 330},
+                                        {"distanza_m": 500, "tempo_s": 170, "ritmo_s_km": 340}])
+        self.assertIsNone(B.giri(laps[:1]))  # un giro solo non dice niente di più
+        self.assertIsNone(B.giri(None))
+
+    def test_attivita_senza_giri_non_cambia(self):
+        a = B.attivita("strava", 1, "2027-01-04", "18:00", "1/36", "Run", 5000, 2000, 2050, 10, None, None)
+        self.assertNotIn("giri", a)
+
+
+class SyncGiriTest(unittest.TestCase):
+    def test_giri_delle_corse_cambiate_e_arretrati(self):
+        import strava_sync as S
+        corsa = lambda id, giorno, **x: {"id": id, "sport_type": "Run", "start_date": f"2027-01-{giorno:02d}T07:00:00Z", **x}
+        db = {1: corsa(1, 1), 2: corsa(2, 2), 3: corsa(3, 3, laps=[]), 4: {**corsa(4, 4), "sport_type": "Volleyball"},
+              5: corsa(5, 5)}
+        chiesti = []
+        n = S.aggiungi_giri(db, [db[5], db[4]], "token", scarica=lambda t, id: chiesti.append(id) or [{"lap_index": 1}],
+                            arretrati=1)
+        # la corsa cambiata (5) e la più recente senza giri (2); non il volley, non quella che li ha già
+        self.assertEqual((n, chiesti), (2, [5, 2]))
+        self.assertNotIn("laps", db[1])
 
 
 if __name__ == "__main__":

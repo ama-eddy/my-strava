@@ -69,6 +69,25 @@ test("ritmi", () => {
   assert.equal(r.totali.con_ritmo, 2);
 });
 
+test("campo ritmo: qualità e test indicativi, gare intermedie con esito", () => {
+  const p = structuredClone(piano);
+  p.fasi[0].ritmi.soglia = { min: "5:50", max: "6:00", nota: "medio" };
+  p.sedute.find((s) => s.id === "w1s3").ritmo = "soglia"; // qualità, fatta a 5:30
+  const intermedia = { ...p.sedute.find((s) => s.id === "w1s4"), tipo: "gara", ritmo: "soglia" };
+  p.sedute = p.sedute.map((s) => (s.id === "w1s4" ? intermedia : s));
+  const att = [...attivita, corsa("2026-10-11", 3, 8, 355)];
+  const r = analizza(p, att, "2026-10-14");
+  const q = r.sedute.find((s) => s.id === "w1s3");
+  assert.deepEqual(q.obiettivo, { min: 350, max: 360, nome: "soglia", nota: "medio", indicativo: true });
+  assert.equal(q.esito, null);
+  const g = r.sedute.find((s) => s.id === "w1s4");
+  assert.deepEqual(g.obiettivo, { min: 350, max: 360, nome: "soglia", nota: "medio" });
+  assert.equal(g.esito, "nel_ritmo");
+  // la gara del piano resta sull'obiettivo della gara, anche con un ritmo
+  const finale = { ...p.sedute.find((s) => s.id === "w2s3"), ritmo: "soglia" };
+  assert.deepEqual(ritmoObiettivo(p, finale), { min: 340, max: 340 });
+});
+
 test("volumi e totali", () => {
   const r = analizza(piano, attivita, "2026-10-14");
   const [w1, w2] = r.settimane;

@@ -4,6 +4,8 @@
 - Scrive data/attivita.json: una lista di attività ordinate per data, con numeri e non testi
   (durate in secondi, distanze in metri, ritmo in secondi al km).
 - Il piano non viene letto: l'unico legame è numero_piano, preso dal titolo ("10/153" -> 10).
+- Le corse con più di un giro (lap) su Strava hanno anche "giri": distanza, tempo e ritmo di
+  ogni giro. Senza giri il campo non c'è.
 """
 
 import csv
@@ -48,9 +50,17 @@ def ritmo(sport, distanza_m, tempo_s):
     return round(tempo_s / (distanza_m / 1000))
 
 
+def giri(laps):
+    """I giri di Strava in metri e secondi; None se ce n'è al massimo uno, perché non dice niente di più."""
+    out = [{"distanza_m": round(g.get("distance") or 0), "tempo_s": g.get("moving_time"),
+            "ritmo_s_km": ritmo("Run", g.get("distance"), g.get("moving_time"))}
+           for g in laps or []]
+    return out if len(out) > 1 else None
+
+
 def attivita(origine, id, data, ora, nome, sport, distanza_m, tempo_movimento_s, tempo_totale_s,
-             dislivello_m, fc_media, fc_max):
-    return {
+             dislivello_m, fc_media, fc_max, laps=None):
+    a = {
         "id": id,
         "origine": origine,
         "data": data,
@@ -66,6 +76,10 @@ def attivita(origine, id, data, ora, nome, sport, distanza_m, tempo_movimento_s,
         "fc_media": round(fc_media) if fc_media is not None else None,
         "fc_max": round(fc_max) if fc_max is not None else None,
     }
+    g = giri(laps)
+    if g:
+        a["giri"] = g
+    return a
 
 
 def da_strava():
@@ -76,6 +90,7 @@ def da_strava():
                 "strava", a["id"], local[:10], local[11:16], a.get("name", ""), a.get("sport_type"),
                 a.get("distance"), a.get("moving_time"), a.get("elapsed_time"),
                 a.get("total_elevation_gain"), a.get("average_heartrate"), a.get("max_heartrate"),
+                a.get("laps"),
             )
 
 

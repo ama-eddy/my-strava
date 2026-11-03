@@ -44,6 +44,16 @@ const modifiche = {
   "seduta fuori dal piano e fuori ordine": (p) => (p.sedute[3].data = "2026-01-01"),
   "forza con distanza": (p) => (p.sedute.find((s) => s.tipo === "forza").distanza_m = 1000),
   "senza gara": (p) => (p.sedute = p.sedute.filter((s) => s.tipo !== "gara")),
+  "ritmo tolto e aggiunto": (p) => {
+    delete p.sedute.find((s) => s.id === "w7s3").ritmo;
+    p.sedute.find((s) => s.id === "w6s5").ritmo = "soglia"; // il test della settimana 6
+  },
+  "ritmi non validi": (p) => {
+    p.sedute.find((s) => s.id === "w5s1").ritmo = "soglia"; // corsa facile
+    p.sedute.find((s) => s.id === "w5s3").ritmo = "medio";
+    p.sedute.find((s) => s.id === "w10s3").ritmo = "ripetute"; // la fase 3 non le ha
+    p.sedute.find((s) => s.id === "w3s3").ritmo = "gara"; // facile in fase 1
+  },
 };
 
 for (const [nome, cambia] of Object.entries(modifiche)) {
