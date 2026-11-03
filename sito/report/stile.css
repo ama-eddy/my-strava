@@ -143,3 +143,10 @@ main { max-width: 1100px; margin: 0 auto; padding: 8px 16px 40px; }
   .tabella tr.oggi { background: var(--oggi); }
   .tabella tr.oggi td { background: none; }
 }
+
+/* Andamento dei test */
+.test-tratto { margin-top: 4px; }
+.andamento { margin-top: 12px; }
+.andamento h3 { font-size: .95rem; margin: 16px 0 4px; }
+.ricalibra { margin: 4px 0; padding-left: 20px; }
+.ricalibra li { margin: 4px 0; }

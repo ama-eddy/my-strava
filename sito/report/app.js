@@ -176,16 +176,71 @@ function disegnaGrafici(piano, r) {
   });
 }
 
+const NOMI_RITMO_FASE = { facile_lungo: "Facile e lungo", soglia: "Soglia", ripetute: "Ripetute", gara: "Ritmo gara" };
+const fasciaRitmo = (f) => (f.min === f.max ? `${ritmo(f.min)}/km` : `${ritmo(f.min)}–${ritmo(f.max)}/km`);
+
+// Il tratto del test e il confronto con il test precedente, sotto il fatto.
+function fattoTest(s, t) {
+  const cella = fatto(s.attivita, s);
+  if (!t) return cella;
+  if (!t.tratto) {
+    cella.append(h("div", { class: "tenue piccolo" }, "Tempo del test non ricavabile: servono i giri su Strava, o un'attività lunga solo quanto il test"));
+    return cella;
+  }
+  cella.append(h("div", { class: "test-tratto" }, h("strong", {}, `Test: ${durata(t.tempo_s)}`), ` · ${ritmo(t.tratto.ritmo_s_km)}/km`,
+    t.tratto.da_giri ? h("span", { class: "tenue" }, ` · ${km(t.tratto.distanza_m, 2)} km dai giri`) : null));
+  const d = t.differenza_s ?? t.differenza_ritmo_s;
+  if (d != null) {
+    const unita = t.differenza_s != null ? "s" : "s/km";
+    const prima = dataBreve(t.precedente);
+    cella.append(h("div", { class: `esito ${d < 0 ? "nel_ritmo" : d > 0 ? "lento" : ""}` },
+      h("span", { "aria-hidden": "true" }, d < 0 ? "▲" : d > 0 ? "▼" : "="),
+      d === 0 ? ` come il test del ${prima}` : ` ${Math.abs(d)} ${unita} ${d < 0 ? "più veloce" : "più lento"} del test del ${prima}`));
+  }
+  return cella;
+}
+
 function disegnaTest(r) {
+  const a = r.andamento;
+  const perId = new Map(a.test.map((t) => [t.seduta.id, t]));
   $("test").replaceChildren(
     h("thead", {}, h("tr", {}, h("th", {}, "Data"), h("th", {}, "Previsto"), h("th", {}, "Fatto"), h("th", {}, "Stato"))),
     h("tbody", {}, r.test.map((s) => h("tr", { class: s.data === oggi ? "oggi" : null },
       h("td", { class: "giorno" }, dataLunga(s.data)),
       h("td", {}, previsto(s)),
-      h("td", {}, fatto(s.attivita, s)),
+      h("td", {}, fattoTest(s, perId.get(s.id))),
       h("td", {}, badgeStato(s.stato), s.esito ? h("div", {}, badgeEsito(s.esito)) : null),
     ))),
   );
+  $("andamento-test").replaceChildren(...andamento(ultimo.piano, a));
+}
+
+// Previsione sulla gara e ritmi da ricalibrare, dall'ultimo test.
+function andamento(piano, a) {
+  const u = a.ultimo;
+  if (!u) return [h("p", { class: "tenue" }, "Dopo il primo test qui compaiono la previsione sulla gara e i ritmi suggeriti.")];
+  const g = piano.gara;
+  const scarto = a.obiettivo_s != null ? u.previsione_s - a.obiettivo_s : null;
+  const out = [
+    h("h3", {}, "Previsione sulla gara"),
+    h("p", {}, `Con il test del ${dataBreve(u.seduta.attivita.data)}: `, h("strong", {}, `${km(g.distanza_m)} km in ${durata(u.previsione_s)}`),
+      ` (${ritmo(u.previsione_s / (g.distanza_m / 1000))}/km). `,
+      scarto != null ? h("span", { class: `esito ${scarto <= 0 ? "nel_ritmo" : "lento"}` },
+        h("span", { "aria-hidden": "true" }, scarto <= 0 ? "✓" : "▼"),
+        scarto === 0 ? ` Come l'obiettivo di ${g.obiettivo_tempo}` : ` ${Math.abs(scarto) < 60 ? `${Math.abs(scarto)} s` : durata(Math.abs(scarto))} ${scarto < 0 ? "meglio" : "peggio"} dell'obiettivo di ${g.obiettivo_tempo}`) : null),
+    h("h3", {}, "Ritmi del piano"),
+  ];
+  if (!a.ricalibra.length) {
+    out.push(h("p", {}, "I ritmi delle fasi che restano sono in linea con l'ultimo test."));
+  } else {
+    out.push(h("p", {}, "Dall'ultimo test questi ritmi delle fasi che restano andrebbero ricalibrati:"),
+      h("ul", { class: "ricalibra" }, a.ricalibra.map((x) => h("li", {},
+        h("strong", {}, `${x.nome} · ${NOMI_RITMO_FASE[x.ritmo]}`),
+        `: nel piano ${fasciaRitmo(x.attuale)}, dal test ${fasciaRitmo(x.suggerito)} `,
+        h("span", { class: "tenue" }, `(${Math.abs(x.scarto_s)} s/km ${x.scarto_s < 0 ? "più veloce" : "più lento"})`)))));
+  }
+  out.push(h("p", { class: "tenue piccolo" }, "Sono stime con regole pratiche: la previsione con la formula di Riegel; dal ritmo equivalente sui 5 km, facile e lungo 60–90 s/km più lenti, soglia 15–25 s/km più lenta, ripetute ± 5 s/km. Se ti tornano, cambia i ritmi della fase nell'editor."));
+  return out;
 }
 
 function disegnaSettimane(r) {

@@ -8,13 +8,13 @@ Qui c'è solo il codice. I dati di ognuno (piano e attività) stanno nel suo rep
 
 | Percorso | Contenuto |
 |---|---|
-| `scripts/strava_sync.py` | Scarica le attività nuove da Strava, e di nuovo quelle delle ultime due settimane, in `data/strava_attivita.jsonl` e `data/strava_attivita.csv`. Toglie la traccia GPS |
-| `scripts/build_dati.py` | Unisce le attività di Strava e quelle scritte a mano (`data/attivita_manuali.csv`) in `data/attivita.json`, con numeri e non testi, e `numero_piano` preso dal titolo (`10/36` → 10) |
+| `scripts/strava_sync.py` | Scarica le attività nuove da Strava, e di nuovo quelle delle ultime due settimane, in `data/strava_attivita.jsonl` e `data/strava_attivita.csv`. Toglie la traccia GPS. Delle corse scarica anche i giri (lap); lo storico senza giri si completa fino a 60 corse per sync |
+| `scripts/build_dati.py` | Unisce le attività di Strava e quelle scritte a mano (`data/attivita_manuali.csv`) in `data/attivita.json`, con numeri e non testi, e `numero_piano` preso dal titolo (`10/36` → 10). Le corse con più di un giro hanno anche `giri` |
 | `scripts/piano.py` | Valida `data/piano.json` (`controlla`), ricalcola i campi ricavati (`aggiorna`), confronta le corse del piano con le attività (`collega`), stampa i km per fase e settimana (`riepilogo`) |
 | `scripts/strava_auth.ps1` | Genera il refresh token di Strava; si lancia a mano, una volta sola, vedi [setup.md](setup.md) |
 | `scripts/crea_esempio.py` | Rigenera i dati di esempio |
 | `sito/` | Le pagine: `report/`, `editor/` e una pagina iniziale. HTML e JavaScript senza build e senza librerie |
-| `sito/esempio/` | Un piano finto di 12 settimane per una 10 km e le attività delle prime sei: servono per provare le pagine e per i test |
+| `sito/esempio/` | Un piano finto di 12 settimane per una 10 km e le attività fino alla settimana 11, con i giri e due test sui 5 km: servono per provare le pagine e per i test |
 | `scripts/confronta_editor.mjs` | Controlla che l'editor dia su un piano gli stessi risultati di `piano.py` |
 | `modello/` | Il punto di partenza di un repo di dati: i due workflow che richiamano quelli di qui e il CSV delle attività manuali |
 | `.github/workflows/` | **Sync Strava** e **Check Piano**, da richiamare dal repo di dati; **Test**; **Pages**, che pubblica `sito/` |
@@ -30,7 +30,8 @@ Gli script lavorano sulla cartella `data/` della cartella da cui si lanciano, ci
   - settimana corrente seduta per seduta: fatta, spostata, saltata o da fare;
   - volume settimanale e lungo, previsti e fatti;
   - ritmo di facili e lunghi rispetto alla fascia della fase;
-  - test e gare, settimane passate.
+  - test e gare: il tempo del test preso dai giri, il confronto con il test precedente, la previsione sulla gara e i ritmi delle fasi rimaste da ricalibrare;
+  - settimane passate.
 - **Editor**:
   - piano per fase e per settimana;
   - le sedute si spostano trascinandole e si modificano cliccandole;
@@ -50,7 +51,7 @@ Poi apri <http://localhost:8000>. Ci sono due modi per vederle con dei dati:
 - con `?esempio`, le pagine usano i dati di esempio;
 - senza, chiedono di scegliere i file del proprio repo di dati.
 
-`?oggi=2027-02-11` mostra le pagine come in un altro giorno.
+`?oggi=2027-03-17` mostra le pagine come in un altro giorno.
 
 Per ora l'editor salva scaricando `piano.json`, da copiare in `data/` del repo di dati. La lettura e la scrittura diretta nel repo di dati arriveranno con un token GitHub. Il codice da cambiare sta in `sito/*/fonte.js`.
 

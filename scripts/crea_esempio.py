@@ -1,5 +1,7 @@
 """Crea i dati di esempio in sito/esempio/: un piano finto di 12 settimane per una 10 km
-e le attività delle prime sei settimane, con qualche seduta spostata, saltata o in più.
+e le attività fino a metà della settimana 11, con qualche seduta spostata, saltata o in più.
+Le corse hanno i giri di Strava (uno per km); i due test sui 5 km hanno riscaldamento e
+defaticamento, così il report deve trovare il tratto del test.
 
 Servono per provare le pagine senza dati propri e come base dei test. Si rigenerano con:
     python3 scripts/crea_esempio.py
@@ -18,7 +20,7 @@ import piano as P  # noqa: E402
 
 OUT = QUI.parent / "sito" / "esempio"
 INIZIO = dt.date(2027, 1, 4)  # lunedì
-OGGI = dt.date(2027, 2, 11)  # il giorno in cui si guarda l'esempio: giovedì della settimana 6
+OGGI = dt.date(2027, 3, 17)  # il giorno in cui si guarda l'esempio: mercoledì della settimana 11
 
 FASI = [
     {"fase": 1, "nome": "Fase 1 · La base", "periodo": "gennaio", "settimane": [1, 4],
@@ -35,11 +37,13 @@ FASI = [
                "soglia": {"min": "5:50", "max": "6:00", "nota": "medio"}, "ripetute": None,
                "gara": {"min": "5:40", "max": "5:45"}}},
 ]
-TIPO = {4: "scarico", 6: "test", 8: "scarico", 12: "gara"}
-NOTA = {1: "Ritmo da conversazione, anche se ti sembra lentissimo.", 6: "Domenica il test: 5 km a tutta, dopo 2 km di riscaldamento."}
+TIPO = {4: "scarico", 6: "test", 8: "scarico", 10: "test", 12: "gara"}
+NOTA = {1: "Ritmo da conversazione, anche se ti sembra lentissimo.",
+        6: "Domenica il test: 5 km a tutta, dopo 2 km di riscaldamento.",
+        10: "Domenica il secondo test sui 5 km: si vede quanto sei migliorato."}
 # km di lunedì (facile), giovedì (facile o qualità) e domenica (lungo, test o gara)
 KM = {1: (4, 4, 6), 2: (4, 4.5, 7), 3: (4.5, 5, 8), 4: (4, 4, 6), 5: (5, 6, 9), 6: (5, 5, 5),
-      7: (5, 6, 10), 8: (4, 5, 7), 9: (5, 7, 11), 10: (5, 7, 12), 11: (5, 6, 9), 12: (4, 5, 10)}
+      7: (5, 6, 10), 8: (4, 5, 7), 9: (5, 7, 11), 10: (5, 7, 5), 11: (5, 6, 12), 12: (4, 5, 10)}
 # qualità del giovedì: descrizione e ritmo della fase che vale (None: nessuno)
 QUALITA = {5: ("6 km con 3 km a ritmo medio", "soglia"), 6: ("5 km con 5 allunghi", None),
            7: ("6 km con 5 × 1000 m", "ripetute"), 8: ("5 km con 2 km a ritmo medio", "soglia"),
@@ -61,7 +65,7 @@ def piano():
             (1, "volley", "Gioco di squadra", None),
             (3, "qualita" if n in QUALITA else "facile", QUALITA.get(n, (f"{km(q)} km facili con allunghi",))[0], q),
             (4, "forza", "Forza, 45 minuti" if n not in TIPO else "Forza leggera, 30 minuti", None),
-            (6, *{6: ("test", "Test 5 km"), 12: ("gara", "Gara di 10 km")}.get(n, ("lungo", f"Lungo di {km(d)} km")), d),
+            (6, *{6: ("test", "Test 5 km"), 10: ("test", "Test 5 km"), 12: ("gara", "Gara di 10 km")}.get(n, ("lungo", f"Lungo di {km(d)} km")), d),
         ]
         if n == 12:  # niente forza a due giorni dalla gara: mobilità
             giorni[3] = (4, "mobilita", "Mobilità, 20 minuti", None)
@@ -109,21 +113,44 @@ def attivita(p):
         if s["id"] == "w3s3":  # corsa del giovedì fatta venerdì
             d += dt.timedelta(days=1)
         if s["corsa"]:
-            ritmo = {"test": 330, "qualita": 372}.get(s["tipo"], 410) + caso.randint(-25, 15)
-            distanza = s["distanza_m"] + caso.randint(-150, 250)
             nome, tipo = f"{s['numero_piano']}/{p['totale_corse']}", "Run"
+            if s["tipo"] == "test":  # 2 km di riscaldamento, il test, 1 km di defaticamento
+                ritmo_test = TEST[s["id"]]
+                tratti = [(2000, 415), (s["distanza_m"], ritmo_test), (1000, 425)]
+            else:
+                ritmo = {"qualita": 372}.get(s["tipo"], 410) + caso.randint(-25, 15)
+                tratti = [(s["distanza_m"] + caso.randint(-150, 250), ritmo)]
+            giri = [g for m, r in tratti for g in giri_di(m, r, caso)]
         else:
-            ritmo, distanza = None, None
-            nome, tipo = s["descrizione"], sport[s["tipo"]]
-        fatte.append((d, nome, tipo, distanza, ritmo))
-    fatte.append((dt.date(2027, 1, 30), "Passeggiata", "Walk", 5200, 690))  # in più
+            nome, tipo, giri = s["descrizione"], sport[s["tipo"]], None
+        fatte.append((d, nome, tipo, giri))
+    fatte.append((dt.date(2027, 1, 30), "Passeggiata", "Walk", [{"distance": 5200, "moving_time": 3588}]))  # in più
     out = []
-    for i, (d, nome, tipo, distanza, ritmo) in enumerate(sorted(fatte), 1):
-        tempo = round(distanza / 1000 * ritmo) if distanza else 3600 if tipo == "Volleyball" else 2700
+    for i, (d, nome, tipo, giri) in enumerate(sorted(fatte, key=lambda x: x[0]), 1):
+        if giri:
+            distanza = sum(g["distance"] for g in giri)
+            tempo = sum(g["moving_time"] for g in giri)
+        else:
+            distanza, tempo = None, 3600 if tipo == "Volleyball" else 2700
         a = B.attivita("strava", 1000 + i, d.isoformat(), "18:30", nome, tipo, distanza, tempo,
-                       tempo + 60, 20 if distanza else None, None, None)
+                       tempo + 60, 20 if distanza else None, None, None, giri if tipo == "Run" else None)
         out.append(a)
     return out
+
+
+# Ritmo dei due test sui 5 km, in secondi al km: il secondo è più veloce.
+TEST = {"w6s5": 332, "w10s5": 320}
+
+
+def giri_di(metri, ritmo, caso):
+    """Giri da 1 km (l'ultimo è il resto) al ritmo dato, con qualche secondo di variazione."""
+    giri = []
+    while metri > 0:
+        m = min(1000, metri)
+        if m >= 100:
+            giri.append({"distance": m, "moving_time": round(m / 1000 * (ritmo + caso.randint(-4, 4)))})
+        metri -= m
+    return giri
 
 
 def scrivi(nome, dati):
