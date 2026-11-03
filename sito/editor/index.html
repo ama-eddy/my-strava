@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Piano di allenamento</title>
+  <link rel="stylesheet" href="stile.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="barra">
+    <div class="titolo">
+      <h1>Piano di allenamento</h1>
+      <p id="gara" class="sotto"></p>
+    </div>
+    <div class="azioni">
+      <span id="stato-salvataggio" class="sotto"></span>
+      <button id="annulla" title="Annulla (Ctrl+Z)">↶ Annulla</button>
+      <button id="ripeti" title="Ripeti (Ctrl+Shift+Z)">↷ Ripeti</button>
+      <button id="salva" class="primario">Salva piano.json</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="apri" hidden>
+      <h2>Apri il piano</h2>
+      <p>Scegli <code>data/piano.json</code> dal tuo repo di dati.</p>
+      <p class="tenue">Oppure prova con i <a href="?esempio&amp;oggi=2027-02-11">dati di esempio</a>.</p>
+      <input type="file" id="file" accept=".json,application/json">
+    </section>
+
+    <section id="editor" hidden>
+      <div class="riepilogo" id="riepilogo"></div>
+      <details id="controlli" class="controlli"></details>
+      <nav class="fasi" id="fasi" aria-label="Fasi"></nav>
+      <div id="fase-info" class="fase-info"></div>
+      <div id="settimane"></div>
+    </section>
+  </main>
+
+  <dialog id="dialogo">
+    <form method="dialog" id="modulo">
+      <h2 id="dialogo-titolo">Seduta</h2>
+      <label>Data <input type="date" name="data" required></label>
+      <label>Tipo <select name="tipo" required></select></label>
+      <label>Descrizione <textarea name="descrizione" rows="3" required></textarea></label>
+      <label id="campo-km">Distanza (km) <input type="number" name="km" min="0.1" step="0.1" inputmode="decimal"></label>
+      <p id="dialogo-errore" class="errore" hidden></p>
+      <div class="bottoni">
+        <button type="button" id="elimina" class="pericolo">Elimina</button>
+        <span class="spazio"></span>
+        <button value="annulla" formnovalidate>Annulla</button>
+        <button value="ok" class="primario">OK</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

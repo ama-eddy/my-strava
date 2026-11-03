@@ -1,0 +1,1025 @@
+{
+  "versione": 1,
+  "inizio": "2027-01-04",
+  "gara": {
+    "nome": "Gara di 10 km",
+    "data": "2027-03-28",
+    "distanza_m": 10000,
+    "obiettivo_tempo": "57:00",
+    "obiettivo_ritmo": "5:42"
+  },
+  "totale_corse": 36,
+  "fasi": [
+    {
+      "fase": 1,
+      "nome": "Fase 1 · La base",
+      "periodo": "gennaio",
+      "settimane": [
+        1,
+        4
+      ],
+      "obiettivo": "Tre uscite a settimana, tutte lente. Il lungo arriva a 8 km.",
+      "ritmi": {
+        "facile_lungo": {
+          "min": "6:40",
+          "max": "7:10"
+        },
+        "soglia": null,
+        "ripetute": null,
+        "gara": null
+      }
+    },
+    {
+      "fase": 2,
+      "nome": "Fase 2 · Cambi di ritmo",
+      "periodo": "febbraio",
+      "settimane": [
+        5,
+        9
+      ],
+      "obiettivo": "Il giovedì arrivano soglia e ripetute. A metà fase un test sui 5 km.",
+      "ritmi": {
+        "facile_lungo": {
+          "min": "6:30",
+          "max": "7:00"
+        },
+        "soglia": {
+          "min": "5:50",
+          "max": "6:00",
+          "nota": "medio"
+        },
+        "ripetute": {
+          "min": "5:25",
+          "max": "5:35",
+          "nota": "1000 m"
+        },
+        "gara": null
+      }
+    },
+    {
+      "fase": 3,
+      "nome": "Fase 3 · Verso la gara",
+      "periodo": "marzo",
+      "settimane": [
+        10,
+        12
+      ],
+      "obiettivo": "Meno volume e più ritmo gara. L'ultima settimana è di scarico.",
+      "ritmi": {
+        "facile_lungo": {
+          "min": "6:30",
+          "max": "7:00"
+        },
+        "soglia": {
+          "min": "5:50",
+          "max": "6:00",
+          "nota": "medio"
+        },
+        "ripetute": null,
+        "gara": {
+          "min": "5:40",
+          "max": "5:45"
+        }
+      }
+    }
+  ],
+  "settimane": [
+    {
+      "settimana": 1,
+      "fase": 1,
+      "tipo": null,
+      "dal": "2027-01-04",
+      "al": "2027-01-10",
+      "distanza_m": 14000,
+      "nota": "Ritmo da conversazione, anche se ti sembra lentissimo."
+    },
+    {
+      "settimana": 2,
+      "fase": 1,
+      "tipo": null,
+      "dal": "2027-01-11",
+      "al": "2027-01-17",
+      "distanza_m": 15500,
+      "nota": null
+    },
+    {
+      "settimana": 3,
+      "fase": 1,
+      "tipo": null,
+      "dal": "2027-01-18",
+      "al": "2027-01-24",
+      "distanza_m": 17500,
+      "nota": null
+    },
+    {
+      "settimana": 4,
+      "fase": 1,
+      "tipo": "scarico",
+      "dal": "2027-01-25",
+      "al": "2027-01-31",
+      "distanza_m": 14000,
+      "nota": null
+    },
+    {
+      "settimana": 5,
+      "fase": 2,
+      "tipo": null,
+      "dal": "2027-02-01",
+      "al": "2027-02-07",
+      "distanza_m": 20000,
+      "nota": null
+    },
+    {
+      "settimana": 6,
+      "fase": 2,
+      "tipo": "test",
+      "dal": "2027-02-08",
+      "al": "2027-02-14",
+      "distanza_m": 15000,
+      "nota": "Domenica il test: 5 km a tutta, dopo 2 km di riscaldamento."
+    },
+    {
+      "settimana": 7,
+      "fase": 2,
+      "tipo": null,
+      "dal": "2027-02-15",
+      "al": "2027-02-21",
+      "distanza_m": 21000,
+      "nota": null
+    },
+    {
+      "settimana": 8,
+      "fase": 2,
+      "tipo": "scarico",
+      "dal": "2027-02-22",
+      "al": "2027-02-28",
+      "distanza_m": 16000,
+      "nota": null
+    },
+    {
+      "settimana": 9,
+      "fase": 2,
+      "tipo": null,
+      "dal": "2027-03-01",
+      "al": "2027-03-07",
+      "distanza_m": 23000,
+      "nota": null
+    },
+    {
+      "settimana": 10,
+      "fase": 3,
+      "tipo": null,
+      "dal": "2027-03-08",
+      "al": "2027-03-14",
+      "distanza_m": 24000,
+      "nota": null
+    },
+    {
+      "settimana": 11,
+      "fase": 3,
+      "tipo": null,
+      "dal": "2027-03-15",
+      "al": "2027-03-21",
+      "distanza_m": 20000,
+      "nota": null
+    },
+    {
+      "settimana": 12,
+      "fase": 3,
+      "tipo": "gara",
+      "dal": "2027-03-22",
+      "al": "2027-03-28",
+      "distanza_m": 19000,
+      "nota": null
+    }
+  ],
+  "sedute": [
+    {
+      "id": "w1s1",
+      "data": "2027-01-04",
+      "giorno": "Lun",
+      "settimana": 1,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "facile",
+      "descrizione": "4 km facili",
+      "corsa": true,
+      "numero_piano": 1,
+      "distanza_m": 4000
+    },
+    {
+      "id": "w1s2",
+      "data": "2027-01-05",
+      "giorno": "Mar",
+      "settimana": 1,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "volley",
+      "descrizione": "Gioco di squadra",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w1s3",
+      "data": "2027-01-07",
+      "giorno": "Gio",
+      "settimana": 1,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "facile",
+      "descrizione": "4 km facili con allunghi",
+      "corsa": true,
+      "numero_piano": 2,
+      "distanza_m": 4000
+    },
+    {
+      "id": "w1s4",
+      "data": "2027-01-08",
+      "giorno": "Ven",
+      "settimana": 1,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "forza",
+      "descrizione": "Forza, 45 minuti",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w1s5",
+      "data": "2027-01-10",
+      "giorno": "Dom",
+      "settimana": 1,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "lungo",
+      "descrizione": "Lungo di 6 km",
+      "corsa": true,
+      "numero_piano": 3,
+      "distanza_m": 6000
+    },
+    {
+      "id": "w2s1",
+      "data": "2027-01-11",
+      "giorno": "Lun",
+      "settimana": 2,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "facile",
+      "descrizione": "4 km facili",
+      "corsa": true,
+      "numero_piano": 4,
+      "distanza_m": 4000
+    },
+    {
+      "id": "w2s2",
+      "data": "2027-01-12",
+      "giorno": "Mar",
+      "settimana": 2,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "volley",
+      "descrizione": "Gioco di squadra",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w2s3",
+      "data": "2027-01-14",
+      "giorno": "Gio",
+      "settimana": 2,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "facile",
+      "descrizione": "4,5 km facili con allunghi",
+      "corsa": true,
+      "numero_piano": 5,
+      "distanza_m": 4500
+    },
+    {
+      "id": "w2s4",
+      "data": "2027-01-15",
+      "giorno": "Ven",
+      "settimana": 2,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "forza",
+      "descrizione": "Forza, 45 minuti",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w2s5",
+      "data": "2027-01-17",
+      "giorno": "Dom",
+      "settimana": 2,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "lungo",
+      "descrizione": "Lungo di 7 km",
+      "corsa": true,
+      "numero_piano": 6,
+      "distanza_m": 7000
+    },
+    {
+      "id": "w3s1",
+      "data": "2027-01-18",
+      "giorno": "Lun",
+      "settimana": 3,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "facile",
+      "descrizione": "4,5 km facili",
+      "corsa": true,
+      "numero_piano": 7,
+      "distanza_m": 4500
+    },
+    {
+      "id": "w3s2",
+      "data": "2027-01-19",
+      "giorno": "Mar",
+      "settimana": 3,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "volley",
+      "descrizione": "Gioco di squadra",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w3s3",
+      "data": "2027-01-21",
+      "giorno": "Gio",
+      "settimana": 3,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "facile",
+      "descrizione": "5 km facili con allunghi",
+      "corsa": true,
+      "numero_piano": 8,
+      "distanza_m": 5000
+    },
+    {
+      "id": "w3s4",
+      "data": "2027-01-22",
+      "giorno": "Ven",
+      "settimana": 3,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "forza",
+      "descrizione": "Forza, 45 minuti",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w3s5",
+      "data": "2027-01-24",
+      "giorno": "Dom",
+      "settimana": 3,
+      "fase": 1,
+      "tipo_settimana": null,
+      "tipo": "lungo",
+      "descrizione": "Lungo di 8 km",
+      "corsa": true,
+      "numero_piano": 9,
+      "distanza_m": 8000
+    },
+    {
+      "id": "w4s1",
+      "data": "2027-01-25",
+      "giorno": "Lun",
+      "settimana": 4,
+      "fase": 1,
+      "tipo_settimana": "scarico",
+      "tipo": "facile",
+      "descrizione": "4 km facili",
+      "corsa": true,
+      "numero_piano": 10,
+      "distanza_m": 4000
+    },
+    {
+      "id": "w4s2",
+      "data": "2027-01-26",
+      "giorno": "Mar",
+      "settimana": 4,
+      "fase": 1,
+      "tipo_settimana": "scarico",
+      "tipo": "volley",
+      "descrizione": "Gioco di squadra",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w4s3",
+      "data": "2027-01-28",
+      "giorno": "Gio",
+      "settimana": 4,
+      "fase": 1,
+      "tipo_settimana": "scarico",
+      "tipo": "facile",
+      "descrizione": "4 km facili con allunghi",
+      "corsa": true,
+      "numero_piano": 11,
+      "distanza_m": 4000
+    },
+    {
+      "id": "w4s4",
+      "data": "2027-01-29",
+      "giorno": "Ven",
+      "settimana": 4,
+      "fase": 1,
+      "tipo_settimana": "scarico",
+      "tipo": "forza",
+      "descrizione": "Forza leggera, 30 minuti",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w4s5",
+      "data": "2027-01-31",
+      "giorno": "Dom",
+      "settimana": 4,
+      "fase": 1,
+      "tipo_settimana": "scarico",
+      "tipo": "lungo",
+      "descrizione": "Lungo di 6 km",
+      "corsa": true,
+      "numero_piano": 12,
+      "distanza_m": 6000
+    },
+    {
+      "id": "w5s1",
+      "data": "2027-02-01",
+      "giorno": "Lun",
+      "settimana": 5,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "facile",
+      "descrizione": "5 km facili",
+      "corsa": true,
+      "numero_piano": 13,
+      "distanza_m": 5000
+    },
+    {
+      "id": "w5s2",
+      "data": "2027-02-02",
+      "giorno": "Mar",
+      "settimana": 5,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "volley",
+      "descrizione": "Gioco di squadra",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w5s3",
+      "data": "2027-02-04",
+      "giorno": "Gio",
+      "settimana": 5,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "qualita",
+      "descrizione": "6 km con 3 km a ritmo medio",
+      "corsa": true,
+      "numero_piano": 14,
+      "distanza_m": 6000
+    },
+    {
+      "id": "w5s4",
+      "data": "2027-02-05",
+      "giorno": "Ven",
+      "settimana": 5,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "forza",
+      "descrizione": "Forza, 45 minuti",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w5s5",
+      "data": "2027-02-07",
+      "giorno": "Dom",
+      "settimana": 5,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "lungo",
+      "descrizione": "Lungo di 9 km",
+      "corsa": true,
+      "numero_piano": 15,
+      "distanza_m": 9000
+    },
+    {
+      "id": "w6s1",
+      "data": "2027-02-08",
+      "giorno": "Lun",
+      "settimana": 6,
+      "fase": 2,
+      "tipo_settimana": "test",
+      "tipo": "facile",
+      "descrizione": "5 km facili",
+      "corsa": true,
+      "numero_piano": 16,
+      "distanza_m": 5000
+    },
+    {
+      "id": "w6s2",
+      "data": "2027-02-09",
+      "giorno": "Mar",
+      "settimana": 6,
+      "fase": 2,
+      "tipo_settimana": "test",
+      "tipo": "volley",
+      "descrizione": "Gioco di squadra",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w6s3",
+      "data": "2027-02-11",
+      "giorno": "Gio",
+      "settimana": 6,
+      "fase": 2,
+      "tipo_settimana": "test",
+      "tipo": "qualita",
+      "descrizione": "5 km con 5 allunghi",
+      "corsa": true,
+      "numero_piano": 17,
+      "distanza_m": 5000
+    },
+    {
+      "id": "w6s4",
+      "data": "2027-02-12",
+      "giorno": "Ven",
+      "settimana": 6,
+      "fase": 2,
+      "tipo_settimana": "test",
+      "tipo": "forza",
+      "descrizione": "Forza leggera, 30 minuti",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w6s5",
+      "data": "2027-02-14",
+      "giorno": "Dom",
+      "settimana": 6,
+      "fase": 2,
+      "tipo_settimana": "test",
+      "tipo": "test",
+      "descrizione": "Test 5 km",
+      "corsa": true,
+      "numero_piano": 18,
+      "distanza_m": 5000
+    },
+    {
+      "id": "w7s1",
+      "data": "2027-02-15",
+      "giorno": "Lun",
+      "settimana": 7,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "facile",
+      "descrizione": "5 km facili",
+      "corsa": true,
+      "numero_piano": 19,
+      "distanza_m": 5000
+    },
+    {
+      "id": "w7s2",
+      "data": "2027-02-16",
+      "giorno": "Mar",
+      "settimana": 7,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "volley",
+      "descrizione": "Gioco di squadra",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w7s3",
+      "data": "2027-02-18",
+      "giorno": "Gio",
+      "settimana": 7,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "qualita",
+      "descrizione": "6 km con 5 × 1000 m",
+      "corsa": true,
+      "numero_piano": 20,
+      "distanza_m": 6000
+    },
+    {
+      "id": "w7s4",
+      "data": "2027-02-19",
+      "giorno": "Ven",
+      "settimana": 7,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "forza",
+      "descrizione": "Forza, 45 minuti",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w7s5",
+      "data": "2027-02-21",
+      "giorno": "Dom",
+      "settimana": 7,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "lungo",
+      "descrizione": "Lungo di 10 km",
+      "corsa": true,
+      "numero_piano": 21,
+      "distanza_m": 10000
+    },
+    {
+      "id": "w8s1",
+      "data": "2027-02-22",
+      "giorno": "Lun",
+      "settimana": 8,
+      "fase": 2,
+      "tipo_settimana": "scarico",
+      "tipo": "facile",
+      "descrizione": "4 km facili",
+      "corsa": true,
+      "numero_piano": 22,
+      "distanza_m": 4000
+    },
+    {
+      "id": "w8s2",
+      "data": "2027-02-23",
+      "giorno": "Mar",
+      "settimana": 8,
+      "fase": 2,
+      "tipo_settimana": "scarico",
+      "tipo": "volley",
+      "descrizione": "Gioco di squadra",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w8s3",
+      "data": "2027-02-25",
+      "giorno": "Gio",
+      "settimana": 8,
+      "fase": 2,
+      "tipo_settimana": "scarico",
+      "tipo": "qualita",
+      "descrizione": "5 km con 2 km a ritmo medio",
+      "corsa": true,
+      "numero_piano": 23,
+      "distanza_m": 5000
+    },
+    {
+      "id": "w8s4",
+      "data": "2027-02-26",
+      "giorno": "Ven",
+      "settimana": 8,
+      "fase": 2,
+      "tipo_settimana": "scarico",
+      "tipo": "forza",
+      "descrizione": "Forza leggera, 30 minuti",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w8s5",
+      "data": "2027-02-28",
+      "giorno": "Dom",
+      "settimana": 8,
+      "fase": 2,
+      "tipo_settimana": "scarico",
+      "tipo": "lungo",
+      "descrizione": "Lungo di 7 km",
+      "corsa": true,
+      "numero_piano": 24,
+      "distanza_m": 7000
+    },
+    {
+      "id": "w9s1",
+      "data": "2027-03-01",
+      "giorno": "Lun",
+      "settimana": 9,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "facile",
+      "descrizione": "5 km facili",
+      "corsa": true,
+      "numero_piano": 25,
+      "distanza_m": 5000
+    },
+    {
+      "id": "w9s2",
+      "data": "2027-03-02",
+      "giorno": "Mar",
+      "settimana": 9,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "volley",
+      "descrizione": "Gioco di squadra",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w9s3",
+      "data": "2027-03-04",
+      "giorno": "Gio",
+      "settimana": 9,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "qualita",
+      "descrizione": "7 km con 6 × 1000 m",
+      "corsa": true,
+      "numero_piano": 26,
+      "distanza_m": 7000
+    },
+    {
+      "id": "w9s4",
+      "data": "2027-03-05",
+      "giorno": "Ven",
+      "settimana": 9,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "forza",
+      "descrizione": "Forza, 45 minuti",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w9s5",
+      "data": "2027-03-07",
+      "giorno": "Dom",
+      "settimana": 9,
+      "fase": 2,
+      "tipo_settimana": null,
+      "tipo": "lungo",
+      "descrizione": "Lungo di 11 km",
+      "corsa": true,
+      "numero_piano": 27,
+      "distanza_m": 11000
+    },
+    {
+      "id": "w10s1",
+      "data": "2027-03-08",
+      "giorno": "Lun",
+      "settimana": 10,
+      "fase": 3,
+      "tipo_settimana": null,
+      "tipo": "facile",
+      "descrizione": "5 km facili",
+      "corsa": true,
+      "numero_piano": 28,
+      "distanza_m": 5000
+    },
+    {
+      "id": "w10s2",
+      "data": "2027-03-09",
+      "giorno": "Mar",
+      "settimana": 10,
+      "fase": 3,
+      "tipo_settimana": null,
+      "tipo": "volley",
+      "descrizione": "Gioco di squadra",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w10s3",
+      "data": "2027-03-11",
+      "giorno": "Gio",
+      "settimana": 10,
+      "fase": 3,
+      "tipo_settimana": null,
+      "tipo": "qualita",
+      "descrizione": "7 km con 4 km a ritmo gara",
+      "corsa": true,
+      "numero_piano": 29,
+      "distanza_m": 7000
+    },
+    {
+      "id": "w10s4",
+      "data": "2027-03-12",
+      "giorno": "Ven",
+      "settimana": 10,
+      "fase": 3,
+      "tipo_settimana": null,
+      "tipo": "forza",
+      "descrizione": "Forza, 45 minuti",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w10s5",
+      "data": "2027-03-14",
+      "giorno": "Dom",
+      "settimana": 10,
+      "fase": 3,
+      "tipo_settimana": null,
+      "tipo": "lungo",
+      "descrizione": "Lungo di 12 km",
+      "corsa": true,
+      "numero_piano": 30,
+      "distanza_m": 12000
+    },
+    {
+      "id": "w11s1",
+      "data": "2027-03-15",
+      "giorno": "Lun",
+      "settimana": 11,
+      "fase": 3,
+      "tipo_settimana": null,
+      "tipo": "facile",
+      "descrizione": "5 km facili",
+      "corsa": true,
+      "numero_piano": 31,
+      "distanza_m": 5000
+    },
+    {
+      "id": "w11s2",
+      "data": "2027-03-16",
+      "giorno": "Mar",
+      "settimana": 11,
+      "fase": 3,
+      "tipo_settimana": null,
+      "tipo": "volley",
+      "descrizione": "Gioco di squadra",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w11s3",
+      "data": "2027-03-18",
+      "giorno": "Gio",
+      "settimana": 11,
+      "fase": 3,
+      "tipo_settimana": null,
+      "tipo": "qualita",
+      "descrizione": "6 km con 3 km a ritmo gara",
+      "corsa": true,
+      "numero_piano": 32,
+      "distanza_m": 6000
+    },
+    {
+      "id": "w11s4",
+      "data": "2027-03-19",
+      "giorno": "Ven",
+      "settimana": 11,
+      "fase": 3,
+      "tipo_settimana": null,
+      "tipo": "forza",
+      "descrizione": "Forza, 45 minuti",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w11s5",
+      "data": "2027-03-21",
+      "giorno": "Dom",
+      "settimana": 11,
+      "fase": 3,
+      "tipo_settimana": null,
+      "tipo": "lungo",
+      "descrizione": "Lungo di 9 km",
+      "corsa": true,
+      "numero_piano": 33,
+      "distanza_m": 9000
+    },
+    {
+      "id": "w12s1",
+      "data": "2027-03-22",
+      "giorno": "Lun",
+      "settimana": 12,
+      "fase": 3,
+      "tipo_settimana": "gara",
+      "tipo": "facile",
+      "descrizione": "4 km facili",
+      "corsa": true,
+      "numero_piano": 34,
+      "distanza_m": 4000
+    },
+    {
+      "id": "w12s2",
+      "data": "2027-03-23",
+      "giorno": "Mar",
+      "settimana": 12,
+      "fase": 3,
+      "tipo_settimana": "gara",
+      "tipo": "volley",
+      "descrizione": "Gioco di squadra",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w12s3",
+      "data": "2027-03-25",
+      "giorno": "Gio",
+      "settimana": 12,
+      "fase": 3,
+      "tipo_settimana": "gara",
+      "tipo": "qualita",
+      "descrizione": "5 km con 2 km a ritmo gara",
+      "corsa": true,
+      "numero_piano": 35,
+      "distanza_m": 5000
+    },
+    {
+      "id": "w12s4",
+      "data": "2027-03-26",
+      "giorno": "Ven",
+      "settimana": 12,
+      "fase": 3,
+      "tipo_settimana": "gara",
+      "tipo": "mobilita",
+      "descrizione": "Mobilità, 20 minuti",
+      "corsa": false,
+      "numero_piano": null,
+      "distanza_m": null
+    },
+    {
+      "id": "w12s5",
+      "data": "2027-03-28",
+      "giorno": "Dom",
+      "settimana": 12,
+      "fase": 3,
+      "tipo_settimana": "gara",
+      "tipo": "gara",
+      "descrizione": "Gara di 10 km",
+      "corsa": true,
+      "numero_piano": 36,
+      "distanza_m": 10000
+    }
+  ],
+  "settimana_tipo": [
+    {
+      "giorno": "Lun",
+      "attivita": "Corsa facile",
+      "nota": "Recupero dal lungo"
+    },
+    {
+      "giorno": "Mar",
+      "attivita": "Gioco di squadra",
+      "nota": "La sera"
+    },
+    {
+      "giorno": "Mer",
+      "attivita": "Riposo",
+      "nota": null
+    },
+    {
+      "giorno": "Gio",
+      "attivita": "Qualità",
+      "nota": "In fase 1: corsa facile con allunghi"
+    },
+    {
+      "giorno": "Ven",
+      "attivita": "Forza",
+      "nota": "45 minuti"
+    },
+    {
+      "giorno": "Sab",
+      "attivita": "Riposo",
+      "nota": null
+    },
+    {
+      "giorno": "Dom",
+      "attivita": "Lungo",
+      "nota": "Oppure test o gara"
+    }
+  ],
+  "regole": [
+    {
+      "titolo": "Facile vuol dire che parli",
+      "testo": "Se non riesci a dire una frase intera, rallenta."
+    },
+    {
+      "titolo": "Una seduta saltata non si recupera",
+      "testo": "Riparti dalla successiva."
+    }
+  ]
+}
