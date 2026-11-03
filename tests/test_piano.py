@@ -137,7 +137,7 @@ class CollegaTest(unittest.TestCase):
     def test_esempio(self):
         with (ESEMPIO / "attivita.json").open(encoding="utf-8") as f:
             coppie, errori, avvisi = P.collega(self.piano, json.load(f))
-        self.assertEqual((len(coppie), errori, len(avvisi)), (15, [], 1))
+        self.assertEqual((len(coppie), errori, len(avvisi)), (30, [], 1))
 
 
 class BuildDatiTest(unittest.TestCase):
@@ -147,6 +147,31 @@ class BuildDatiTest(unittest.TestCase):
 
     def test_secondi(self):
         self.assertEqual((B.secondi("1:02:03"), B.secondi("27:00"), B.secondi("")), (3723, 1620, None))
+
+    def test_giri(self):
+        laps = [{"distance": 1000.4, "moving_time": 330}, {"distance": 500, "moving_time": 170}]
+        self.assertEqual(B.giri(laps), [{"distanza_m": 1000, "tempo_s": 330, "ritmo_s_km": 330},
+                                        {"distanza_m": 500, "tempo_s": 170, "ritmo_s_km": 340}])
+        self.assertIsNone(B.giri(laps[:1]))  # un giro solo non dice niente di più
+        self.assertIsNone(B.giri(None))
+
+    def test_attivita_senza_giri_non_cambia(self):
+        a = B.attivita("strava", 1, "2027-01-04", "18:00", "1/36", "Run", 5000, 2000, 2050, 10, None, None)
+        self.assertNotIn("giri", a)
+
+
+class SyncGiriTest(unittest.TestCase):
+    def test_giri_delle_corse_cambiate_e_arretrati(self):
+        import strava_sync as S
+        corsa = lambda id, giorno, **x: {"id": id, "sport_type": "Run", "start_date": f"2027-01-{giorno:02d}T07:00:00Z", **x}
+        db = {1: corsa(1, 1), 2: corsa(2, 2), 3: corsa(3, 3, laps=[]), 4: {**corsa(4, 4), "sport_type": "Volleyball"},
+              5: corsa(5, 5)}
+        chiesti = []
+        n = S.aggiungi_giri(db, [db[5], db[4]], "token", scarica=lambda t, id: chiesti.append(id) or [{"lap_index": 1}],
+                            arretrati=1)
+        # la corsa cambiata (5) e la più recente senza giri (2); non il volley, non quella che li ha già
+        self.assertEqual((n, chiesti), (2, [5, 2]))
+        self.assertNotIn("laps", db[1])
 
 
 if __name__ == "__main__":

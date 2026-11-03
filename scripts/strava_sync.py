@@ -5,7 +5,8 @@ STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET e STRAVA_REFRESH_TOKEN
 (refresh token con permesso activity:read_all, vedi scripts/strava_auth.ps1).
 
 - data/strava_attivita.jsonl: una riga JSON per attività, i dati di Strava completi
-  (tranne la traccia GPS). È la fonte principale.
+  (tranne la traccia GPS). È la fonte principale. Le corse hanno anche i giri (lap) in
+  "laps": servono a trovare il tratto veloce di test e qualità.
 - data/strava_attivita.csv: tabella leggibile ricavata dal file JSONL, con origine=strava.
   Le attività non registrate su Strava stanno a parte in data/attivita_manuali.csv
   (stesse colonne, origine=manual), che questo script non tocca.
@@ -29,6 +30,14 @@ CSV = DATA / "strava_attivita.csv"
 # Riscarica sempre le ultime due settimane, così prende anche titoli e dati modificati dopo.
 OVERLAP = timedelta(days=14)
 SPORT_A_PIEDI = {"Run", "TrailRun", "VirtualRun", "Walk", "Hike"}
+SPORT_CORSA = {"Run", "TrailRun", "VirtualRun"}
+# Ogni sync scarica i giri delle corse nuove o cambiate, e al massimo questo numero di corse
+# vecchie che non li hanno ancora: così lo storico si completa in poche settimane senza
+# superare i limiti dell'API di Strava (200 richieste ogni 15 minuti).
+GIRI_ARRETRATI = 60
+# Dei giri si tengono solo questi campi.
+CAMPI_GIRO = ("lap_index", "name", "distance", "moving_time", "elapsed_time", "average_speed",
+              "max_speed", "total_elevation_gain", "average_heartrate", "max_heartrate", "split")
 
 
 def env(name):
@@ -75,6 +84,26 @@ def fetch_activities(token, after):
             return activities
         activities.extend(batch)
         page += 1
+
+
+def fetch_laps(token, activity_id):
+    laps = request_json(f"https://www.strava.com/api/v3/activities/{activity_id}/laps",
+                        headers={"Authorization": f"Bearer {token}"})
+    return [{k: lap[k] for k in CAMPI_GIRO if k in lap} for lap in laps]
+
+
+def aggiungi_giri(db, cambiate, token, scarica=fetch_laps, arretrati=GIRI_ARRETRATI):
+    """Mette i giri ("laps") nelle corse: in tutte quelle di `cambiate` e in al massimo
+    `arretrati` corse del database che non li hanno ancora, le più recenti prima.
+    Restituisce il numero di corse completate."""
+    corse = lambda a: a.get("sport_type") in SPORT_CORSA
+    da_fare = [a for a in cambiate if corse(a)]
+    ids = {a["id"] for a in da_fare}
+    vecchie = sorted((a for a in db.values() if corse(a) and "laps" not in a and a["id"] not in ids),
+                     key=lambda a: a["start_date"], reverse=True)
+    for a in da_fare + vecchie[:arretrati]:
+        a["laps"] = scarica(token, a["id"])
+    return len(da_fare) + len(vecchie[:arretrati])
 
 
 def parse_date(value):
@@ -142,18 +171,27 @@ def main():
         last = max(parse_date(a["start_date"]) for a in db.values())
         after = (last - OVERLAP).timestamp()
 
-    fetched = fetch_activities(access_token(), after)
+    token = access_token()
+    fetched = fetch_activities(token, after)
     new = updated = 0
+    cambiate = []
     for a in fetched:
         a.pop("map", None)  # traccia GPS: non serve e rivela da dove parti
-        if a["id"] not in db:
+        vecchia = db.get(a["id"])
+        if vecchia is not None and "laps" in vecchia:
+            a["laps"] = vecchia["laps"]  # i giri si riscaricano solo se l'attività è cambiata
+        if vecchia is None:
             new += 1
-        elif db[a["id"]] != a:
+            cambiate.append(a)
+        elif vecchia != a:
             updated += 1
+            cambiate.append(a)
         db[a["id"]] = a
 
+    con_giri = aggiungi_giri(db, cambiate, token)
     save_db(db)
-    print(f"Attività nuove: {new}, aggiornate: {updated}, totale nel database: {len(db)}")
+    print(f"Attività nuove: {new}, aggiornate: {updated}, giri scaricati per {con_giri} corse, "
+          f"totale nel database: {len(db)}")
 
 
 if __name__ == "__main__":
