@@ -1,0 +1,16 @@
+name: Check Piano
+
+# A ogni modifica dei dati controlla il piano e il collegamento con le attività.
+# Solo controlli: non modifica nessun file.
+on:
+  push:
+    paths: ["data/**", ".github/workflows/piano.yml"]
+  pull_request:
+    paths: ["data/**", ".github/workflows/piano.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  controlla:
+    uses: ama-eddy/my-strava/.github/workflows/piano.yml@main

@@ -5,6 +5,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -24,9 +27,9 @@ jobs:
         run: |
           python3 scripts/crea_esempio.py
           git diff --exit-code sito/esempio
-      - name: Controlli sui dati di esempio
-        env:
-          STRAVA_DATI: sito/esempio
-        run: |
-          python3 scripts/piano.py controlla
-          python3 scripts/piano.py collega
+
+  # Lo stesso Check Piano che usa il repo di dati, provato sui dati di esempio.
+  check-piano:
+    uses: ./.github/workflows/piano.yml
+    with:
+      dati: sito/esempio

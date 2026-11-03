@@ -1,0 +1,66 @@
+name: Sync Strava
+
+# Workflow da richiamare dal repo di dati (vedi modello/). Scarica le attività da Strava,
+# le unisce a quelle manuali, controlla il collegamento con il piano e fa un solo commit
+# di data/ nel repo di dati. Se un passaggio fallisce si ferma senza commit.
+on:
+  workflow_call:
+    inputs:
+      codice:
+        description: Repo con il codice di my-strava
+        type: string
+        default: ama-eddy/my-strava
+      ref:
+        description: Branch, tag o commit del codice
+        type: string
+        default: main
+    secrets:
+      STRAVA_CLIENT_ID:
+        required: true
+      STRAVA_CLIENT_SECRET:
+        required: true
+      STRAVA_REFRESH_TOKEN:
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: sync-strava
+      cancel-in-progress: false
+    steps:
+      - name: Repo di dati
+        uses: actions/checkout@v6
+      - name: Codice di my-strava
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ inputs.codice }}
+          ref: ${{ inputs.ref }}
+          path: .my-strava
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Scarica le attività da Strava
+        env:
+          STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+        run: python3 .my-strava/scripts/strava_sync.py
+      - name: Unisce Strava e attività manuali
+        run: python3 .my-strava/scripts/build_dati.py
+      - name: Controlla il collegamento con il piano
+        run: python3 .my-strava/scripts/piano.py collega
+      - name: Commit e push
+        run: |
+          git add data/
+          if git diff --cached --quiet; then
+            echo "Nessuna novità da Strava"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Strava: sync $(date -u +%F)"
+          git push
