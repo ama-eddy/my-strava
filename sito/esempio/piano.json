@@ -168,11 +168,11 @@
     {
       "settimana": 10,
       "fase": 3,
-      "tipo": null,
+      "tipo": "test",
       "dal": "2027-03-08",
       "al": "2027-03-14",
-      "distanza_m": 24000,
-      "nota": null
+      "distanza_m": 17000,
+      "nota": "Domenica il secondo test sui 5 km: si vede quanto sei migliorato."
     },
     {
       "settimana": 11,
@@ -180,7 +180,7 @@
       "tipo": null,
       "dal": "2027-03-15",
       "al": "2027-03-21",
-      "distanza_m": 20000,
+      "distanza_m": 23000,
       "nota": null
     },
     {
@@ -789,7 +789,7 @@
       "giorno": "Lun",
       "settimana": 10,
       "fase": 3,
-      "tipo_settimana": null,
+      "tipo_settimana": "test",
       "tipo": "facile",
       "descrizione": "5 km facili",
       "corsa": true,
@@ -802,7 +802,7 @@
       "giorno": "Mar",
       "settimana": 10,
       "fase": 3,
-      "tipo_settimana": null,
+      "tipo_settimana": "test",
       "tipo": "volley",
       "descrizione": "Gioco di squadra",
       "corsa": false,
@@ -815,7 +815,7 @@
       "giorno": "Gio",
       "settimana": 10,
       "fase": 3,
-      "tipo_settimana": null,
+      "tipo_settimana": "test",
       "tipo": "qualita",
       "descrizione": "7 km con 4 km a ritmo gara",
       "corsa": true,
@@ -829,9 +829,9 @@
       "giorno": "Ven",
       "settimana": 10,
       "fase": 3,
-      "tipo_settimana": null,
+      "tipo_settimana": "test",
       "tipo": "forza",
-      "descrizione": "Forza, 45 minuti",
+      "descrizione": "Forza leggera, 30 minuti",
       "corsa": false,
       "numero_piano": null,
       "distanza_m": null
@@ -842,12 +842,12 @@
       "giorno": "Dom",
       "settimana": 10,
       "fase": 3,
-      "tipo_settimana": null,
-      "tipo": "lungo",
-      "descrizione": "Lungo di 12 km",
+      "tipo_settimana": "test",
+      "tipo": "test",
+      "descrizione": "Test 5 km",
       "corsa": true,
       "numero_piano": 30,
-      "distanza_m": 12000
+      "distanza_m": 5000
     },
     {
       "id": "w11s1",
@@ -910,10 +910,10 @@
       "fase": 3,
       "tipo_settimana": null,
       "tipo": "lungo",
-      "descrizione": "Lungo di 9 km",
+      "descrizione": "Lungo di 12 km",
       "corsa": true,
       "numero_piano": 33,
-      "distanza_m": 9000
+      "distanza_m": 12000
     },
     {
       "id": "w12s1",
