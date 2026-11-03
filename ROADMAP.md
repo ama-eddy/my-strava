@@ -48,6 +48,8 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 
 **Fino alla prima versione si lavora sui dati di esempio.** Il collegamento a un repo personale di dati, cioè i passi 3 e 4, si fa tutto insieme alla fine: vedi l'[issue #5][i5].
 
+**Prossimo passo: la prima versione, entro il 22 novembre 2026**, data del primo test del piano vero. Si uniscono la PR [#3] e poi si fanno i passi dell'[issue #5][i5]. Prima, a mano, vanno inserite su Strava le attività manuali di ottobre ([strava-database#5](https://github.com/ama-eddy/strava-database/issues/5)).
+
 Fino ad allora gli script esistono in due copie:
 
 - in **strava-database**, dove gira il sync vero del lunedì;
