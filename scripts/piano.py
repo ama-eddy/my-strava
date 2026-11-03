@@ -298,6 +298,9 @@ def main(argv):
               f"{len(piano['settimane'])} settimane, {len(avvisi)} avvisi")
         return 0
     if comando == "collega":
+        if not ATTIVITA.exists():
+            print(f"{ATTIVITA} non c'è ancora: nessuna attività da collegare")
+            return 0
         with ATTIVITA.open(encoding="utf-8") as f:
             attivita = json.load(f)
         coppie, errori, avvisi = collega(piano, attivita)

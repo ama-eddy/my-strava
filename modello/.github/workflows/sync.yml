@@ -1,0 +1,17 @@
+name: Sync Strava
+
+# Ogni lunedì scarica le attività da Strava e fa un commit di data/.
+# Il codice sta in my-strava; qui servono solo i secret STRAVA_CLIENT_ID,
+# STRAVA_CLIENT_SECRET e STRAVA_REFRESH_TOKEN (vedi setup.md di my-strava).
+on:
+  schedule:
+    - cron: "3 7 * * 1"  # lunedì 07:03 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    uses: ama-eddy/my-strava/.github/workflows/sync.yml@main
+    secrets: inherit

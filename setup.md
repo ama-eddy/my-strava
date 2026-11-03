@@ -1,6 +1,12 @@
 # Setup
 
-Come collegare Strava a un repo di dati. Per ora il sync si lancia in locale o con un workflow nel repo di dati; i workflow pronti da richiamare arriveranno in seguito.
+Come creare il proprio repo di dati e collegarlo a Strava. Il codice resta in my-strava: il repo di dati contiene solo `data/` e due workflow di poche righe che richiamano quelli di my-strava.
+
+## 0. Creare il repo di dati (una volta sola)
+
+1. Crea su GitHub un repo **privato**, per esempio `allenamento-dati`.
+2. Copia dentro il contenuto della cartella [`modello/`](modello), compresa `.github/`.
+3. Come punto di partenza per il piano copia [`sito/esempio/piano.json`](sito/esempio/piano.json) in `data/piano.json`. Poi lo modifichi con l'editor.
 
 ## Cosa fa
 
@@ -52,14 +58,22 @@ python3 ../my-strava/scripts/strava_sync.py   # dalla radice del repo di dati
 
 ## 4. Sync settimanale
 
-Ogni **lunedì alle 07:03 UTC** (08:03 d'inverno, 09:03 d'estate) il workflow GitHub Actions **Sync Strava** del repo di dati:
+Ogni **lunedì alle 07:03 UTC** (08:03 d'inverno, 09:03 d'estate) il workflow **Sync Strava** del repo di dati richiama quello di my-strava, che:
 
-1. lancia `python3 scripts/strava_sync.py`;
-2. lancia `python3 scripts/build_dati.py`;
-3. controlla il collegamento con il piano con `python3 scripts/piano.py collega`;
-4. se `data/` è cambiata, fa commit con messaggio `Strava: sync AAAA-MM-GG` e push su `main`.
+1. lancia `strava_sync.py`;
+2. lancia `build_dati.py`;
+3. controlla il collegamento con il piano con `piano.py collega`;
+4. se `data/` è cambiata, fa commit con messaggio `Strava: sync AAAA-MM-GG` e push su `main` del repo di dati.
 
 Si può lanciare anche a mano: *Actions → Sync Strava → Run workflow*. Se un passaggio fallisce, non fa commit e GitHub manda un'email.
+
+A ogni push che tocca `data/`, **Check Piano** controlla:
+
+- il piano;
+- il collegamento con le attività;
+- che l'editor dia sul piano gli stessi risultati di `piano.py`.
+
+I due workflow usano il codice di `main` di my-strava. Per fissare una versione si cambia `@main` nel file del repo di dati, oppure si passa `ref`.
 
 ## 5. Leggere i dati
 

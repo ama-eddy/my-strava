@@ -1,0 +1,53 @@
+name: Check Piano
+
+# Workflow da richiamare dal repo di dati (vedi modello/). Solo controlli: non modifica
+# e non committa nessun file. Controlla il piano, il collegamento con le attività e che
+# l'editor (piano.js) dia sul piano gli stessi risultati di piano.py.
+on:
+  workflow_call:
+    inputs:
+      codice:
+        description: Repo con il codice di my-strava
+        type: string
+        default: ama-eddy/my-strava
+      ref:
+        description: Branch, tag o commit del codice
+        type: string
+        default: main
+      dati:
+        description: Cartella dei dati nel repo che richiama il workflow
+        type: string
+        default: data
+
+permissions:
+  contents: read
+
+jobs:
+  controlla:
+    runs-on: ubuntu-latest
+    env:
+      STRAVA_DATI: ${{ inputs.dati }}
+      # Richiamato da my-strava stesso (per provarlo sui dati di esempio) il codice è già qui.
+      CODICE: ${{ github.repository == inputs.codice && '.' || '.my-strava' }}
+    steps:
+      - name: Repo di dati
+        uses: actions/checkout@v6
+      - name: Codice di my-strava
+        if: github.repository != inputs.codice
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ inputs.codice }}
+          ref: ${{ inputs.ref }}
+          path: .my-strava
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+      - name: Controlla il piano
+        run: python3 $CODICE/scripts/piano.py controlla
+      - name: Controlla il collegamento con le attività
+        run: python3 $CODICE/scripts/piano.py collega
+      - name: L'editor dà gli stessi risultati di piano.py
+        run: node $CODICE/scripts/confronta_editor.mjs

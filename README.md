@@ -15,7 +15,12 @@ Qui c'è solo il codice. I dati di ognuno (piano e attività) stanno nel suo rep
 | `scripts/crea_esempio.py` | Rigenera i dati di esempio |
 | `sito/` | Le pagine: `report/`, `editor/` e una pagina iniziale. HTML e JavaScript senza build e senza librerie |
 | `sito/esempio/` | Un piano finto di 12 settimane per una 10 km e le attività delle prime sei: servono per provare le pagine e per i test |
+| `scripts/confronta_editor.mjs` | Controlla che l'editor dia su un piano gli stessi risultati di `piano.py` |
+| `modello/` | Il punto di partenza di un repo di dati: i due workflow che richiamano quelli di qui e il CSV delle attività manuali |
+| `.github/workflows/` | **Sync Strava** e **Check Piano**, da richiamare dal repo di dati; **Test**; **Pages**, che pubblica `sito/` |
 | `tests/`, `test/` | Test di `scripts/` (Python) e delle pagine (Node) |
+
+Per creare il proprio repo di dati e collegarlo a Strava: [setup.md](setup.md). I prossimi passi sono nella [ROADMAP](ROADMAP.md).
 
 Gli script lavorano sulla cartella `data/` della cartella da cui si lanciano, cioè la radice del repo di dati, oppure sul percorso in `STRAVA_DATI`.
 
@@ -31,6 +36,8 @@ Gli script lavorano sulla cartella `data/` della cartella da cui si lanciano, ci
   - le sedute si spostano trascinandole e si modificano cliccandole;
   - ricalcola i campi ricavati e fa gli stessi controlli di `piano.py controlla`, quindi con errori non si salva;
   - annulla e ripeti, bozza salvata nel browser.
+
+Il sito è pubblicato con GitHub Pages su <https://ama-eddy.github.io/my-strava/>. Contiene solo le pagine e i dati di esempio.
 
 Per provarle in locale:
 
