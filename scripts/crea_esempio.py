@@ -40,9 +40,11 @@ NOTA = {1: "Ritmo da conversazione, anche se ti sembra lentissimo.", 6: "Domenic
 # km di lunedì (facile), giovedì (facile o qualità) e domenica (lungo, test o gara)
 KM = {1: (4, 4, 6), 2: (4, 4.5, 7), 3: (4.5, 5, 8), 4: (4, 4, 6), 5: (5, 6, 9), 6: (5, 5, 5),
       7: (5, 6, 10), 8: (4, 5, 7), 9: (5, 7, 11), 10: (5, 7, 12), 11: (5, 6, 9), 12: (4, 5, 10)}
-QUALITA = {5: "6 km con 3 km a ritmo medio", 6: "5 km con 5 allunghi", 7: "6 km con 5 × 1000 m",
-           8: "5 km con 2 km a ritmo medio", 9: "7 km con 6 × 1000 m", 10: "7 km con 4 km a ritmo gara",
-           11: "6 km con 3 km a ritmo gara", 12: "5 km con 2 km a ritmo gara"}
+# qualità del giovedì: descrizione e ritmo della fase che vale (None: nessuno)
+QUALITA = {5: ("6 km con 3 km a ritmo medio", "soglia"), 6: ("5 km con 5 allunghi", None),
+           7: ("6 km con 5 × 1000 m", "ripetute"), 8: ("5 km con 2 km a ritmo medio", "soglia"),
+           9: ("7 km con 6 × 1000 m", "ripetute"), 10: ("7 km con 4 km a ritmo gara", "gara"),
+           11: ("6 km con 3 km a ritmo gara", "gara"), 12: ("5 km con 2 km a ritmo gara", "gara")}
 
 
 def km(x):
@@ -57,16 +59,18 @@ def piano():
         giorni = [
             (0, "facile", f"{km(f)} km facili", f),
             (1, "volley", "Gioco di squadra", None),
-            (3, "qualita" if n in QUALITA else "facile", QUALITA.get(n, f"{km(q)} km facili con allunghi"), q),
+            (3, "qualita" if n in QUALITA else "facile", QUALITA.get(n, (f"{km(q)} km facili con allunghi",))[0], q),
             (4, "forza", "Forza, 45 minuti" if n not in TIPO else "Forza leggera, 30 minuti", None),
             (6, *{6: ("test", "Test 5 km"), 12: ("gara", "Gara di 10 km")}.get(n, ("lungo", f"Lungo di {km(d)} km")), d),
         ]
         if n == 12:  # niente forza a due giorni dalla gara: mobilità
             giorni[3] = (4, "mobilita", "Mobilità, 20 minuti", None)
         for k, (g, tipo, descrizione, distanza) in enumerate(giorni, 1):
-            sedute.append({"id": f"w{n}s{k}", "data": (lun + dt.timedelta(days=g)).isoformat(), "tipo": tipo,
-                           "descrizione": descrizione,
-                           "distanza_m": round(distanza * 1000) if distanza else None})
+            seduta = {"id": f"w{n}s{k}", "data": (lun + dt.timedelta(days=g)).isoformat(), "tipo": tipo,
+                      "descrizione": descrizione, "distanza_m": round(distanza * 1000) if distanza else None}
+            if tipo == "qualita" and QUALITA[n][1]:
+                seduta["ritmo"] = QUALITA[n][1]
+            sedute.append(seduta)
     base = {
         "versione": 1,
         "inizio": INIZIO.isoformat(),

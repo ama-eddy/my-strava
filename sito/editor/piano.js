@@ -6,6 +6,9 @@ export const TIPI_ALTRI = ["volley", "forza", "mobilita", "camminata", "trekking
 export const TIPI_SEDUTA = [...TIPI_CORSA, ...TIPI_ALTRI];
 export const TIPI_SETTIMANA = [null, "scarico", "test", "gara"];
 export const RITMI = ["facile_lungo", "soglia", "ripetute", "gara"];
+// Il campo facoltativo `ritmo` di una seduta: quale ritmo della fase vale per qualità, test e gara.
+export const RITMI_SEDUTA = ["soglia", "ripetute", "gara"];
+export const TIPI_CON_RITMO = ["qualita", "test", "gara"];
 export const GIORNI = ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"];
 const RITMO = /^\d{1,2}:[0-5]\d$/;
 const GIORNO_MS = 86400000;
@@ -42,7 +45,7 @@ export function espandi(piano) {
     const n = settimanaDi(piano, s.data);
     const corsa = TIPI_CORSA.includes(s.tipo);
     if (corsa) numero += 1;
-    return {
+    const seduta = {
       id: s.id,
       data: s.data,
       giorno: GIORNI[giornoSettimana(s.data)],
@@ -55,6 +58,8 @@ export function espandi(piano) {
       numero_piano: corsa ? numero : null,
       distanza_m: s.distanza_m ?? null,
     };
+    if (s.ritmo != null) seduta.ritmo = s.ritmo; // solo se c'è, così i piani senza ritmo non cambiano
+    return seduta;
   });
   const settimane = piano.settimane.map((w) => {
     const n = w.settimana;
@@ -150,6 +155,14 @@ export function controlla(piano) {
     if (TIPI_CORSA.includes(s.tipo)) {
       if (!Number.isInteger(km) || km <= 0) err(`${sid}: una corsa deve avere distanza_m intera positiva`);
     } else if (km != null) err(`${sid}: solo le corse hanno distanza_m`);
+    const r = s.ritmo;
+    if (r != null) {
+      const n = faseDi(piano, settimanaDi(piano, s.data));
+      const fase = piano.fasi.find((f) => f.fase === n);
+      if (!TIPI_CON_RITMO.includes(s.tipo)) err(`${sid}: solo qualità, test e gara hanno un ritmo`);
+      else if (!RITMI_SEDUTA.includes(r)) err(`${sid}: ritmo '${r}' non valido`);
+      else if (fase && !fase.ritmi?.[r]) err(`${sid}: la fase ${n} non ha il ritmo ${r}`);
+    }
   }
 
   if (!piano.sedute.some((s) => s.tipo === "gara" && s.data === gara)) err(`nessuna seduta di tipo gara il ${gara}`);

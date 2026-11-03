@@ -23,18 +23,34 @@ export const secondiKm = (r) => {
 export const settimanaDi = (piano, data) => Math.floor((giorno(data) - giorno(piano.inizio)) / 7) + 1;
 const corsa = (a) => a.sport === "Run" || a.sport === "TrailRun" || a.sport === "VirtualRun";
 
-/** Ritmo obiettivo di una seduta in secondi al km ({min, max}), o null se il piano non lo dà.
- * Facile e lungo: il ritmo facile della fase. Gara: l'obiettivo della gara, se è la gara del piano,
- * altrimenti il ritmo gara della fase. Qualità e test: null, il piano non dice ancora quale ritmo vale. */
+/**
+ * Ritmo obiettivo di una seduta in secondi al km, o null se il piano non lo dà:
+ * {min, max}, più `nome` (soglia, ripetute, gara) quando viene dal campo `ritmo` della seduta,
+ * `nota` della fase se c'è, e `indicativo` quando il ritmo medio dell'attività non basta a
+ * giudicarlo.
+ * - Facile e lungo: il ritmo facile della fase.
+ * - Gara: l'obiettivo della gara, se è la gara del piano; altrimenti il ritmo scelto con
+ *   `ritmo`, o il ritmo gara della fase.
+ * - Qualità e test: il ritmo scelto con `ritmo`, solo indicativo, perché il ritmo medio di
+ *   Strava include riscaldamento e recuperi. Senza `ritmo`, null.
+ */
 export function ritmoObiettivo(piano, s) {
   const fase = piano.fasi.find((f) => f.fase === s.fase);
   let r = null;
+  const altro = {};
   if (s.tipo === "facile" || s.tipo === "lungo") r = fase?.ritmi.facile_lungo;
   else if (s.tipo === "gara") {
     const g = piano.gara.obiettivo_ritmo;
-    r = s.data === piano.gara.data && g ? { min: g, max: g } : fase?.ritmi.gara;
+    if (s.data === piano.gara.data && g) r = { min: g, max: g };
+    else r = fase?.ritmi[s.ritmo ?? "gara"];
+  } else if ((s.tipo === "qualita" || s.tipo === "test") && s.ritmo) {
+    r = fase?.ritmi[s.ritmo];
+    altro.indicativo = true;
   }
-  return r ? { min: secondiKm(r.min), max: secondiKm(r.max) } : null;
+  if (!r) return null;
+  if (s.ritmo && !(s.tipo === "gara" && s.data === piano.gara.data)) altro.nome = s.ritmo;
+  if (altro.nome && r.nota) altro.nota = r.nota;
+  return { min: secondiKm(r.min), max: secondiKm(r.max), ...altro };
 }
 
 /** "veloce", "lento" o "nel_ritmo"; null se manca l'obiettivo o il ritmo. */
@@ -94,7 +110,8 @@ export function analizza(piano, attivita, oggi) {
     const a = abbinate.get(s.id) ?? null;
     const stato = a ? (a.data === s.data ? "fatta" : "spostata") : s.data < oggi ? "saltata" : "da_fare";
     const obiettivo = s.corsa ? ritmoObiettivo(piano, s) : null;
-    return { ...s, stato, attivita: a, obiettivo, esito: a ? esitoRitmo(obiettivo, a.ritmo_s_km) : null };
+    const esito = a && !obiettivo?.indicativo ? esitoRitmo(obiettivo, a.ritmo_s_km) : null;
+    return { ...s, stato, attivita: a, obiettivo, esito };
   });
   const extra = nelPiano.filter((a) => !usate.has(a));
 

@@ -136,6 +136,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 16px; }
 .seduta .tipo { font-weight: 600; color: var(--colore); }
 .seduta .numero { color: var(--tenue); font-variant-numeric: tabular-nums; }
 .seduta-km { font-weight: 600; font-variant-numeric: tabular-nums; }
+.seduta-km .ritmo { font-weight: 400; color: var(--tenue); }
 .seduta .descrizione {
   font-size: .78rem; color: var(--tenue); display: -webkit-box; -webkit-line-clamp: 3;
   -webkit-box-orient: vertical; overflow: hidden;

@@ -1,4 +1,4 @@
-import { GIORNI, TIPI_CORSA, TIPI_SEDUTA, controlla, espandi, giorno, iso, serializza, settimanaDi } from "./piano.js";
+import { GIORNI, RITMI_SEDUTA, TIPI_CON_RITMO, TIPI_CORSA, TIPI_SEDUTA, controlla, espandi, faseDi, giorno, iso, serializza, settimanaDi } from "./piano.js";
 import { caricaPiano, leggiFile, salvaPiano } from "./fonte.js";
 
 export const NOMI_TIPO = {
@@ -16,6 +16,7 @@ export const NOMI_TIPO = {
 const NOMI_SETTIMANA = { "": "normale", scarico: "scarico", test: "test", gara: "gara" };
 const MESI = ["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"];
 const BOZZA = "my-strava:editor:bozza";
+const NOMI_RITMO = { soglia: "Soglia", ripetute: "Ripetute", gara: "Ritmo gara" };
 
 const $ = (id) => document.getElementById(id);
 const h = (tag, attr = {}, ...figli) => {
@@ -249,7 +250,7 @@ function seduta(s) {
     h("span", { class: "seduta-testa" },
       h("span", { class: "tipo" }, NOMI_TIPO[s.tipo]),
       s.corsa ? h("span", { class: "numero" }, `${s.numero_piano}/${stato.piano.totale_corse}`) : null),
-    s.corsa ? h("span", { class: "seduta-km" }, `${km(s.distanza_m)} km`) : null,
+    s.corsa ? h("span", { class: "seduta-km" }, `${km(s.distanza_m)} km`, s.ritmo ? h("span", { class: "ritmo" }, ` · ${NOMI_RITMO[s.ritmo]?.toLowerCase() ?? s.ritmo}`) : null) : null,
     s.descrizione !== NOMI_TIPO[s.tipo] ? h("span", { class: "descrizione" }, s.descrizione) : null,
   );
 }
@@ -265,8 +266,31 @@ const aggiornaCampoKm = () => {
   const corsa = TIPI_CORSA.includes(modulo.tipo.value);
   $("campo-km").hidden = !corsa;
   modulo.km.required = corsa;
+  aggiornaCampoRitmo();
 };
+
+// I ritmi della fase in cui cade la data scelta; quelli che la fase non ha restano visibili ma spenti.
+function aggiornaCampoRitmo() {
+  const conRitmo = TIPI_CON_RITMO.includes(modulo.tipo.value);
+  $("campo-ritmo").hidden = !conRitmo;
+  if (!conRitmo) return;
+  const scelto = modulo.ritmo.value;
+  const p = stato.piano;
+  const n = modulo.data.value ? faseDi(p, settimanaDi(p, modulo.data.value)) : null;
+  const ritmi = p.fasi.find((f) => f.fase === n)?.ritmi ?? {};
+  modulo.ritmo.replaceChildren(
+    h("option", { value: "" }, "Nessuno"),
+    ...RITMI_SEDUTA.map((k) => {
+      const r = ritmi[k];
+      const valori = r ? ` · ${r.min === r.max ? r.min : `${r.min}–${r.max}`}/km${r.nota ? ` (${r.nota})` : ""}` : ` · non previsto in fase ${n ?? "?"}`;
+      return h("option", { value: k, disabled: r ? null : "" }, NOMI_RITMO[k] + valori);
+    }),
+  );
+  modulo.ritmo.value = scelto;
+  if (modulo.ritmo.value !== scelto) modulo.ritmo.value = "";
+}
 modulo.tipo.addEventListener("change", aggiornaCampoKm);
+modulo.data.addEventListener("change", aggiornaCampoRitmo);
 
 function apriDialogo(id, data) {
   const s = id ? stato.piano.sedute.find((s) => s.id === id) : null;
@@ -281,6 +305,11 @@ function apriDialogo(id, data) {
   $("elimina").hidden = !s;
   $("dialogo-errore").hidden = true;
   aggiornaCampoKm();
+  // il valore attuale si imposta dopo le opzioni: se la fase non lo ha più resta, e il controllo lo segnala
+  if (s?.ritmo && ![...modulo.ritmo.options].some((o) => o.value === s.ritmo)) {
+    modulo.ritmo.append(h("option", { value: s.ritmo }, `${NOMI_RITMO[s.ritmo] ?? s.ritmo} · non valido`));
+  }
+  modulo.ritmo.value = s?.ritmo ?? "";
   $("dialogo").showModal();
 }
 
@@ -294,6 +323,7 @@ modulo.addEventListener("submit", (e) => {
     return;
   }
   const valori = { data: modulo.data.value, tipo: modulo.tipo.value, descrizione: modulo.descrizione.value.trim(), distanza_m: distanza };
+  const ritmo = TIPI_CON_RITMO.includes(valori.tipo) ? modulo.ritmo.value || null : null;
   if (!valori.descrizione) {
     e.preventDefault();
     mostraErrore("Scrivi una descrizione.");
@@ -305,12 +335,14 @@ modulo.addEventListener("submit", (e) => {
       const s = p.sedute.find((s) => s.id === id);
       const nuovaData = s.data !== valori.data;
       Object.assign(s, valori);
+      if (ritmo) s.ritmo = ritmo;
+      else delete s.ritmo;
       if (nuovaData) {
         p.sedute = p.sedute.filter((x) => x !== s);
         p.sedute.push(s);
       }
     } else {
-      p.sedute.push({ id: nuovoId(p, valori.data), ...valori });
+      p.sedute.push({ id: nuovoId(p, valori.data), ...valori, ...(ritmo ? { ritmo } : {}) });
     }
   });
 });

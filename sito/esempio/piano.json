@@ -491,7 +491,8 @@
       "descrizione": "6 km con 3 km a ritmo medio",
       "corsa": true,
       "numero_piano": 14,
-      "distanza_m": 6000
+      "distanza_m": 6000,
+      "ritmo": "soglia"
     },
     {
       "id": "w5s4",
@@ -621,7 +622,8 @@
       "descrizione": "6 km con 5 × 1000 m",
       "corsa": true,
       "numero_piano": 20,
-      "distanza_m": 6000
+      "distanza_m": 6000,
+      "ritmo": "ripetute"
     },
     {
       "id": "w7s4",
@@ -686,7 +688,8 @@
       "descrizione": "5 km con 2 km a ritmo medio",
       "corsa": true,
       "numero_piano": 23,
-      "distanza_m": 5000
+      "distanza_m": 5000,
+      "ritmo": "soglia"
     },
     {
       "id": "w8s4",
@@ -751,7 +754,8 @@
       "descrizione": "7 km con 6 × 1000 m",
       "corsa": true,
       "numero_piano": 26,
-      "distanza_m": 7000
+      "distanza_m": 7000,
+      "ritmo": "ripetute"
     },
     {
       "id": "w9s4",
@@ -816,7 +820,8 @@
       "descrizione": "7 km con 4 km a ritmo gara",
       "corsa": true,
       "numero_piano": 29,
-      "distanza_m": 7000
+      "distanza_m": 7000,
+      "ritmo": "gara"
     },
     {
       "id": "w10s4",
@@ -881,7 +886,8 @@
       "descrizione": "6 km con 3 km a ritmo gara",
       "corsa": true,
       "numero_piano": 32,
-      "distanza_m": 6000
+      "distanza_m": 6000,
+      "ritmo": "gara"
     },
     {
       "id": "w11s4",
@@ -946,7 +952,8 @@
       "descrizione": "5 km con 2 km a ritmo gara",
       "corsa": true,
       "numero_piano": 35,
-      "distanza_m": 5000
+      "distanza_m": 5000,
+      "ritmo": "gara"
     },
     {
       "id": "w12s4",

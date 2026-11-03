@@ -65,6 +65,28 @@ class PianoTest(unittest.TestCase):
     def test_ritmo_invertito(self):
         self.assertTrue(self._errori(lambda p: p["fasi"][0]["ritmi"]["facile_lungo"].update(min="7:30")))
 
+    def _seduta(self, p, id):
+        return next(s for s in p["sedute"] if s["id"] == id)
+
+    def test_ritmo_resta_e_solo_dove_c_e(self):
+        x = P.espandi(self.piano)
+        self.assertEqual(self._seduta(x, "w7s3")["ritmo"], "ripetute")
+        self.assertNotIn("ritmo", self._seduta(x, "w6s3"))  # qualità senza ritmo
+
+    def test_ritmo_non_valido(self):
+        errori = self._errori(lambda p: self._seduta(p, "w5s3").update(ritmo="facile_lungo"))
+        self.assertEqual(errori, ["w5s3: ritmo 'facile_lungo' non valido"])
+
+    def test_ritmo_su_una_corsa_facile(self):
+        errori = self._errori(lambda p: self._seduta(p, "w5s1").update(ritmo="soglia"))
+        self.assertEqual(errori, ["w5s1: solo qualità, test e gara hanno un ritmo"])
+
+    def test_ritmo_che_la_fase_non_ha(self):
+        # w10s3 è in fase 3, che non ha le ripetute; w2s3 in fase 1, che non ha la soglia
+        errori = self._errori(lambda p: (self._seduta(p, "w10s3").update(ritmo="ripetute"),
+                                         self._seduta(p, "w2s3").update(tipo="qualita", ritmo="soglia")))
+        self.assertEqual(errori, ["w2s3: la fase 1 non ha il ritmo soglia", "w10s3: la fase 3 non ha il ritmo ripetute"])
+
     def test_buco_tra_fasi(self):
         self.assertTrue(self._errori(lambda p: p["fasi"][1].update(settimane=[6, 9])))
 
