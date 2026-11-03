@@ -20,7 +20,7 @@ Qui c'è solo il codice. I dati di ognuno (piano e attività) stanno nel suo rep
 | `.github/workflows/` | **Sync Strava** e **Check Piano**, da richiamare dal repo di dati; **Test**; **Pages**, che pubblica `sito/` |
 | `tests/`, `test/` | Test di `scripts/` (Python) e delle pagine (Node) |
 
-Per creare il proprio repo di dati e collegarlo a Strava: [setup.md](setup.md).
+Per creare il proprio repo di dati e collegarlo a Strava: [setup.md](setup.md). I prossimi passi sono nella [ROADMAP](ROADMAP.md).
 
 Gli script lavorano sulla cartella `data/` della cartella da cui si lanciano, cioè la radice del repo di dati, oppure sul percorso in `STRAVA_DATI`.
 
