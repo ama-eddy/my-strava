@@ -1,0 +1,32 @@
+name: Test
+
+# Test di scripts/ e delle pagine, sui dati di esempio. Non modifica nessun file.
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+      - name: Test di piano.py e build_dati.py
+        run: python3 -m unittest discover -s tests -v
+      - name: Test delle pagine, compreso il confronto tra piano.js e piano.py
+        run: node --test
+      - name: I dati di esempio sono aggiornati
+        run: |
+          python3 scripts/crea_esempio.py
+          git diff --exit-code sito/esempio
+      - name: Controlli sui dati di esempio
+        env:
+          STRAVA_DATI: sito/esempio
+        run: |
+          python3 scripts/piano.py controlla
+          python3 scripts/piano.py collega

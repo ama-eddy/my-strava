@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Report allenamento</title>
+  <link rel="stylesheet" href="stile.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="testata">
+    <h1>Report allenamento</h1>
+    <p id="sottotitolo" class="tenue"></p>
+  </header>
+
+  <main>
+    <section id="apri" class="scheda" hidden>
+      <h2>Apri i dati</h2>
+      <p>Scegli <code>data/piano.json</code> e <code>data/attivita.json</code> dal tuo repo di dati.</p>
+      <p class="tenue">Oppure prova con i <a href="?esempio&amp;oggi=2027-02-11">dati di esempio</a>.</p>
+      <input type="file" id="file" accept=".json,application/json" multiple>
+      <p id="errore-file" class="errore" hidden></p>
+    </section>
+
+    <div id="report" hidden>
+      <section class="cifre" id="cifre" aria-label="In sintesi"></section>
+
+      <section class="scheda">
+        <h2 id="titolo-settimana">Questa settimana</h2>
+        <p id="nota-settimana" class="tenue"></p>
+        <div class="scorre"><table id="settimana" class="tabella"></table></div>
+      </section>
+
+      <section class="scheda">
+        <h2>Volume settimanale</h2>
+        <p class="tenue">Km di corsa per settimana, previsti e fatti.</p>
+        <div class="legenda"><span><i class="chiave previsto"></i>Previsto</span><span><i class="chiave fatto"></i>Fatto</span></div>
+        <div id="grafico-volume" class="grafico"></div>
+      </section>
+
+      <section class="scheda">
+        <h2>Il lungo</h2>
+        <p class="tenue">La corsa più lunga di ogni settimana (lungo, test o gara), prevista e fatta.</p>
+        <div class="legenda"><span><i class="chiave previsto"></i>Previsto</span><span><i class="chiave fatto"></i>Fatto</span></div>
+        <div id="grafico-lungo" class="grafico"></div>
+      </section>
+
+      <section class="scheda">
+        <h2>Ritmo di facili e lunghi</h2>
+        <p class="tenue">Ogni punto è una corsa; la fascia è il ritmo facile previsto dalla fase. Più in alto è più veloce.</p>
+        <div id="grafico-ritmo" class="grafico"></div>
+      </section>
+
+      <section class="scheda">
+        <h2>Test e gare</h2>
+        <div class="scorre"><table id="test" class="tabella"></table></div>
+      </section>
+
+      <section class="scheda">
+        <h2>Settimane passate</h2>
+        <div id="settimane"></div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
