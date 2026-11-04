@@ -10,4 +10,5 @@ Repo **privato** con il piano e le attività. Il codice sta in [my-strava](https
 | `data/attivita.json` | Tutte le attività insieme, per le pagine: si rigenera a ogni sync |
 
 - **Sync Strava** gira ogni lunedì, o a mano da *Actions → Sync Strava → Run workflow*.
+  Per un'attività inserita su Strava con più di due settimane di ritardo, si lancia a mano con **completo** spuntato.
 - **Check Piano** controlla i dati a ogni push.

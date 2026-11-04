@@ -67,6 +67,8 @@ Ogni **lunedì alle 07:03 UTC** (08:03 d'inverno, 09:03 d'estate) il workflow **
 
 Si può lanciare anche a mano: *Actions → Sync Strava → Run workflow*. Se un passaggio fallisce, non fa commit e GitHub manda un'email.
 
+Il sync normale riscarica solo le attività dalle due settimane prima dell'ultima. Se inserisci su Strava un'attività con una data più vecchia, lancialo a mano con la casella **completo** spuntata: riscarica tutte le attività. I giri delle corse vecchie che li hanno già non si riscaricano.
+
 A ogni push che tocca `data/`, **Check Piano** controlla:
 
 - il piano;
