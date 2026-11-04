@@ -8,7 +8,7 @@ Qui c'è solo il codice. I dati di ognuno (piano e attività) stanno nel suo rep
 
 | Percorso | Contenuto |
 |---|---|
-| `scripts/strava_sync.py` | Scarica le attività nuove da Strava, e di nuovo quelle delle ultime due settimane, in `data/strava_attivita.jsonl` e `data/strava_attivita.csv`. Toglie la traccia GPS. Delle corse scarica anche i giri (lap); lo storico senza giri si completa fino a 60 corse per sync |
+| `scripts/strava_sync.py` | Scarica le attività nuove da Strava, e di nuovo quelle delle ultime due settimane, in `data/strava_attivita.jsonl` e `data/strava_attivita.csv`. Toglie la traccia GPS. Delle corse scarica anche i giri (lap); lo storico senza giri si completa fino a 60 corse per sync. Con `STRAVA_COMPLETO=1` riscarica tutte le attività |
 | `scripts/build_dati.py` | Unisce le attività di Strava e quelle scritte a mano (`data/attivita_manuali.csv`) in `data/attivita.json`, con numeri e non testi, e `numero_piano` preso dal titolo (`10/36` → 10). Le corse con più di un giro hanno anche `giri` |
 | `scripts/piano.py` | Valida `data/piano.json` (`controlla`), ricalcola i campi ricavati (`aggiorna`), confronta le corse del piano con le attività (`collega`), stampa i km per fase e settimana (`riepilogo`) |
 | `scripts/strava_auth.ps1` | Genera il refresh token di Strava; si lancia a mano, una volta sola, vedi [setup.md](setup.md) |

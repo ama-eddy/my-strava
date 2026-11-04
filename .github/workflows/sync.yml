@@ -14,6 +14,10 @@ on:
         description: Branch, tag o commit del codice
         type: string
         default: main
+      completo:
+        description: Riscarica tutte le attività, non solo quelle delle ultime due settimane
+        type: boolean
+        default: false
     secrets:
       STRAVA_CLIENT_ID:
         required: true
@@ -48,6 +52,7 @@ jobs:
           STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
           STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
           STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+          STRAVA_COMPLETO: ${{ inputs.completo && '1' || '' }}
         run: python3 .my-strava/scripts/strava_sync.py
       - name: Unisce Strava e attività manuali
         run: python3 .my-strava/scripts/build_dati.py
