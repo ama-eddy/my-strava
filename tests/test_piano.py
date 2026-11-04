@@ -174,5 +174,32 @@ class SyncGiriTest(unittest.TestCase):
         self.assertNotIn("laps", db[1])
 
 
+class SyncCompletoTest(unittest.TestCase):
+    def setUp(self):
+        import strava_sync as S
+        self.S = S
+        self.corsa = lambda id, giorno, **x: {"id": id, "sport_type": "Run", "name": f"{id}/36",
+                                              "start_date": f"2027-01-{giorno:02d}T07:00:00Z", **x}
+
+    def test_inizio_sync(self):
+        db = {1: self.corsa(1, 1), 2: self.corsa(2, 20)}
+        self.assertEqual(self.S.inizio_sync({}), 0)
+        self.assertEqual(self.S.inizio_sync(db, completo=True), 0)
+        # due settimane prima dell'ultima attività (20 gennaio)
+        self.assertEqual(self.S.inizio_sync(db), self.S.parse_date("2027-01-06T07:00:00Z").timestamp())
+
+    def test_completo_non_riscarica_i_giri_vecchi(self):
+        db = {1: self.corsa(1, 1, laps=[{"lap_index": 1}]), 2: self.corsa(2, 2), 3: self.corsa(3, 20, laps=[])}
+        scaricate = [self.corsa(1, 1, kudos_count=3), self.corsa(2, 2, kudos_count=1),
+                     self.corsa(3, 20, kudos_count=2), {**self.corsa(4, 3), "map": {"polyline": "x"}}]
+        finestra = self.S.inizio_sync(db)
+        new, updated, cambiate = self.S.unisci(db, scaricate, finestra)
+        # la 1 è vecchia e ha già i giri: si aggiorna ma non li riscarica; la 2 non li ha;
+        # la 3 è nelle due settimane; la 4, inserita in ritardo, è nuova e senza traccia GPS
+        self.assertEqual((new, updated, [a["id"] for a in cambiate]), (1, 3, [2, 3, 4]))
+        self.assertEqual((db[1]["kudos_count"], db[1]["laps"]), (3, [{"lap_index": 1}]))
+        self.assertNotIn("map", db[4])
+
+
 if __name__ == "__main__":
     unittest.main()

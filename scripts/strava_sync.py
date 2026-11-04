@@ -164,15 +164,19 @@ def save_db(db):
         writer.writerows(rows)
 
 
-def main():
-    db = load_db()
-    after = 0
-    if db:
-        last = max(parse_date(a["start_date"]) for a in db.values())
-        after = (last - OVERLAP).timestamp()
+def inizio_sync(db, completo=False):
+    """Da quando scaricare le attività (timestamp): da sempre se il database è vuoto o il sync
+    è completo, altrimenti dalle due settimane prima dell'ultima attività."""
+    if not db or completo:
+        return 0
+    last = max(parse_date(a["start_date"]) for a in db.values())
+    return (last - OVERLAP).timestamp()
 
-    token = access_token()
-    fetched = fetch_activities(token, after)
+
+def unisci(db, fetched, finestra):
+    """Mette nel database le attività scaricate. Restituisce nuove, aggiornate e le attività
+    di cui riscaricare i giri: le nuove e quelle cambiate. Una cambiata che ha già i giri e
+    comincia prima di `finestra` (timestamp) li tiene, così un sync completo non li riscarica tutti."""
     new = updated = 0
     cambiate = []
     for a in fetched:
@@ -185,8 +189,23 @@ def main():
             cambiate.append(a)
         elif vecchia != a:
             updated += 1
-            cambiate.append(a)
+            if "laps" not in a or parse_date(a["start_date"]).timestamp() >= finestra:
+                cambiate.append(a)
         db[a["id"]] = a
+    return new, updated, cambiate
+
+
+def main():
+    db = load_db()
+    # STRAVA_COMPLETO=1 riscarica tutte le attività: serve per quelle inserite su Strava
+    # più di due settimane dopo la loro data, che il sync normale non vede.
+    completo = os.environ.get("STRAVA_COMPLETO", "").lower() in ("1", "true")
+    after = inizio_sync(db, completo)
+    finestra = inizio_sync(db)
+
+    token = access_token()
+    fetched = fetch_activities(token, after)
+    new, updated, cambiate = unisci(db, fetched, finestra)
 
     con_giri = aggiungi_giri(db, cambiate, token)
     save_db(db)
