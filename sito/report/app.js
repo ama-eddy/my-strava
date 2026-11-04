@@ -42,13 +42,13 @@ const oggi = new URLSearchParams(location.search).get("oggi")
 
 let ultimo = null;
 
-function disegna({ piano, attivita }) {
+function disegna({ piano, attivita, origine }) {
   ultimo = { piano, attivita };
   const r = analizza(piano, attivita, oggi);
   const t = r.totali;
   $("apri").hidden = true;
   $("report").hidden = false;
-  $("sottotitolo").textContent = `${piano.gara.nome} del ${dataLunga(piano.gara.data)} · obiettivo ${piano.gara.obiettivo_tempo} (${piano.gara.obiettivo_ritmo}/km) · dati al ${dataLunga(oggi)}`;
+  $("sottotitolo").textContent = `${piano.gara.nome} del ${dataLunga(piano.gara.data)} · obiettivo ${piano.gara.obiettivo_tempo} (${piano.gara.obiettivo_ritmo}/km) · dati al ${dataLunga(oggi)} · ${origine}`;
 
   $("cifre").replaceChildren(
     cifra("Giorni alla gara", t.giorni_alla_gara, `settimana ${Math.min(r.settimana_corrente, piano.settimane.length)} di ${piano.settimane.length}`),
@@ -280,6 +280,12 @@ addEventListener("resize", () => {
   attesa = setTimeout(() => ultimo && disegnaGrafici(ultimo.piano, analizza(ultimo.piano, ultimo.attivita, oggi)), 150);
 });
 
-const dati = await caricaDati();
-if (dati) disegna(dati);
-else $("apri").hidden = false;
+try {
+  const dati = await caricaDati();
+  if (dati) disegna(dati);
+  else $("apri").hidden = false;
+} catch (err) {
+  $("errore-file").textContent = err.message;
+  $("errore-file").hidden = false;
+  $("apri").hidden = false;
+}

@@ -1,0 +1,34 @@
+/* Stile delle pagine semplici del sito: la pagina iniziale e il collegamento del repo. */
+:root {
+  color-scheme: light dark;
+  --sfondo: #f6f6f3; --carta: #fff; --testo: #1d1d1b; --tenue: #6b6b66; --bordo: #deded8;
+  --accento: #2f5fd0; --accento-testo: #fff; --errore: #b3261e;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --sfondo: #121211; --carta: #1c1c1b; --testo: #ecece8; --tenue: #a3a39d; --bordo: #343432; --accento: #7fa2f0; --accento-testo: #0d1220; --errore: #ff8a80; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--sfondo); color: var(--testo); line-height: 1.45; }
+main { max-width: 640px; margin: 0 auto; padding: 24px 16px 40px; }
+h1 { margin: 8px 0 4px; font-size: 1.5rem; }
+h2 { margin: 0 0 8px; font-size: 1.1rem; }
+p { margin: 6px 0; }
+a { color: var(--accento); }
+.tenue { color: var(--tenue); }
+.errore { color: var(--errore); }
+[hidden] { display: none !important; }
+.scheda { background: var(--carta); border: 1px solid var(--bordo); border-radius: 10px; padding: 16px; margin-top: 16px; }
+.scheda ol { padding-left: 20px; margin: 0; }
+.scheda li { margin: 4px 0; }
+label { display: block; margin-bottom: 12px; font-weight: 500; }
+input { display: block; width: 100%; margin-top: 4px; padding: 10px; font: inherit; color: inherit; background: var(--sfondo); border: 1px solid var(--bordo); border-radius: 8px; }
+input:focus { outline: 2px solid var(--accento); outline-offset: 1px; }
+.azioni { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+button, .pulsante { font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--bordo); background: var(--carta); color: var(--testo); cursor: pointer; text-decoration: none; }
+.primario { background: var(--accento); color: var(--accento-testo); border-color: var(--accento); }
+button:disabled { opacity: .6; cursor: default; }
+.pagine { display: grid; gap: 12px; margin: 24px 0; }
+.pagina { display: block; background: var(--carta); border: 1px solid var(--bordo); border-radius: 10px; padding: 16px; color: inherit; text-decoration: none; }
+.pagina:hover, .pagina:focus-visible { border-color: var(--accento); }
+.pagina strong { color: var(--accento); font-size: 1.1rem; }

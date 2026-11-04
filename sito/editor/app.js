@@ -1,5 +1,5 @@
 import { GIORNI, RITMI_SEDUTA, TIPI_CON_RITMO, TIPI_CORSA, TIPI_SEDUTA, controlla, espandi, faseDi, giorno, iso, serializza, settimanaDi } from "./piano.js";
-import { caricaPiano, leggiFile, salvaPiano } from "./fonte.js";
+import { caricaPiano, leggiFile, salvaIn, salvaPiano } from "./fonte.js";
 
 export const NOMI_TIPO = {
   facile: "Facile",
@@ -61,8 +61,8 @@ function imposta(piano) {
   stato.piano = piano;
   stato.verifica = controlla(piano);
   try {
-    if (serializza(piano) === stato.salvato) localStorage.removeItem(BOZZA);
-    else localStorage.setItem(BOZZA, JSON.stringify({ base: stato.salvato, piano }));
+    if (serializza(piano) === stato.salvato) localStorage.removeItem(stato.bozza);
+    else localStorage.setItem(stato.bozza, JSON.stringify({ base: stato.salvato, piano }));
   } catch {}
   disegna();
 }
@@ -106,7 +106,7 @@ function disegna() {
   const p = stato.piano;
   const { errori, avvisi } = stato.verifica;
 
-  $("gara").textContent = `${p.gara.nome} · ${dataLunga(p.gara.data)} · obiettivo ${p.gara.obiettivo_tempo}`;
+  $("gara").textContent = `${p.gara.nome} · ${dataLunga(p.gara.data)} · obiettivo ${p.gara.obiettivo_tempo} · ${stato.origine}`;
   $("annulla").disabled = !stato.indietro.length;
   $("ripeti").disabled = !stato.avanti.length;
   $("stato-salvataggio").textContent = modificato() ? "Modifiche non salvate" : "Salvato";
@@ -368,7 +368,14 @@ $("elimina").addEventListener("click", () => {
 $("annulla").addEventListener("click", annulla);
 $("ripeti").addEventListener("click", ripeti);
 $("salva").addEventListener("click", async () => {
-  stato.salvato = await salvaPiano(stato.piano);
+  const pulsante = $("salva");
+  pulsante.disabled = true;
+  $("stato-salvataggio").textContent = salvaIn() ? "Salvataggio…" : "";
+  try {
+    stato.salvato = await salvaPiano(stato.piano);
+  } catch (err) {
+    alert(`Il piano non è stato salvato. ${err.message}`);
+  }
   imposta(stato.piano);
 });
 document.addEventListener("keydown", (e) => {
@@ -384,7 +391,7 @@ $("file").addEventListener("change", async (e) => {
   if (e.target.files[0]) apri(await leggiFile(e.target.files[0]));
 });
 
-function apri({ testo }) {
+function apri({ testo, origine }) {
   let piano;
   try {
     piano = JSON.parse(testo);
@@ -393,22 +400,35 @@ function apri({ testo }) {
     return;
   }
   stato.salvato = testo;
+  stato.origine = origine;
+  stato.bozza = `${BOZZA}:${origine}`; // una bozza per ogni origine: esempio, repo di dati, file
   stato.indietro = [];
   stato.avanti = [];
   let bozza = null;
   try {
-    bozza = JSON.parse(localStorage.getItem(BOZZA));
+    bozza = JSON.parse(localStorage.getItem(stato.bozza));
   } catch {}
-  if (bozza?.base === testo && confirm("C'è una bozza non salvata di questo piano. Riprenderla?")) {
+  const domanda = bozza?.base === testo
+    ? "C'è una bozza non salvata di questo piano. Riprenderla?"
+    : "C'è una bozza non salvata, fatta su una versione precedente del piano. Riprenderla? Salvandola sostituisci la versione attuale.";
+  if (bozza?.piano && confirm(domanda)) {
     stato.indietro = [espandi(piano)];
     piano = bozza.piano;
   }
+  $("salva").textContent = salvaIn() ? "Salva su GitHub" : "Salva piano.json";
+  $("salva").title = salvaIn() ? `Salva data/piano.json in ${salvaIn()} con un commit` : "Scarica piano.json";
   $("apri").hidden = true;
   $("editor").hidden = false;
   imposta(espandi(piano));
   document.querySelector(".settimana.corrente")?.scrollIntoView({ block: "start" });
 }
 
-const iniziale = await caricaPiano();
-if (iniziale) apri(iniziale);
-else $("apri").hidden = false;
+try {
+  const iniziale = await caricaPiano();
+  if (iniziale) apri(iniziale);
+  else $("apri").hidden = false;
+} catch (err) {
+  $("errore-apri").textContent = err.message;
+  $("errore-apri").hidden = false;
+  $("apri").hidden = false;
+}

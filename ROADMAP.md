@@ -32,7 +32,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 |---|---|---|
 | 1 | **Un repo pubblico con tutto il codice**: script, pagine, dati di esempio e test, compreso il confronto tra `piano.js` e `piano.py` | Fatto ([#1]) |
 | 2 | **Workflow riutilizzabili** Sync Strava e Check Piano, `modello/` per un repo di dati, sito pubblicato con GitHub Pages | Fatto ([#2]) |
-| 3 | **Lettura e scrittura diretta nel repo di dati** con un token GitHub fine-grained, salvato solo nel browser: il report legge, l'editor salva con un commit. Pagina **Collega** per repo e token. Pronto nella PR [#3], non ancora unito | In attesa della prima versione: [issue #5][i5] |
+| 3 | **Lettura e scrittura diretta nel repo di dati** con un token GitHub fine-grained, salvato solo nel browser: il report legge, l'editor salva con un commit. Pagina **Collega** per repo e token | Fatto ([#3]) |
 | 4 | **Collegare il primo repo di dati** (strava-database): i workflow diventano i due file di `modello/`, il codice esce da lì | In attesa della prima versione: [issue #5][i5] |
 | 5 | **Ritmo obiettivo per qualità, test e gare intermedie**: un campo facoltativo `ritmo` (`soglia`, `ripetute` o `gara`) sulle sedute di `piano.json`. È controllato da `piano.py` e `piano.js` e si sceglie nel dialogo dell'editor. Il report lo mostra per qualità e test senza esito, perché il ritmo medio di Strava include riscaldamento e recuperi | Fatto ([#4]) |
 | 6 | **Andamento dei test, previsione e ritmi da ricalibrare.** Il report trova il tratto del test dai giri di Strava, lo confronta con il test precedente, stima il tempo di gara con la formula di Riegel e segnala i ritmi delle fasi rimaste che si scostano da quelli suggeriti dal test | Fatto ([#6]) |
@@ -48,7 +48,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 [#8]: https://github.com/ama-eddy/my-strava/pull/8
 [i5]: https://github.com/ama-eddy/my-strava/issues/5
 
-**Fino alla prima versione si lavora sui dati di esempio.** Il collegamento a un repo personale di dati, cioè i passi 3 e 4, si fa tutto insieme alla fine: vedi l'[issue #5][i5].
+**Fino alla prima versione si lavora sui dati di esempio.** Il passo 3 è pronto: le pagine sanno leggere e scrivere un repo di dati. Il collegamento del repo personale, cioè il passo 4, si fa alla prima versione: vedi l'[issue #5][i5].
 
 **Prossimo passo: la prima versione, entro il 22 novembre 2026**, data del primo test del piano vero. Si uniscono la PR [#3] e poi si fanno i passi dell'[issue #5][i5]. Prima, a mano, vanno inserite su Strava le attività manuali di ottobre ([strava-database#5](https://github.com/ama-eddy/strava-database/issues/5)).
 
