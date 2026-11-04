@@ -38,12 +38,14 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 | 6 | **Andamento dei test, previsione e ritmi da ricalibrare.** Il report trova il tratto del test dai giri di Strava, lo confronta con il test precedente, stima il tempo di gara con la formula di Riegel e segnala i ritmi delle fasi rimaste che si scostano da quelli suggeriti dal test | Fatto ([#6]) |
 | 7 | **Giri (lap) di Strava nel sync**: le corse hanno i giri in `strava_attivita.jsonl` e in `attivita.json`; lo storico si completa un po' per volta. Arriva nel sync vero con il passo 4 | Fatto ([#6]) |
 | 8 | **Esito vero del ritmo di qualità** dai giri: riconoscere le ripetute e i tratti a soglia o a ritmo gara | Più avanti |
+| 9 | **Sync completo a richiesta**: la casella **completo** in *Run workflow* riscarica tutte le attività, per quelle inserite su Strava con più di due settimane di ritardo. Le corse vecchie che hanno già i giri non li riscaricano. Serve per le attività di ottobre al passo 4 | Fatto ([#8]) |
 
 [#1]: https://github.com/ama-eddy/my-strava/pull/1
 [#2]: https://github.com/ama-eddy/my-strava/pull/2
 [#3]: https://github.com/ama-eddy/my-strava/pull/3
 [#4]: https://github.com/ama-eddy/my-strava/pull/4
 [#6]: https://github.com/ama-eddy/my-strava/pull/6
+[#8]: https://github.com/ama-eddy/my-strava/pull/8
 [i5]: https://github.com/ama-eddy/my-strava/issues/5
 
 **Fino alla prima versione si lavora sui dati di esempio.** Il collegamento a un repo personale di dati, cioè i passi 3 e 4, si fa tutto insieme alla fine: vedi l'[issue #5][i5].
@@ -84,7 +86,7 @@ Le modifiche fatte qui non arrivano al sync finché non si fa il passo 4. Quindi
   - Mobilità → Yoga;
   - Camminata → Walk;
   - Trekking → Hike.
-- **Le attività vanno su Strava entro due settimane.** Il sync riscarica solo gli ultimi 14 giorni: quelle inserite più tardi con una data vecchia non arrivano.
+- **Le attività vanno su Strava entro due settimane.** Il sync riscarica solo gli ultimi 14 giorni: quelle inserite più tardi con una data vecchia arrivano solo con un sync lanciato a mano con **completo** spuntato.
 - **`attivita_manuali.csv` resta solo per le eccezioni**: attività con dati stimati o inserite su Strava troppo tardi.
 - **Facili e lunghi si confrontano con la fascia `facile_lungo` della fase, senza tolleranza.** La gara del piano si confronta con `gara.obiettivo_ritmo`.
 - **Una seduta non fatta si mostra come saltata.** Se la recuperi, rinomini l'attività con il numero della corsa, oppure sposti la seduta nell'editor.
