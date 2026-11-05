@@ -108,7 +108,7 @@ class PianoTest(unittest.TestCase):
 
 def attivita(data, nome, km=5):
     return {"data": data, "nome": nome, "numero_piano": B.numero_piano(nome),
-            "distanza_m": km * 1000, "origine": "strava"}
+            "distanza_m": km * 1000}
 
 
 class CollegaTest(unittest.TestCase):
@@ -145,9 +145,6 @@ class BuildDatiTest(unittest.TestCase):
         self.assertEqual(B.numero_piano("10/36 lungo"), 10)
         self.assertIsNone(B.numero_piano("Corsa del mattino"))
 
-    def test_secondi(self):
-        self.assertEqual((B.secondi("1:02:03"), B.secondi("27:00"), B.secondi("")), (3723, 1620, None))
-
     def test_giri(self):
         laps = [{"distance": 1000.4, "moving_time": 330}, {"distance": 500, "moving_time": 170}]
         self.assertEqual(B.giri(laps), [{"distanza_m": 1000, "tempo_s": 330, "ritmo_s_km": 330},
@@ -156,7 +153,7 @@ class BuildDatiTest(unittest.TestCase):
         self.assertIsNone(B.giri(None))
 
     def test_attivita_senza_giri_non_cambia(self):
-        a = B.attivita("strava", 1, "2027-01-04", "18:00", "1/36", "Run", 5000, 2000, 2050, 10, None, None)
+        a = B.attivita(1, "2027-01-04", "18:00", "1/36", "Run", 5000, 2000, 2050, 10, None, None)
         self.assertNotIn("giri", a)
 
 

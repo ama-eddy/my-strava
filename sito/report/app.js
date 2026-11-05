@@ -98,7 +98,6 @@ function fatto(a, s) {
     a.ritmo_s_km ? ` · ${ritmo(a.ritmo_s_km)}/km` : "",
     a.tempo_movimento_s ? h("span", { class: "tenue" }, ` · ${durata(a.tempo_movimento_s)}`) : "",
     spostata ? h("div", { class: "tenue piccolo" }, `${giornoSett(a.data)} ${dataBreve(a.data)}`) : null,
-    a.origine === "manual" ? h("div", { class: "tenue piccolo" }, "inserita a mano") : null,
   );
 }
 

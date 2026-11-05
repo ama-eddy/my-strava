@@ -1,6 +1,7 @@
-"""Unisce le attività di Strava e quelle manuali in data/attivita.json.
+"""Prepara le attività di Strava per le pagine in data/attivita.json.
 
-- Legge data/strava_attivita.jsonl (scritto da strava_sync.py) e data/attivita_manuali.csv.
+- Legge data/strava_attivita.jsonl (scritto da strava_sync.py). Tutte le attività passano da
+  Strava, anche quelle senza orologio: si inseriscono come attività manuali nell'app.
 - Scrive data/attivita.json: una lista di attività ordinate per data, con numeri e non testi
   (durate in secondi, distanze in metri, ritmo in secondi al km).
 - Il piano non viene letto: l'unico legame è numero_piano, preso dal titolo ("10/153" -> 10).
@@ -8,7 +9,6 @@
   ogni giro. Senza giri il campo non c'è.
 """
 
-import csv
 import json
 import os
 import re
@@ -18,7 +18,6 @@ from pathlib import Path
 # Cartella dei dati: data/ nella cartella da cui si lancia lo script, o il percorso in STRAVA_DATI.
 DATA = Path(os.environ.get("STRAVA_DATI", "data")).resolve()
 JSONL = DATA / "strava_attivita.jsonl"
-MANUALI = DATA / "attivita_manuali.csv"
 OUT = DATA / "attivita.json"
 
 SPORT_A_PIEDI = {"Run", "TrailRun", "VirtualRun", "Walk", "Hike"}
@@ -28,20 +27,6 @@ NUMERO_PIANO = re.compile(r"^\s*(\d+)/\d+\b")
 def numero_piano(nome):
     match = NUMERO_PIANO.match(nome or "")
     return int(match.group(1)) if match else None
-
-
-def secondi(hms):
-    """'1:02:03' o '27:00' -> secondi; vuoto -> None."""
-    if not hms:
-        return None
-    total = 0
-    for part in hms.split(":"):
-        total = total * 60 + int(part)
-    return total
-
-
-def numero(value, cast=float):
-    return cast(value) if value not in (None, "") else None
 
 
 def ritmo(sport, distanza_m, tempo_s):
@@ -58,11 +43,10 @@ def giri(laps):
     return out if len(out) > 1 else None
 
 
-def attivita(origine, id, data, ora, nome, sport, distanza_m, tempo_movimento_s, tempo_totale_s,
+def attivita(id, data, ora, nome, sport, distanza_m, tempo_movimento_s, tempo_totale_s,
              dislivello_m, fc_media, fc_max, laps=None):
     a = {
         "id": id,
-        "origine": origine,
         "data": data,
         "ora": ora,
         "nome": nome,
@@ -87,35 +71,20 @@ def da_strava():
         for a in (json.loads(line) for line in f if line.strip()):
             local = a["start_date_local"]  # ora locale, anche se finisce con "Z"
             yield attivita(
-                "strava", a["id"], local[:10], local[11:16], a.get("name", ""), a.get("sport_type"),
+                a["id"], local[:10], local[11:16], a.get("name", ""), a.get("sport_type"),
                 a.get("distance"), a.get("moving_time"), a.get("elapsed_time"),
                 a.get("total_elevation_gain"), a.get("average_heartrate"), a.get("max_heartrate"),
                 a.get("laps"),
             )
 
 
-def da_manuali():
-    if not MANUALI.exists():
-        return
-    with MANUALI.open(encoding="utf-8", newline="") as f:
-        for row in csv.DictReader(f):
-            km = numero(row["distanza_km"])
-            yield attivita(
-                "manual", numero(row["id"], int), row["data"], row["ora"] or None, row["nome"],
-                row["sport"], km * 1000 if km is not None else None,
-                secondi(row["tempo_movimento"]), secondi(row["tempo_totale"]),
-                numero(row["dislivello_m"]), numero(row["fc_media"]), numero(row["fc_max"]),
-            )
-
-
 def main():
-    tutte = list(da_strava()) + list(da_manuali())
+    tutte = list(da_strava())
     tutte.sort(key=lambda a: (a["data"], a["ora"] or ""))
     with OUT.open("w", encoding="utf-8", newline="\n") as f:
         json.dump(tutte, f, ensure_ascii=False, indent=2)
         f.write("\n")
-    manuali = sum(a["origine"] == "manual" for a in tutte)
-    print(f"Attività in {OUT}: {len(tutte)} ({len(tutte) - manuali} Strava, {manuali} manuali)")
+    print(f"Attività in {OUT}: {len(tutte)}")
 
 
 if __name__ == "__main__":
