@@ -7,9 +7,7 @@ STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET e STRAVA_REFRESH_TOKEN
 - data/strava_attivita.jsonl: una riga JSON per attività, i dati di Strava completi
   (tranne la traccia GPS). È la fonte principale. Le corse hanno anche i giri (lap) in
   "laps": servono a trovare il tratto veloce di test e qualità.
-- data/strava_attivita.csv: tabella leggibile ricavata dal file JSONL, con origine=strava.
-  Le attività non registrate su Strava stanno a parte in data/attivita_manuali.csv
-  (stesse colonne, origine=manual), che questo script non tocca.
+- data/strava_attivita.csv: tabella leggibile ricavata dal file JSONL.
 """
 
 import csv
@@ -157,9 +155,9 @@ def save_db(db):
     with JSONL.open("w", encoding="utf-8", newline="\n") as f:
         for a in activities:
             f.write(json.dumps(a, ensure_ascii=False, sort_keys=True) + "\n")
-    rows = [dict(csv_row(a), origine="strava") for a in activities]
+    rows = [csv_row(a) for a in activities]
     with CSV.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=list(csv_row({"id": 0}).keys()) + ["origine"])
+        writer = csv.DictWriter(f, fieldnames=list(csv_row({"id": 0}).keys()))
         writer.writeheader()
         writer.writerows(rows)
 

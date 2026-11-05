@@ -9,14 +9,14 @@ Qui c'è solo il codice. I dati di ognuno (piano e attività) stanno nel suo rep
 | Percorso | Contenuto |
 |---|---|
 | `scripts/strava_sync.py` | Scarica le attività nuove da Strava, e di nuovo quelle delle ultime due settimane, in `data/strava_attivita.jsonl` e `data/strava_attivita.csv`. Toglie la traccia GPS. Delle corse scarica anche i giri (lap); lo storico senza giri si completa fino a 60 corse per sync. Con `STRAVA_COMPLETO=1` riscarica tutte le attività |
-| `scripts/build_dati.py` | Unisce le attività di Strava e quelle scritte a mano (`data/attivita_manuali.csv`) in `data/attivita.json`, con numeri e non testi, e `numero_piano` preso dal titolo (`10/36` → 10). Le corse con più di un giro hanno anche `giri` |
+| `scripts/build_dati.py` | Prepara le attività di Strava per le pagine in `data/attivita.json`, con numeri e non testi, e `numero_piano` preso dal titolo (`10/36` → 10). Le corse con più di un giro hanno anche `giri` |
 | `scripts/piano.py` | Valida `data/piano.json` (`controlla`), ricalcola i campi ricavati (`aggiorna`), confronta le corse del piano con le attività (`collega`), stampa i km per fase e settimana (`riepilogo`) |
 | `scripts/strava_auth.ps1` | Genera il refresh token di Strava; si lancia a mano, una volta sola, vedi [setup.md](setup.md) |
 | `scripts/crea_esempio.py` | Rigenera i dati di esempio |
 | `sito/` | Le pagine: `report/`, `editor/`, `collega/` per il repo di dati e una pagina iniziale. HTML e JavaScript senza build e senza librerie |
 | `sito/esempio/` | Un piano finto di 12 settimane per una 10 km e le attività fino alla settimana 11, con i giri e due test sui 5 km: servono per provare le pagine e per i test |
 | `scripts/confronta_editor.mjs` | Controlla che l'editor dia su un piano gli stessi risultati di `piano.py` |
-| `modello/` | Il punto di partenza di un repo di dati: i due workflow che richiamano quelli di qui e il CSV delle attività manuali |
+| `modello/` | Il punto di partenza di un repo di dati: i due workflow che richiamano quelli di qui |
 | `.github/workflows/` | **Sync Strava** e **Check Piano**, da richiamare dal repo di dati; **Test**; **Pages**, che pubblica `sito/` |
 | `tests/`, `test/` | Test di `scripts/` (Python) e delle pagine (Node) |
 

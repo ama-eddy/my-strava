@@ -1,7 +1,7 @@
 name: Sync Strava
 
 # Workflow da richiamare dal repo di dati (vedi modello/). Scarica le attività da Strava,
-# le unisce a quelle manuali, controlla il collegamento con il piano e fa un solo commit
+# le prepara per le pagine, controlla il collegamento con il piano e fa un solo commit
 # di data/ nel repo di dati. Se un passaggio fallisce si ferma senza commit.
 on:
   workflow_call:
@@ -54,7 +54,7 @@ jobs:
           STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
           STRAVA_COMPLETO: ${{ inputs.completo && '1' || '' }}
         run: python3 .my-strava/scripts/strava_sync.py
-      - name: Unisce Strava e attività manuali
+      - name: Prepara le attività per le pagine
         run: python3 .my-strava/scripts/build_dati.py
       - name: Controlla il collegamento con il piano
         run: python3 .my-strava/scripts/piano.py collega

@@ -28,8 +28,8 @@ const piano = {
   ],
 };
 const corsa = (data, numero, km, ritmo, nome = `${numero}/5`) =>
-  ({ data, ora: "18:00", nome, sport: "Run", numero_piano: numero, distanza_m: km * 1000, ritmo_s_km: ritmo, origine: "strava" });
-const altro = (data, sport) => ({ data, ora: "20:00", nome: sport, sport, numero_piano: null, distanza_m: null, ritmo_s_km: null, origine: "manual" });
+  ({ data, ora: "18:00", nome, sport: "Run", numero_piano: numero, distanza_m: km * 1000, ritmo_s_km: ritmo });
+const altro = (data, sport) => ({ data, ora: "20:00", nome: sport, sport, numero_piano: null, distanza_m: null, ritmo_s_km: null });
 
 const attivita = [
   corsa("2026-09-30", null, 5, 360, "Prima del piano"),

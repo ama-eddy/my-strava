@@ -132,7 +132,7 @@ def attivita(p):
             tempo = sum(g["moving_time"] for g in giri)
         else:
             distanza, tempo = None, 3600 if tipo == "Volleyball" else 2700
-        a = B.attivita("strava", 1000 + i, d.isoformat(), "18:30", nome, tipo, distanza, tempo,
+        a = B.attivita(1000 + i, d.isoformat(), "18:30", nome, tipo, distanza, tempo,
                        tempo + 60, 20 if distanza else None, None, None, giri if tipo == "Run" else None)
         out.append(a)
     return out

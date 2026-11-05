@@ -1,7 +1,6 @@
 [
   {
     "id": 1001,
-    "origine": "strava",
     "data": "2027-01-04",
     "ora": "18:30",
     "nome": "1/36",
@@ -39,7 +38,6 @@
   },
   {
     "id": 1002,
-    "origine": "strava",
     "data": "2027-01-05",
     "ora": "18:30",
     "nome": "Gioco di squadra",
@@ -55,7 +53,6 @@
   },
   {
     "id": 1003,
-    "origine": "strava",
     "data": "2027-01-07",
     "ora": "18:30",
     "nome": "2/36",
@@ -93,7 +90,6 @@
   },
   {
     "id": 1004,
-    "origine": "strava",
     "data": "2027-01-08",
     "ora": "18:30",
     "nome": "Forza, 45 minuti",
@@ -109,7 +105,6 @@
   },
   {
     "id": 1005,
-    "origine": "strava",
     "data": "2027-01-10",
     "ora": "18:30",
     "nome": "3/36",
@@ -157,7 +152,6 @@
   },
   {
     "id": 1006,
-    "origine": "strava",
     "data": "2027-01-11",
     "ora": "18:30",
     "nome": "4/36",
@@ -200,7 +194,6 @@
   },
   {
     "id": 1007,
-    "origine": "strava",
     "data": "2027-01-12",
     "ora": "18:30",
     "nome": "Gioco di squadra",
@@ -216,7 +209,6 @@
   },
   {
     "id": 1008,
-    "origine": "strava",
     "data": "2027-01-14",
     "ora": "18:30",
     "nome": "5/36",
@@ -259,7 +251,6 @@
   },
   {
     "id": 1009,
-    "origine": "strava",
     "data": "2027-01-15",
     "ora": "18:30",
     "nome": "Forza, 45 minuti",
@@ -275,7 +266,6 @@
   },
   {
     "id": 1010,
-    "origine": "strava",
     "data": "2027-01-17",
     "ora": "18:30",
     "nome": "6/36",
@@ -328,7 +318,6 @@
   },
   {
     "id": 1011,
-    "origine": "strava",
     "data": "2027-01-18",
     "ora": "18:30",
     "nome": "7/36",
@@ -371,7 +360,6 @@
   },
   {
     "id": 1012,
-    "origine": "strava",
     "data": "2027-01-19",
     "ora": "18:30",
     "nome": "Gioco di squadra",
@@ -387,7 +375,6 @@
   },
   {
     "id": 1013,
-    "origine": "strava",
     "data": "2027-01-22",
     "ora": "18:30",
     "nome": "8/36",
@@ -435,7 +422,6 @@
   },
   {
     "id": 1014,
-    "origine": "strava",
     "data": "2027-01-22",
     "ora": "18:30",
     "nome": "Forza, 45 minuti",
@@ -451,7 +437,6 @@
   },
   {
     "id": 1015,
-    "origine": "strava",
     "data": "2027-01-24",
     "ora": "18:30",
     "nome": "9/36",
@@ -514,7 +499,6 @@
   },
   {
     "id": 1016,
-    "origine": "strava",
     "data": "2027-01-25",
     "ora": "18:30",
     "nome": "10/36",
@@ -557,7 +541,6 @@
   },
   {
     "id": 1017,
-    "origine": "strava",
     "data": "2027-01-26",
     "ora": "18:30",
     "nome": "Gioco di squadra",
@@ -573,7 +556,6 @@
   },
   {
     "id": 1018,
-    "origine": "strava",
     "data": "2027-01-28",
     "ora": "18:30",
     "nome": "11/36",
@@ -611,7 +593,6 @@
   },
   {
     "id": 1019,
-    "origine": "strava",
     "data": "2027-01-29",
     "ora": "18:30",
     "nome": "Forza leggera, 30 minuti",
@@ -627,7 +608,6 @@
   },
   {
     "id": 1020,
-    "origine": "strava",
     "data": "2027-01-30",
     "ora": "18:30",
     "nome": "Passeggiata",
@@ -643,7 +623,6 @@
   },
   {
     "id": 1021,
-    "origine": "strava",
     "data": "2027-01-31",
     "ora": "18:30",
     "nome": "12/36",
@@ -696,7 +675,6 @@
   },
   {
     "id": 1022,
-    "origine": "strava",
     "data": "2027-02-01",
     "ora": "18:30",
     "nome": "13/36",
@@ -744,7 +722,6 @@
   },
   {
     "id": 1023,
-    "origine": "strava",
     "data": "2027-02-04",
     "ora": "18:30",
     "nome": "14/36",
@@ -792,7 +769,6 @@
   },
   {
     "id": 1024,
-    "origine": "strava",
     "data": "2027-02-05",
     "ora": "18:30",
     "nome": "Forza, 45 minuti",
@@ -808,7 +784,6 @@
   },
   {
     "id": 1025,
-    "origine": "strava",
     "data": "2027-02-08",
     "ora": "18:30",
     "nome": "16/36",
@@ -856,7 +831,6 @@
   },
   {
     "id": 1026,
-    "origine": "strava",
     "data": "2027-02-09",
     "ora": "18:30",
     "nome": "Gioco di squadra",
@@ -872,7 +846,6 @@
   },
   {
     "id": 1027,
-    "origine": "strava",
     "data": "2027-02-11",
     "ora": "18:30",
     "nome": "17/36",
@@ -915,7 +888,6 @@
   },
   {
     "id": 1028,
-    "origine": "strava",
     "data": "2027-02-12",
     "ora": "18:30",
     "nome": "Forza leggera, 30 minuti",
@@ -931,7 +903,6 @@
   },
   {
     "id": 1029,
-    "origine": "strava",
     "data": "2027-02-14",
     "ora": "18:30",
     "nome": "18/36",
@@ -989,7 +960,6 @@
   },
   {
     "id": 1030,
-    "origine": "strava",
     "data": "2027-02-15",
     "ora": "18:30",
     "nome": "19/36",
@@ -1032,7 +1002,6 @@
   },
   {
     "id": 1031,
-    "origine": "strava",
     "data": "2027-02-16",
     "ora": "18:30",
     "nome": "Gioco di squadra",
@@ -1048,7 +1017,6 @@
   },
   {
     "id": 1032,
-    "origine": "strava",
     "data": "2027-02-18",
     "ora": "18:30",
     "nome": "20/36",
@@ -1096,7 +1064,6 @@
   },
   {
     "id": 1033,
-    "origine": "strava",
     "data": "2027-02-19",
     "ora": "18:30",
     "nome": "Forza, 45 minuti",
@@ -1112,7 +1079,6 @@
   },
   {
     "id": 1034,
-    "origine": "strava",
     "data": "2027-02-21",
     "ora": "18:30",
     "nome": "21/36",
@@ -1185,7 +1151,6 @@
   },
   {
     "id": 1035,
-    "origine": "strava",
     "data": "2027-02-22",
     "ora": "18:30",
     "nome": "22/36",
@@ -1223,7 +1188,6 @@
   },
   {
     "id": 1036,
-    "origine": "strava",
     "data": "2027-02-23",
     "ora": "18:30",
     "nome": "Gioco di squadra",
@@ -1239,7 +1203,6 @@
   },
   {
     "id": 1037,
-    "origine": "strava",
     "data": "2027-02-25",
     "ora": "18:30",
     "nome": "23/36",
@@ -1287,7 +1250,6 @@
   },
   {
     "id": 1038,
-    "origine": "strava",
     "data": "2027-02-26",
     "ora": "18:30",
     "nome": "Forza leggera, 30 minuti",
@@ -1303,7 +1265,6 @@
   },
   {
     "id": 1039,
-    "origine": "strava",
     "data": "2027-02-28",
     "ora": "18:30",
     "nome": "24/36",
@@ -1361,7 +1322,6 @@
   },
   {
     "id": 1040,
-    "origine": "strava",
     "data": "2027-03-01",
     "ora": "18:30",
     "nome": "25/36",
@@ -1404,7 +1364,6 @@
   },
   {
     "id": 1041,
-    "origine": "strava",
     "data": "2027-03-02",
     "ora": "18:30",
     "nome": "Gioco di squadra",
@@ -1420,7 +1379,6 @@
   },
   {
     "id": 1042,
-    "origine": "strava",
     "data": "2027-03-04",
     "ora": "18:30",
     "nome": "26/36",
@@ -1473,7 +1431,6 @@
   },
   {
     "id": 1043,
-    "origine": "strava",
     "data": "2027-03-05",
     "ora": "18:30",
     "nome": "Forza, 45 minuti",
@@ -1489,7 +1446,6 @@
   },
   {
     "id": 1044,
-    "origine": "strava",
     "data": "2027-03-07",
     "ora": "18:30",
     "nome": "27/36",
@@ -1562,7 +1518,6 @@
   },
   {
     "id": 1045,
-    "origine": "strava",
     "data": "2027-03-08",
     "ora": "18:30",
     "nome": "28/36",
@@ -1605,7 +1560,6 @@
   },
   {
     "id": 1046,
-    "origine": "strava",
     "data": "2027-03-09",
     "ora": "18:30",
     "nome": "Gioco di squadra",
@@ -1621,7 +1575,6 @@
   },
   {
     "id": 1047,
-    "origine": "strava",
     "data": "2027-03-11",
     "ora": "18:30",
     "nome": "29/36",
@@ -1674,7 +1627,6 @@
   },
   {
     "id": 1048,
-    "origine": "strava",
     "data": "2027-03-12",
     "ora": "18:30",
     "nome": "Forza leggera, 30 minuti",
@@ -1690,7 +1642,6 @@
   },
   {
     "id": 1049,
-    "origine": "strava",
     "data": "2027-03-14",
     "ora": "18:30",
     "nome": "30/36",
@@ -1748,7 +1699,6 @@
   },
   {
     "id": 1050,
-    "origine": "strava",
     "data": "2027-03-15",
     "ora": "18:30",
     "nome": "31/36",
@@ -1796,7 +1746,6 @@
   },
   {
     "id": 1051,
-    "origine": "strava",
     "data": "2027-03-16",
     "ora": "18:30",
     "nome": "Gioco di squadra",

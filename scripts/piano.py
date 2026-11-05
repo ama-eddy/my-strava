@@ -322,7 +322,7 @@ def main(argv):
         coppie, errori, avvisi = collega(piano, attivita)
         for s, a in coppie:
             print(f"{s['numero_piano']:>3}  previsto {s['data']} {_km(s['distanza_m']):>4} km"
-                  f"  fatto {a['data']} {_km(a['distanza_m'] or 0):>5} km  {a['origine']}")
+                  f"  fatto {a['data']} {_km(a['distanza_m'] or 0):>5} km")
         _stampa(errori, avvisi)
         print(f"{len(coppie)} corse collegate su {piano['totale_corse']}, {len(errori)} errori, {len(avvisi)} avvisi")
         return 1 if errori else 0

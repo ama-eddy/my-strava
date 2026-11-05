@@ -87,6 +87,6 @@ Le modifiche fatte qui non arrivano al sync finché non si fa il passo 4. Quindi
   - Camminata → Walk;
   - Trekking → Hike.
 - **Le attività vanno su Strava entro due settimane.** Il sync riscarica solo gli ultimi 14 giorni: quelle inserite più tardi con una data vecchia arrivano solo con un sync lanciato a mano con **completo** spuntato.
-- **`attivita_manuali.csv` resta solo per le eccezioni**: attività con dati stimati o inserite su Strava troppo tardi.
+- **Niente attività fuori da Strava.** Il vecchio `attivita_manuali.csv` non c'è più. Un'attività dimenticata o con dati stimati si inserisce su Strava come attività manuale, e una inserita in ritardo arriva con il sync **completo**.
 - **Facili e lunghi si confrontano con la fascia `facile_lungo` della fase, senza tolleranza.** La gara del piano si confronta con `gara.obiettivo_ritmo`.
 - **Una seduta non fatta si mostra come saltata.** Se la recuperi, rinomini l'attività con il numero della corsa, oppure sposti la seduta nell'editor.
