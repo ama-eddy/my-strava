@@ -7,6 +7,7 @@ const LUNGHI = ["lungo", "test", "gara"];
 // Tipo di attività su Strava -> tipo di seduta del piano (vedi le decisioni nella ROADMAP).
 export const SPORT_TIPO = {
   Volleyball: "volley",
+  Workout: "forza",
   WeightTraining: "forza",
   Yoga: "mobilita",
   Walk: "camminata",

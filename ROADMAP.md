@@ -82,7 +82,7 @@ Le modifiche fatte qui non arrivano al sync finché non si fa il passo 4. Quindi
 - **I titoli seguono i nomi del piano**: **Gioco di squadra**, **Forza**, **Mobilità**, **Camminata**, **Trekking**. Le corse hanno il titolo `N/totale`.
 - **Lo sport su Strava**:
   - Gioco di squadra → Volleyball;
-  - Forza → Weight Training;
+  - Forza → Workout (Allenamento); vale anche Weight Training;
   - Mobilità → Yoga;
   - Camminata → Walk;
   - Trekking → Hike.

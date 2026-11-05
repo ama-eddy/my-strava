@@ -102,7 +102,7 @@ def piano():
 
 def attivita(p):
     caso = random.Random(7)
-    sport = {"volley": "Volleyball", "forza": "WeightTraining", "mobilita": "Yoga"}
+    sport = {"volley": "Volleyball", "forza": "Workout", "mobilita": "Yoga"}
     fatte = []
     for s in p["sedute"]:
         d = dt.date.fromisoformat(s["data"])
