@@ -53,6 +53,14 @@ test("stati delle sedute", () => {
   assert.equal(r.settimana_corrente, 2);
 });
 
+test("Workout e WeightTraining valgono tutti e due come forza", () => {
+  const conForza = { ...piano, sedute: [...piano.sedute, seduta("w2s9", "2026-10-12", "forza", null, null, 2)] };
+  for (const sport of ["Workout", "WeightTraining"]) {
+    const r = analizza(conForza, [altro("2026-10-12", sport)], "2026-10-14");
+    assert.equal(r.sedute.find((s) => s.id === "w2s9").stato, "fatta", sport);
+  }
+});
+
 test("oggi non è saltata: la seduta di oggi resta da fare", () => {
   const r = analizza(piano, attivita, "2026-10-13");
   assert.equal(r.sedute.find((s) => s.id === "w2s2").stato, "da_fare");

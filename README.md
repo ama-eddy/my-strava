@@ -76,7 +76,7 @@ Senza collegamento le pagine usano una copia locale in `dati/`, i file scelti a 
   - **Le gare intermedie** hanno un esito: si confrontano con quel ritmo, oppure con il ritmo gara della fase.
 - **Il collegamento tra piano e attività**:
   - **le corse** si collegano sul numero nel titolo dell'attività su Strava: `10/36` è la decima corsa del piano;
-  - **le altre sedute** si collegano sullo sport di Strava: `Volleyball` → gioco di squadra, `WeightTraining` → forza, `Yoga` → mobilità, `Walk` → camminata, `Hike` → trekking. Si cerca prima un'attività lo stesso giorno, poi nella stessa settimana.
+  - **le altre sedute** si collegano sullo sport di Strava: `Volleyball` → gioco di squadra, `Workout` (o `WeightTraining`) → forza, `Yoga` → mobilità, `Walk` → camminata, `Hike` → trekking. Si cerca prima un'attività lo stesso giorno, poi nella stessa settimana.
 - La logica del piano esiste in due copie: `scripts/piano.py` e `sito/editor/piano.js`. Se ne cambi una, cambia anche l'altra: `test/piano.test.mjs` le confronta.
 
 ## Test

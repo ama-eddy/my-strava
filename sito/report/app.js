@@ -1,4 +1,4 @@
-import { analizza, giorno, iso, secondiKm } from "./analisi.js";
+import { SPORT_TIPO, analizza, giorno, iso, secondiKm } from "./analisi.js";
 import { caricaDati, leggiFile } from "./fonte.js";
 import { colonneSettimane, ritmi } from "./grafici.js";
 
@@ -117,7 +117,7 @@ function righeSedute(w) {
   ];
 }
 
-const sportTipo = (a) => (a.sport === "Run" ? "facile" : { Volleyball: "volley", WeightTraining: "forza", Yoga: "mobilita", Walk: "camminata", Hike: "trekking" }[a.sport]);
+const sportTipo = (a) => (a.sport === "Run" ? "facile" : SPORT_TIPO[a.sport]);
 
 function disegnaSettimana(piano, r) {
   const n = Math.min(Math.max(1, r.settimana_corrente), piano.settimane.length);

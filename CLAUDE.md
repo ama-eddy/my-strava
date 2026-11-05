@@ -46,7 +46,7 @@ Piano di allenamento per la corsa, attività di Strava e due pagine, report ed e
 - **Le corse si collegano al piano** con il titolo `N/totale` su Strava, cioè `numero_piano`.
 - **Le altre sedute si collegano con lo sport di Strava**, prima lo stesso giorno, poi nella stessa settimana:
   - Volleyball → gioco di squadra;
-  - WeightTraining → forza;
+  - Workout → forza, e anche WeightTraining;
   - Yoga → mobilità;
   - Walk → camminata;
   - Hike → trekking.
