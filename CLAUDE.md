@@ -7,12 +7,12 @@ Piano di allenamento per la corsa, attività di Strava e due pagine, report ed e
 | Repo | Cosa contiene |
 |---|---|
 | `ama-eddy/my-strava` (pubblico) | Tutto il codice: script, pagine, workflow riutilizzabili, dati di esempio e test. Il sito è pubblicato con GitHub Pages su <https://ama-eddy.github.io/my-strava/> |
-| `ama-eddy/strava-database` (privato) | I dati veri dell'utente: `data/piano.json`, le attività, i secret di Strava. Ha ancora una sua copia degli script, con cui gira il sync vero del lunedì |
+| `ama-eddy/strava-database` (privato) | I dati veri dell'utente: `data/piano.json`, le attività, i secret di Strava. Contiene solo `data/` e i due workflow di `modello/`, che richiamano quelli di qui |
 | `training-plan-editor`, `training-report` | Vecchi repo, il cui codice ora è qui. Vanno archiviati con l'issue #5 |
 
 - **In my-strava non entrano mai dati personali:** né il piano vero, né le attività, né coordinate o nomi. Si lavora sui dati finti di `sito/esempio/`.
-- **Gli script di strava-database non si toccano** finché l'issue #5 non lo collega ai workflow di qui. Prima di allora le modifiche fatte qui non arrivano al sync vero.
-- La ROADMAP e il README di strava-database sono indietro: parlano ancora di training-plan-editor e training-report. Si aggiornano con l'issue #5.
+- **Le modifiche fatte qui arrivano subito al sync vero e a Check Piano**, perché strava-database richiama i workflow di `main`. Prima di unire una PR che tocca `scripts/` o `.github/workflows/`, provala su una copia dei dati veri, fuori da questo repo.
+- **Nei testi di my-strava** (codice, commit, PR, issue) non vanno date, nomi o numeri delle attività vere: i dettagli del repo di dati si scrivono solo lì.
 
 ## Come si lavora
 
@@ -27,7 +27,7 @@ Piano di allenamento per la corsa, attività di Strava e due pagine, report ed e
 ## Il codice
 
 - **Le pagine (`sito/`)** sono HTML e JavaScript con moduli ES, senza build e senza librerie. I grafici sono SVG fatti a mano (`sito/report/grafici.js`).
-- **Da dove arrivano i dati** lo sa solo `fonte.js` di ogni pagina. Il codice che parla con GitHub sta in `sito/comune/github.js`, che arriva con la PR #3.
+- **Da dove arrivano i dati** lo sa solo `fonte.js` di ogni pagina. Il codice che parla con GitHub sta in `sito/comune/github.js`.
 - **La logica del piano esiste in due copie**, `scripts/piano.py` e `sito/editor/piano.js`, che devono dare risultati identici:
   - stessi campi ricavati, nello stesso ordine e byte per byte;
   - stessi errori e avvisi, con gli stessi testi.
