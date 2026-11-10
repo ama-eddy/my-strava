@@ -13,4 +13,4 @@ permissions:
 
 jobs:
   controlla:
-    uses: ama-eddy/my-strava/.github/workflows/piano.yml@v1
+    uses: ama-eddy/my-strava/.github/workflows/piano.yml@v2

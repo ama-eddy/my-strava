@@ -158,6 +158,16 @@ dialog input, dialog select, dialog textarea {
   border: 1px solid var(--bordo); border-radius: 6px; padding: 6px 8px; background: var(--sfondo); color: var(--testo);
 }
 dialog .bottoni { display: flex; gap: 8px; }
+dialog { max-height: calc(100dvh - 32px); overflow: auto; }
+.tratti { border: 1px solid var(--bordo); border-radius: 8px; padding: 8px 10px 10px; margin: 0; }
+.tratti legend { font-size: .9rem; color: var(--tenue); padding: 0 4px; }
+.facoltativo { font-size: .8rem; color: var(--tenue); }
+.riga-tratto { display: grid; grid-template-columns: 4.5em 1fr 1fr auto; gap: 6px; align-items: center; margin-bottom: 6px; }
+.riga-tratto input, .riga-tratto select { min-width: 0; padding: 4px 6px; }
+.riga-tratto .preciso { grid-column: 2 / 4; }
+.riga-tratto .togli { border: 0; background: none; color: var(--tenue); padding: 4px 6px; cursor: pointer; }
+.tratti-piede { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+#aggiungi-tratto { border: 1px dashed var(--bordo); border-radius: 6px; background: none; padding: 4px 8px; cursor: pointer; }
 dialog .spazio { flex: 1; }
 [hidden] { display: none !important; }
 
@@ -168,4 +178,11 @@ dialog .spazio { flex: 1; }
   .giorno-testa { width: 100%; }
   .tipo-settimana { margin-left: 0; }
   .barra { position: static; }
+  /* tratti: km, tipo e ✕ sulla prima riga, il ritmo sotto */
+  .riga-tratto { grid-template-columns: 4em 1fr auto; padding-bottom: 6px; border-bottom: 1px solid var(--bordo); }
+  .riga-tratto .km { grid-area: 1 / 1; }
+  .riga-tratto .tipo { grid-area: 1 / 2; }
+  .riga-tratto .togli { grid-area: 1 / 3; }
+  .riga-tratto .ritmo { grid-area: 2 / 1 / 3 / 4; }
+  .riga-tratto .preciso { grid-area: 3 / 1 / 4 / 4; }
 }

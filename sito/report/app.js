@@ -71,6 +71,36 @@ const badgeStato = (stato) => h("span", { class: `stato ${stato}` }, h("span", {
 const badgeEsito = (esito) => esito ? h("span", { class: `esito ${esito}` }, h("span", { "aria-hidden": "true" }, ESITI[esito][0]), ` ${ESITI[esito][1]}`) : null;
 
 const NOMI_RITMO = { soglia: "soglia", ripetute: "ripetute", gara: "ritmo gara" };
+const NOMI_TRATTO = { riscaldamento: "riscaldamento", corsa: "corsa", test: "test", defaticamento: "defaticamento" };
+const NOMI_RITMO_TRATTO = { facile_lungo: "facile", soglia: "soglia", ripetute: "ripetute", gara: "ritmo gara" };
+const kmTratto = (x) => x.toLocaleString("it-IT", { maximumFractionDigits: 1 });
+
+// "2 km riscaldamento · 5 km test · 1 km a 6:05"
+const testoTratto = (t) => `${kmTratto(t.km)} km ${t.tipo === "corsa" && t.ritmo ? "" : NOMI_TRATTO[t.tipo] ?? t.tipo}${
+  t.ritmo ? `${t.tipo === "corsa" ? "" : " "}${t.ritmo.includes(":") ? `a ${t.ritmo.replace("-", "–")}` : NOMI_RITMO_TRATTO[t.ritmo] ?? t.ritmo}` : ""}`;
+
+// "facile 6:30–7:00", "6:05 ± 5 s"
+function testoObiettivoTratto(o) {
+  if (!o) return null;
+  if (o.preciso != null) return `obiettivo ${ritmo(o.preciso)} ± ${(o.max - o.min) / 2} s`;
+  return `obiettivo ${o.nome ? `${NOMI_RITMO_TRATTO[o.nome]} ` : ""}${ritmo(o.min)}–${ritmo(o.max)}`;
+}
+
+// I tratti fatti sotto il fatto: un riga per tratto, con il ritmo dai giri e l'esito.
+function trattiFatti(s) {
+  const tf = s.tratti_fatti;
+  if (!tf) return null;
+  if (tf.every((x) => x.ritmo_s_km == null)) {
+    return h("div", { class: "tenue piccolo" }, "Tratti non misurati: servono i giri su Strava, per esempio quelli automatici ogni km");
+  }
+  return h("ul", { class: "tratti" }, tf.map((x) => h("li", {},
+    h("span", { class: "tenue" }, `km ${kmTratto(x.da_km)}–${kmTratto(x.a_km)} `),
+    NOMI_TRATTO[x.tratto.tipo] ?? x.tratto.tipo,
+    x.ritmo_s_km != null ? h("strong", {}, ` ${ritmo(x.ritmo_s_km)}/km`) : h("span", { class: "tenue" }, " non misurato"),
+    x.obiettivo ? h("span", { class: "tenue" }, ` · ${testoObiettivoTratto(x.obiettivo)}`) : null,
+    x.esito ? [" ", badgeEsito(x.esito)] : null,
+  )));
+}
 
 // "ritmo 6:30–7:00/km", oppure "ripetute 5:25–5:35/km · 1000 m · indicativo"
 function testoObiettivo(o) {
@@ -83,6 +113,7 @@ function previsto(s) {
     h("strong", {}, NOMI_TIPO[s.tipo]),
     s.corsa ? ` · ${km(s.distanza_m)} km · ${s.numero_piano}/${ultimo.piano.totale_corse}` : "",
     s.descrizione !== NOMI_TIPO[s.tipo] ? h("div", { class: "tenue piccolo" }, s.descrizione) : null,
+    s.tratti?.length ? h("div", { class: "tenue piccolo" }, s.tratti.map(testoTratto).join(" · ")) : null,
     s.obiettivo ? h("div", {
       class: "tenue piccolo",
       title: s.obiettivo.indicativo ? "Senza esito: il ritmo medio di Strava include riscaldamento e recuperi" : null,
@@ -111,7 +142,7 @@ function righeSedute(w) {
     h("tbody", {}, righe.map(({ data, s, a, stato }) => h("tr", { class: data === oggi ? "oggi" : null },
       h("td", { class: "giorno" }, `${giornoSett(data)} ${+data.slice(8)}`),
       h("td", {}, s ? previsto(s) : h("span", { class: "tenue" }, NOMI_TIPO[sportTipo(a)] ?? a.sport)),
-      h("td", {}, fatto(a, s)),
+      h("td", {}, fatto(a, s), s ? trattiFatti(s) : null),
       h("td", {}, badgeStato(stato), s?.esito ? h("div", {}, badgeEsito(s.esito)) : null),
     ))),
   ];
@@ -183,7 +214,7 @@ function fattoTest(s, t) {
   const cella = fatto(s.attivita, s);
   if (!t) return cella;
   if (!t.tratto) {
-    cella.append(h("div", { class: "tenue piccolo" }, "Tempo del test non ricavabile: servono i giri su Strava, o un'attività lunga solo quanto il test"));
+    cella.append(h("div", { class: "tenue piccolo" }, "Tempo del test non ricavabile: servono i giri su Strava, per esempio quelli automatici ogni km"));
     return cella;
   }
   cella.append(h("div", { class: "test-tratto" }, h("strong", {}, `Test: ${durata(t.tempo_s)}`), ` · ${ritmo(t.tratto.ritmo_s_km)}/km`,
@@ -207,7 +238,7 @@ function disegnaTest(r) {
     h("tbody", {}, r.test.map((s) => h("tr", { class: s.data === oggi ? "oggi" : null },
       h("td", { class: "giorno" }, dataLunga(s.data)),
       h("td", {}, previsto(s)),
-      h("td", {}, fattoTest(s, perId.get(s.id))),
+      h("td", {}, fattoTest(s, perId.get(s.id)), trattiFatti(s)),
       h("td", {}, badgeStato(s.stato), s.esito ? h("div", {}, badgeEsito(s.esito)) : null),
     ))),
   );

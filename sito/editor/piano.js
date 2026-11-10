@@ -9,8 +9,11 @@ export const RITMI = ["facile_lungo", "soglia", "ripetute", "gara"];
 // Il campo facoltativo `ritmo` di una seduta: quale ritmo della fase vale per qualità, test e gara.
 export const RITMI_SEDUTA = ["soglia", "ripetute", "gara"];
 export const TIPI_CON_RITMO = ["qualita", "test", "gara"];
+// Il campo facoltativo `tratti` di una corsa: la corsa km per km, a blocchi.
+export const TIPI_TRATTO = ["riscaldamento", "corsa", "test", "defaticamento"];
 export const GIORNI = ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"];
 const RITMO = /^\d{1,2}:[0-5]\d$/;
+const RITMO_TRATTO = /^(\d{1,2}:[0-5]\d)(?:-(\d{1,2}:[0-5]\d))?$/;
 const GIORNO_MS = 86400000;
 
 export const secondiKm = (r) => {
@@ -33,6 +36,12 @@ export function faseDi(piano, settimana) {
   }
   return null;
 }
+
+/** I metri di una corsa con i tratti: la somma dei km dei tratti. */
+export const distanzaTratti = (tratti) => Math.round(tratti.reduce((t, x) => t + x.km, 0) * 1000);
+
+const kmValido = (x) => typeof x === "number" && Number.isFinite(x) && x > 0 && Math.abs(x * 10 - Math.round(x * 10)) < 1e-9;
+const trattiValidi = (tratti) => Array.isArray(tratti) && tratti.every((t) => t && typeof t === "object" && !Array.isArray(t) && kmValido(t.km));
 
 export const ordina = (sedute) =>
   sedute.map((s, i) => [s, i]).sort((x, y) => (x[0].data < y[0].data ? -1 : x[0].data > y[0].data ? 1 : x[1] - y[1])).map((x) => x[0]);
@@ -59,6 +68,10 @@ export function espandi(piano) {
       distanza_m: s.distanza_m ?? null,
     };
     if (s.ritmo != null) seduta.ritmo = s.ritmo; // solo se c'è, così i piani senza ritmo non cambiano
+    if (s.tratti != null) { // come ritmo; con i tratti la distanza è la loro somma
+      seduta.tratti = s.tratti;
+      if (s.tratti.length && trattiValidi(s.tratti)) seduta.distanza_m = distanzaTratti(s.tratti);
+    }
     return seduta;
   });
   const settimane = piano.settimane.map((w) => {
@@ -85,6 +98,40 @@ export function espandi(piano) {
     settimana_tipo: piano.settimana_tipo ?? [],
     regole: piano.regole ?? [],
   };
+}
+
+function controllaTratti(piano, s, sid, err) {
+  const tratti = s.tratti;
+  if (!TIPI_CORSA.includes(s.tipo)) {
+    err(`${sid}: solo le corse hanno i tratti`);
+    return;
+  }
+  if (!Array.isArray(tratti) || !tratti.length) {
+    err(`${sid}: tratti vuoti o non validi`);
+    return;
+  }
+  const n = faseDi(piano, settimanaDi(piano, s.data));
+  const fase = piano.fasi.find((f) => f.fase === n);
+  tratti.forEach((t, idx) => {
+    const i = idx + 1;
+    if (!t || typeof t !== "object" || Array.isArray(t)) {
+      err(`${sid}: tratto ${i} non valido`);
+      return;
+    }
+    if (!kmValido(t.km)) err(`${sid}: tratto ${i}: km deve essere positivo, al massimo con un decimale`);
+    if (!TIPI_TRATTO.includes(t.tipo)) err(`${sid}: tratto ${i}: tipo '${t.tipo}' non valido`);
+    const r = t.ritmo;
+    if (r == null) return;
+    if (RITMI.includes(r)) {
+      if (fase && !fase.ritmi?.[r]) err(`${sid}: tratto ${i}: la fase ${n} non ha il ritmo ${r}`);
+      return;
+    }
+    const m = typeof r === "string" ? RITMO_TRATTO.exec(r) : null;
+    if (!m || (m[2] && secondiKm(m[1]) > secondiKm(m[2]))) err(`${sid}: tratto ${i}: ritmo '${r}' non valido`);
+  });
+  const test = tratti.filter((t) => t && typeof t === "object" && t.tipo === "test").length;
+  if (test && s.tipo !== "test") err(`${sid}: solo i test hanno un tratto di test`);
+  else if (test > 1) err(`${sid}: più di un tratto di test`);
 }
 
 /** Restituisce {errori, avvisi}, come controlla() in piano.py, senza il controllo
@@ -163,6 +210,7 @@ export function controlla(piano) {
       else if (!RITMI_SEDUTA.includes(r)) err(`${sid}: ritmo '${r}' non valido`);
       else if (fase && !fase.ritmi?.[r]) err(`${sid}: la fase ${n} non ha il ritmo ${r}`);
     }
+    if (s.tratti != null) controllaTratti(piano, s, sid, err);
   }
 
   if (!piano.sedute.some((s) => s.tipo === "gara" && s.data === gara)) err(`nessuna seduta di tipo gara il ${gara}`);

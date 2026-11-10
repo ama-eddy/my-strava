@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { analizza, riegel, ritmiSuggeriti, trattoTest } from "../sito/report/analisi.js";
+import { analizza, distanzaTest, obiettivoTratto, riegel, ritmiSuggeriti, trattiFatti, trattoTest } from "../sito/report/analisi.js";
 
 const giri = (...x) => x.map(([m, s]) => ({ distanza_m: m, tempo_s: s, ritmo_s_km: Math.round(s / (m / 1000)) }));
 
@@ -33,7 +33,7 @@ test("andamento sui dati di esempio: due test, previsione e ritmi da ricalibrare
   const leggi = (f) => JSON.parse(readFileSync(new URL(`../sito/esempio/${f}`, import.meta.url)));
   const a = analizza(leggi("piano.json"), leggi("attivita.json"), "2027-03-17").andamento;
   assert.deepEqual(a.test.map((t) => [t.seduta.id, t.tempo_s, t.differenza_s, t.precedente]),
-    [["w6s5", 1657, null, null], ["w10s5", 1598, -59, "2027-02-14"]]);
+    [["w6s5", 1664, null, null], ["w10s5", 1598, -66, "2027-02-14"]]);
   assert.equal(a.ultimo.seduta.id, "w10s5");
   assert.equal(a.obiettivo_s, 57 * 60);
   assert.ok(a.ultimo.previsione_s < a.obiettivo_s);
@@ -42,4 +42,39 @@ test("andamento sui dati di esempio: due test, previsione e ritmi da ricalibrare
   // prima del secondo test i suggerimenti vengono dal primo
   const prima = analizza(leggi("piano.json"), leggi("attivita.json"), "2027-03-10").andamento;
   assert.equal(prima.ultimo.seduta.id, "w6s5");
+});
+
+// ---------- Tratti km per km ----------
+
+const piano = { fasi: [{ fase: 2, ritmi: { facile_lungo: { min: "6:30", max: "7:00" }, soglia: { min: "5:50", max: "6:00" } } }] };
+const seduta = (tratti) => ({ fase: 2, tipo: "qualita", tratti, distanza_m: 1000 * tratti.reduce((t, x) => t + x.km, 0) });
+
+test("obiettivo di un tratto: ritmo della fase, preciso con tolleranza, fascia", () => {
+  const s = seduta([]);
+  assert.deepEqual(obiettivoTratto(piano, s, { km: 1, tipo: "corsa", ritmo: "soglia" }), { min: 350, max: 360, nome: "soglia" });
+  assert.deepEqual(obiettivoTratto(piano, s, { km: 1, tipo: "corsa", ritmo: "6:05" }), { min: 360, max: 370, preciso: 365 });
+  assert.deepEqual(obiettivoTratto(piano, s, { km: 1, tipo: "corsa", ritmo: "5:45-5:50" }), { min: 345, max: 350 });
+  assert.equal(obiettivoTratto(piano, s, { km: 1, tipo: "riscaldamento" }), null);
+  assert.equal(obiettivoTratto(piano, s, { km: 1, tipo: "corsa", ritmo: "gara" }), null); // la fase non ce l'ha
+});
+
+test("tratti fatti: i giri da 1 km vanno al loro tratto, con l'esito", () => {
+  const s = seduta([{ km: 2, tipo: "riscaldamento", ritmo: "facile_lungo" }, { km: 3, tipo: "corsa", ritmo: "soglia" }, { km: 1, tipo: "defaticamento" }]);
+  const a = { giri: giri([1000, 410], [1000, 405], [1000, 352], [1000, 362], [1000, 358], [1030, 440]) };
+  assert.deepEqual(trattiFatti(piano, s, a).map((x) => [x.da_km, x.a_km, x.distanza_m, x.tempo_s, x.ritmo_s_km, x.esito]), [
+    [0, 2, 2000, 815, 408, "nel_ritmo"],
+    [2, 5, 3000, 1072, 357, "nel_ritmo"],
+    [5, 6, 1030, 440, 427, null], // il defaticamento non ha un ritmo
+  ]);
+});
+
+test("tratti fatti: con un giro solo per tutta la corsa non si misura niente", () => {
+  const s = seduta([{ km: 2, tipo: "riscaldamento" }, { km: 5, tipo: "test" }, { km: 1, tipo: "defaticamento" }]);
+  assert.ok(trattiFatti(piano, s, { giri: [] }).every((x) => x.ritmo_s_km === null));
+  assert.ok(trattiFatti(piano, s, { giri: giri([8000, 2900]) }).every((x) => x.ritmo_s_km === null));
+});
+
+test("distanza del test: il tratto di test, se c'è", () => {
+  assert.equal(distanzaTest({ distanza_m: 8000, tratti: [{ km: 2, tipo: "riscaldamento" }, { km: 5, tipo: "test" }, { km: 1, tipo: "defaticamento" }] }), 5000);
+  assert.equal(distanzaTest({ distanza_m: 5000 }), 5000);
 });

@@ -87,6 +87,30 @@ class PianoTest(unittest.TestCase):
                                          self._seduta(p, "w2s3").update(tipo="qualita", ritmo="soglia")))
         self.assertEqual(errori, ["w2s3: la fase 1 non ha il ritmo soglia", "w10s3: la fase 3 non ha il ritmo ripetute"])
 
+    def test_tratti_danno_la_distanza(self):
+        p = copy.deepcopy(self.piano)
+        s = next(x for x in p["sedute"] if x["id"] == "w1s1")
+        s["tratti"] = [{"km": 1.5, "tipo": "riscaldamento"}, {"km": 3, "tipo": "corsa", "ritmo": "6:50-7:05"}]
+        x = P.espandi(p)
+        self.assertEqual(next(t for t in x["sedute"] if t["id"] == "w1s1")["distanza_m"], 4500)
+        self.assertEqual(P.controlla(x), ([], []))
+
+    def test_km_interi_senza_decimale(self):
+        p = copy.deepcopy(self.piano)
+        next(x for x in p["sedute"] if x["id"] == "w1s1")["tratti"] = [{"km": 4.0, "tipo": "corsa"}]
+        x = P.espandi(p)
+        self.assertEqual(json.dumps(next(t for t in x["sedute"] if t["id"] == "w1s1")["tratti"]), '[{"km": 4, "tipo": "corsa"}]')
+
+    def test_tratti_solo_dove_ci_sono(self):
+        x = P.espandi(self.piano)
+        self.assertEqual(sum(1 for s in x["sedute"] if "tratti" in s), 8)
+
+    def test_tratto_di_test_fuori_da_un_test(self):
+        p = copy.deepcopy(self.piano)
+        next(x for x in p["sedute"] if x["id"] == "w2s1")["tratti"] = [{"km": 4, "tipo": "test"}]
+        errori, _ = P.controlla(P.espandi(p))
+        self.assertIn("w2s1: solo i test hanno un tratto di test", errori)
+
     def test_buco_tra_fasi(self):
         self.assertTrue(self._errori(lambda p: p["fasi"][1].update(settimane=[6, 9])))
 

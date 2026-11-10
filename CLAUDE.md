@@ -55,8 +55,9 @@ Piano di allenamento per la corsa, attività di Strava e due pagine, report ed e
   - Hike → trekking.
 - **Una seduta non fatta resta "saltata".** Se si recupera, si rinomina l'attività con il numero della corsa, oppure si sposta la seduta nell'editor.
 - **Facili e lunghi** si confrontano con la fascia `facile_lungo` della fase, senza tolleranza.
-- **Qualità e test** mostrano il ritmo obiettivo senza esito, perché il ritmo medio include riscaldamento e recuperi.
-- **Il tempo del test** viene dai giri consecutivi più veloci che fanno la distanza del test.
+- **Qualità e test** mostrano il ritmo obiettivo senza esito, perché il ritmo medio include riscaldamento e recuperi. L'esito c'è per i **tratti km per km**, ognuno misurato con i suoi giri.
+- **Il tempo del test** viene dai giri consecutivi più veloci che fanno la distanza del test: quella del tratto `test`, se la seduta ha i tratti.
+- **I tratti sono blocchi di km**, non a tempo e senza recuperi: si collegano ai giri automatici ogni km. Le sedute a tempo restano solo nella descrizione.
 - **La previsione e i ritmi suggeriti** sono stime con regole pratiche: la formula di Riegel e scarti fissi dal ritmo dei 5 km. Il report le segnala e basta: il piano lo cambia l'utente.
 - **Nell'editor un id nuovo** è il primo libero della forma `w{settimana}s{k}`.
 

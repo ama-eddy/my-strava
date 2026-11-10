@@ -48,6 +48,14 @@
       <label>Descrizione <textarea name="descrizione" rows="3" required></textarea></label>
       <label id="campo-km">Distanza (km) <input type="number" name="km" min="0.1" step="0.1" inputmode="decimal"></label>
       <label id="campo-ritmo">Ritmo obiettivo <select name="ritmo"></select></label>
+      <fieldset id="campo-tratti" class="tratti">
+        <legend>Tratti km per km <span class="facoltativo">facoltativi</span></legend>
+        <div id="righe-tratti"></div>
+        <div class="tratti-piede">
+          <button type="button" id="aggiungi-tratto">+ Aggiungi tratto</button>
+          <span id="somma-tratti" class="facoltativo"></span>
+        </div>
+      </fieldset>
       <p id="dialogo-errore" class="errore" hidden></p>
       <div class="bottoni">
         <button type="button" id="elimina" class="pericolo">Elimina</button>

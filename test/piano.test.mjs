@@ -48,6 +48,19 @@ const modifiche = {
     delete p.sedute.find((s) => s.id === "w7s3").ritmo;
     p.sedute.find((s) => s.id === "w6s5").ritmo = "soglia"; // il test della settimana 6
   },
+  "tratti aggiunti, tolti e cambiati": (p) => {
+    p.sedute.find((s) => s.id === "w1s1").tratti = [{ km: 1.5, tipo: "riscaldamento" }, { km: 3, tipo: "corsa", ritmo: "6:50-7:05" }];
+    delete p.sedute.find((s) => s.id === "w9s5").tratti;
+    p.sedute.find((s) => s.id === "w11s5").tratti[1].km = 4;
+  },
+  "tratti non validi": (p) => {
+    p.sedute.find((s) => s.id === "w1s1").tratti = [{ km: 0, tipo: "corsa" }, { km: 1.25, tipo: "veloce", ritmo: "7:10-6:40" }, "x"];
+    p.sedute.find((s) => s.id === "w1s2").tratti = [{ km: 1, tipo: "corsa" }]; // gioco di squadra
+    p.sedute.find((s) => s.id === "w1s3").tratti = [];
+    p.sedute.find((s) => s.id === "w2s1").tratti = [{ km: 4, tipo: "test" }]; // non è un test
+    p.sedute.find((s) => s.id === "w2s3").tratti = [{ km: 4.5, tipo: "corsa", ritmo: "soglia" }]; // la fase 1 non ce l'ha
+    p.sedute.find((s) => s.id === "w6s5").tratti.push({ km: 1, tipo: "test", ritmo: "4:5" });
+  },
   "ritmi non validi": (p) => {
     p.sedute.find((s) => s.id === "w5s1").ritmo = "soglia"; // corsa facile
     p.sedute.find((s) => s.id === "w5s3").ritmo = "medio";

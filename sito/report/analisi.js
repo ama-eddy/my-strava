@@ -54,6 +54,62 @@ export function ritmoObiettivo(piano, s) {
   return { min: secondiKm(r.min), max: secondiKm(r.max), ...altro };
 }
 
+// Un ritmo preciso di un tratto, come "6:05", vale con questa tolleranza in secondi al km.
+export const TOLLERANZA_TRATTO_S = 5;
+
+/**
+ * Ritmo obiettivo di un tratto in secondi al km, {min, max, nome?}, o null se il tratto non
+ * ne ha uno. `nome` è il ritmo della fase (facile_lungo, soglia, ripetute, gara) quando il
+ * tratto lo usa; un ritmo preciso "m:ss" vale con TOLLERANZA_TRATTO_S in più o in meno.
+ */
+export function obiettivoTratto(piano, s, t) {
+  const r = t.ritmo;
+  if (!r) return null;
+  if (!r.includes(":")) {
+    const f = piano.fasi.find((x) => x.fase === s.fase)?.ritmi[r];
+    return f ? { min: secondiKm(f.min), max: secondiKm(f.max), nome: r } : null;
+  }
+  const [da, a] = r.split("-").map(secondiKm);
+  return a == null ? { min: da - TOLLERANZA_TRATTO_S, max: da + TOLLERANZA_TRATTO_S, preciso: da } : { min: da, max: a };
+}
+
+/**
+ * I tratti di una corsa confrontati con i giri dell'attività. Ogni giro va al tratto in cui
+ * cade la sua metà, sui km previsti (i metri oltre la fine vanno all'ultimo tratto). Un
+ * tratto è misurato se i suoi giri fanno dal 90% al 115% dei suoi km: con i giri automatici
+ * ogni km tornano i tratti in km interi; con un giro solo per tutta la corsa non torna niente.
+ * Restituisce un elemento per tratto: {tratto, da_km, a_km, obiettivo, distanza_m, tempo_s,
+ * ritmo_s_km, esito}; distanza, tempo, ritmo ed esito sono null se il tratto non è misurato.
+ */
+export function trattiFatti(piano, s, a) {
+  let inizio = 0;
+  const out = s.tratti.map((t) => {
+    const x = { tratto: t, da_km: inizio, a_km: inizio + t.km, obiettivo: obiettivoTratto(piano, s, t), giri: [] };
+    inizio += t.km;
+    return x;
+  });
+  let fatti = 0;
+  for (const g of a?.giri ?? []) {
+    const meta = (fatti + g.distanza_m / 2) / 1000;
+    fatti += g.distanza_m;
+    (out.find((x) => meta < x.a_km) ?? out[out.length - 1]).giri.push(g);
+  }
+  return out.map(({ giri, ...x }) => {
+    const m = giri.reduce((t, g) => t + g.distanza_m, 0);
+    const sec = giri.reduce((t, g) => t + g.tempo_s, 0);
+    const previsti = (x.a_km - x.da_km) * 1000;
+    if (!m || m < previsti * 0.9 || m > previsti * 1.15) return { ...x, distanza_m: null, tempo_s: null, ritmo_s_km: null, esito: null };
+    const ritmo_s_km = Math.round(sec / (m / 1000));
+    return { ...x, distanza_m: m, tempo_s: sec, ritmo_s_km, esito: esitoRitmo(x.obiettivo, ritmo_s_km) };
+  });
+}
+
+/** I metri del test: il tratto di test, se la seduta ha i tratti, altrimenti tutta la seduta. */
+export function distanzaTest(s) {
+  const t = s.tratti?.find((x) => x.tipo === "test");
+  return t ? Math.round(t.km * 1000) : s.distanza_m;
+}
+
 /** "veloce", "lento" o "nel_ritmo"; null se manca l'obiettivo o il ritmo. */
 export function esitoRitmo(obiettivo, ritmo) {
   if (!obiettivo || ritmo == null) return null;
@@ -112,7 +168,8 @@ export function analizza(piano, attivita, oggi) {
     const stato = a ? (a.data === s.data ? "fatta" : "spostata") : s.data < oggi ? "saltata" : "da_fare";
     const obiettivo = s.corsa ? ritmoObiettivo(piano, s) : null;
     const esito = a && !obiettivo?.indicativo ? esitoRitmo(obiettivo, a.ritmo_s_km) : null;
-    return { ...s, stato, attivita: a, obiettivo, esito };
+    const tratti = s.tratti?.length && a ? trattiFatti(piano, s, a) : null;
+    return { ...s, stato, attivita: a, obiettivo, esito, tratti_fatti: tratti };
   });
   const extra = nelPiano.filter((a) => !usate.has(a));
 
@@ -234,10 +291,11 @@ export function andamentoTest(piano, sedute, oggi) {
   const fatti = sedute.filter((s) => s.tipo === "test" && s.attivita).sort((a, b) => a.data.localeCompare(b.data));
   let precedente = null;
   const test = fatti.map((s) => {
-    const tratto = trattoTest(s.attivita, s.distanza_m);
+    const distanza_m = distanzaTest(s);
+    const tratto = trattoTest(s.attivita, distanza_m);
     if (!tratto) return { seduta: s, tratto: null, tempo_s: null, differenza_s: null, differenza_ritmo_s: null, precedente: null, previsione_s: null };
-    const tempo_s = Math.round(tratto.tempo_s * s.distanza_m / tratto.distanza_m);
-    const confrontabile = precedente && precedente.seduta.distanza_m === s.distanza_m;
+    const tempo_s = Math.round(tratto.tempo_s * distanza_m / tratto.distanza_m);
+    const confrontabile = precedente && distanzaTest(precedente.seduta) === distanza_m;
     const x = {
       seduta: s,
       tratto,
