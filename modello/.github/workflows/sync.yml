@@ -1,11 +1,11 @@
 name: Sync Strava
 
-# Ogni lunedì scarica le attività da Strava e fa un commit di data/.
+# Ogni mattina scarica le attività da Strava e fa un commit di data/.
 # Il codice sta in my-strava; qui servono solo i secret STRAVA_CLIENT_ID,
 # STRAVA_CLIENT_SECRET e STRAVA_REFRESH_TOKEN (vedi setup.md di my-strava).
 on:
   schedule:
-    - cron: "3 7 * * 1"  # lunedì 07:03 UTC
+    - cron: "7 5 * * *"  # ogni giorno alle 05:07 UTC: le 06:07 in Italia d'inverno, le 07:07 d'estate
   workflow_dispatch:
     inputs:
       completo:
