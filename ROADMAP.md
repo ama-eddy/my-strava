@@ -49,6 +49,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 | 17 | **Guida d'uso** per chi usa le pagine e non sviluppa: titoli `N/totale` delle corse, sport su Strava, giri automatici, sync completo, come leggere il report | Da fare |
 | 18 | **Prova da zero**: rifare tutto il percorso come una persona nuova, con un repo di prova e i dati di esempio, e correggere dove ci si blocca. Poi la prova di un amico vero | Da fare, per ultimo |
 | 19 | **Tratti km per km**: un campo facoltativo `tratti` sulle corse, a blocchi di km con tipo (riscaldamento, corsa, test, defaticamento) e ritmo, della fase o preciso. Si compila nell'editor. Il report misura ogni tratto con i giri di Strava e ne dà l'esito, e il test si misura sul suo tratto e non sull'intera corsa. È una prima parte del passo 8, per i tratti in km. Arriva nei repo di dati con la versione `v2` | Fatto ([#17]); strava-database usa `@v2` |
+| 20 | **Parziali al km di Strava al posto dei giri**: alcuni orologi mandano a Strava la corsa con un giro solo, anche con i giri automatici attivi; i km per km che Strava mostra (*Parziali*) li calcola Strava dalla traccia GPS. Il sync li scarica dal dettaglio dell'attività (`splits_metric`), con la stessa richiesta che oggi usa per i giri, e `build_dati.py` li usa come giri quando l'attività ha un giro solo. Così test e tratti si misurano anche con quegli orologi, storico compreso. Serve una versione `v3` | Da fare, prima del 22 novembre |
 
 [#1]: https://github.com/ama-eddy/my-strava/pull/1
 [#2]: https://github.com/ama-eddy/my-strava/pull/2
@@ -67,7 +68,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 - strava-database contiene solo `data/` e i due workflow;
 - report ed editor leggono e salvano i dati veri con il token della pagina Collega.
 
-**Prossimo passo: il primo test del piano vero, il 22 novembre 2026.** Sull'orologio vanno attivati i giri automatici ogni km: il report trova il tratto del test nei giri.
+**Prossimo passo: il passo 20, poi il primo test del piano vero, il 22 novembre 2026.** Il report trova il tratto del test nei giri; se l'orologio manda a Strava un giro solo, servono i parziali al km del passo 20, con la versione `v3` nel repo di dati prima del test.
 
 **Poi: my-strava usabile da pochi amici**, passi 12–18, prima di nuove funzioni come il passo 8. Le persone sono poche e le si può aiutare, quindi resta tutto in italiano. L'ordine:
 1. ~~il passo 12~~, fatto: il sync vero usa `v1`, e le modifiche su `main` non lo toccano;
