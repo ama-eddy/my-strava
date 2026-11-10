@@ -33,7 +33,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 | 1 | **Un repo pubblico con tutto il codice**: script, pagine, dati di esempio e test, compreso il confronto tra `piano.js` e `piano.py` | Fatto ([#1]) |
 | 2 | **Workflow riutilizzabili** Sync Strava e Check Piano, `modello/` per un repo di dati, sito pubblicato con GitHub Pages | Fatto ([#2]) |
 | 3 | **Lettura e scrittura diretta nel repo di dati** con un token GitHub fine-grained, salvato solo nel browser: il report legge, l'editor salva con un commit. Pagina **Collega** per repo e token | Fatto ([#3]) |
-| 4 | **Collegare il primo repo di dati** (strava-database): i workflow diventano i due file di `modello/`, il codice esce da lì | Fatto ([strava-database#15](https://github.com/ama-eddy/strava-database/pull/15)); restano token e pulizia: [issue #5][i5] |
+| 4 | **Collegare il primo repo di dati** (strava-database): i workflow diventano i due file di `modello/`, il codice esce da lì | Fatto ([strava-database#15](https://github.com/ama-eddy/strava-database/pull/15), [issue #5][i5]): report ed editor leggono e salvano i dati veri, i vecchi repo sono archiviati |
 | 5 | **Ritmo obiettivo per qualità, test e gare intermedie**: un campo facoltativo `ritmo` (`soglia`, `ripetute` o `gara`) sulle sedute di `piano.json`. È controllato da `piano.py` e `piano.js` e si sceglie nel dialogo dell'editor. Il report lo mostra per qualità e test senza esito, perché il ritmo medio di Strava include riscaldamento e recuperi | Fatto ([#4]) |
 | 6 | **Andamento dei test, previsione e ritmi da ricalibrare.** Il report trova il tratto del test dai giri di Strava, lo confronta con il test precedente, stima il tempo di gara con la formula di Riegel e segnala i ritmi delle fasi rimaste che si scostano da quelli suggeriti dal test | Fatto ([#6]) |
 | 7 | **Giri (lap) di Strava nel sync**: le corse hanno i giri in `strava_attivita.jsonl` e in `attivita.json`; lo storico si completa un po' per volta. Arriva nel sync vero con il passo 4 | Fatto ([#6]) |
@@ -52,11 +52,12 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 [#11]: https://github.com/ama-eddy/my-strava/pull/11
 [i5]: https://github.com/ama-eddy/my-strava/issues/5
 
-**Fino alla prima versione si lavora sui dati di esempio.** Il passo 3 è pronto: le pagine sanno leggere e scrivere un repo di dati. Il collegamento del repo personale, cioè il passo 4, si fa alla prima versione: vedi l'[issue #5][i5].
+**La prima versione è pronta.** Il repo di dati è collegato:
+- il sync e Check Piano girano con il codice di qui;
+- strava-database contiene solo `data/` e i due workflow;
+- report ed editor leggono e salvano i dati veri con il token della pagina Collega.
 
-**Prossimo passo: la prima versione, entro il 22 novembre 2026**, data del primo test del piano vero. Il repo di dati è collegato: dal 5 novembre il sync e Check Piano girano con il codice di qui, e strava-database contiene solo `data/` e i due workflow. Restano, a mano, i passi 2 e 4 dell'[issue #5][i5]: il token nella pagina Collega e la pulizia dei vecchi repo.
-
-Per il test, sull'orologio vanno attivati i giri automatici ogni km: il report trova il tratto del test nei giri.
+**Prossimo passo: il primo test del piano vero, il 22 novembre 2026.** Sull'orologio vanno attivati i giri automatici ogni km: il report trova il tratto del test nei giri. Poi viene il passo 8.
 
 ## Fatto finora nel report e nell'editor
 
