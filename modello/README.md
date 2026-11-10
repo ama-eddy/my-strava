@@ -11,3 +11,4 @@ Repo **privato** con il piano e le attività. Il codice sta in [my-strava](https
 - **Sync Strava** gira ogni lunedì, o a mano da *Actions → Sync Strava → Run workflow*.
   Per un'attività inserita su Strava con più di due settimane di ritardo, si lancia a mano con **completo** spuntato.
 - **Check Piano** controlla i dati a ogni push.
+- I workflow usano la versione `v1` di my-strava: per aggiornarla vedi *Versioni* in [setup.md](https://github.com/ama-eddy/my-strava/blob/main/setup.md#versioni).

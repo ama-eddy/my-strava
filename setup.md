@@ -75,7 +75,18 @@ A ogni push che tocca `data/`, **Check Piano** controlla:
 - il collegamento con le attività;
 - che l'editor dia sul piano gli stessi risultati di `piano.py`.
 
-I due workflow usano il codice di `main` di my-strava. Per fissare una versione si cambia `@main` nel file del repo di dati, oppure si passa `ref`.
+## Versioni
+
+I due workflow del repo di dati richiamano una **versione** di my-strava, cioè un tag come `v1`, e non `main`. Così le modifiche in corso su `main` non toccano il tuo sync.
+
+- **Per passare a una versione nuova**, per esempio `v2`, cambia `@v1` in `@v2` in `.github/workflows/sync.yml` e `piano.yml` del repo di dati. Le novità di ogni versione sono nella [ROADMAP](ROADMAP.md).
+- **Le pagine** (report, editor, Collega) sono una sola per tutti e seguono sempre `main`: leggono i piani e i dati di tutte le versioni.
+
+Per chi sviluppa my-strava:
+
+- `sync.yml` e `piano.yml` di qui scaricano gli script del tag scritto nel loro input `ref`, che deve essere uguale al tag della versione. Lo controlla `tests/test_versioni.py`, insieme a `@vN` in `modello/`.
+- **Una versione nuova:** si cambia la versione in quei quattro file, si prova sul repo di dati con `@main` e `ref: main`, si unisce la PR e si mette il tag `vN` sul commit di `main`.
+- Un tag non si sposta: una correzione diventa una versione nuova.
 
 ## 5. Leggere i dati
 
