@@ -74,6 +74,12 @@ Senza collegamento le pagine usano una copia locale in `dati/`, i file scelti a 
   - **Controlli:** `piano.py` e l'editor danno errore se la seduta non è di qualità, test o gara, oppure se la fase non ha quel ritmo.
   - **Nel report**, per qualità e test il ritmo si vede ma senza esito, perché il ritmo medio di Strava include riscaldamento e recuperi.
   - **Le gare intermedie** hanno un esito: si confrontano con quel ritmo, oppure con il ritmo gara della fase.
+- **I tratti km per km.** Una corsa può avere un campo `tratti` facoltativo, che la divide in blocchi di km. Si compila nel dialogo dell'editor. Per esempio un test: `[{"km": 2, "tipo": "riscaldamento", "ritmo": "facile_lungo"}, {"km": 5, "tipo": "test"}, {"km": 1, "tipo": "defaticamento"}]`.
+  - **`km`**: positivo, al massimo con un decimale. Con i tratti, la distanza della corsa è la loro somma.
+  - **`tipo`**: `riscaldamento`, `corsa`, `test` o `defaticamento`. Solo un test può avere un tratto `test`, e uno solo.
+  - **`ritmo`**, facoltativo: uno dei ritmi della fase (`facile_lungo`, `soglia`, `ripetute`, `gara`), oppure preciso come `6:05`, o una fascia come `5:45-5:50`.
+  - **Nel report** ogni tratto ha il ritmo dai giri di Strava e, se ha un ritmo, l'esito. Un giro va al tratto in cui cade la sua metà: con i giri automatici ogni km tornano i tratti in km interi. Un ritmo preciso vale con 5 secondi al km di tolleranza.
+  - **Il tempo del test** si cerca sui km del tratto `test`, non sull'intera corsa.
 - **Il collegamento tra piano e attività**:
   - **le corse** si collegano sul numero nel titolo dell'attività su Strava: `10/36` è la decima corsa del piano;
   - **le altre sedute** si collegano sullo sport di Strava: `Volleyball` → gioco di squadra, `Workout` (o `WeightTraining`) → forza, `Yoga` → mobilità, `Walk` → camminata, `Hike` → trekking. Si cerca prima un'attività lo stesso giorno, poi nella stessa settimana.

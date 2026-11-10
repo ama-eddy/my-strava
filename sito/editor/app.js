@@ -1,4 +1,4 @@
-import { GIORNI, RITMI_SEDUTA, TIPI_CON_RITMO, TIPI_CORSA, TIPI_SEDUTA, controlla, espandi, faseDi, giorno, iso, serializza, settimanaDi } from "./piano.js";
+import { GIORNI, RITMI, RITMI_SEDUTA, TIPI_CON_RITMO, TIPI_CORSA, TIPI_SEDUTA, TIPI_TRATTO, controlla, espandi, faseDi, giorno, iso, serializza, settimanaDi } from "./piano.js";
 import { caricaPiano, leggiFile, salvaIn, salvaPiano } from "./fonte.js";
 
 export const NOMI_TIPO = {
@@ -17,6 +17,8 @@ const NOMI_SETTIMANA = { "": "normale", scarico: "scarico", test: "test", gara: 
 const MESI = ["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"];
 const BOZZA = "my-strava:editor:bozza";
 const NOMI_RITMO = { soglia: "Soglia", ripetute: "Ripetute", gara: "Ritmo gara" };
+const NOMI_TRATTO = { riscaldamento: "Riscaldamento", corsa: "Corsa", test: "Test", defaticamento: "Defaticamento" };
+const NOMI_RITMO_FASE = { facile_lungo: "Facile", ...NOMI_RITMO };
 
 const $ = (id) => document.getElementById(id);
 const h = (tag, attr = {}, ...figli) => {
@@ -250,7 +252,8 @@ function seduta(s) {
     h("span", { class: "seduta-testa" },
       h("span", { class: "tipo" }, NOMI_TIPO[s.tipo]),
       s.corsa ? h("span", { class: "numero" }, `${s.numero_piano}/${stato.piano.totale_corse}`) : null),
-    s.corsa ? h("span", { class: "seduta-km" }, `${km(s.distanza_m)} km`, s.ritmo ? h("span", { class: "ritmo" }, ` · ${NOMI_RITMO[s.ritmo]?.toLowerCase() ?? s.ritmo}`) : null) : null,
+    s.corsa ? h("span", { class: "seduta-km" }, `${km(s.distanza_m)} km`, s.ritmo ? h("span", { class: "ritmo" }, ` · ${NOMI_RITMO[s.ritmo]?.toLowerCase() ?? s.ritmo}`) : null,
+      s.tratti?.length ? h("span", { class: "ritmo" }, ` · ${s.tratti.length} tratti`) : null) : null,
     s.descrizione !== NOMI_TIPO[s.tipo] ? h("span", { class: "descrizione" }, s.descrizione) : null,
   );
 }
@@ -265,8 +268,10 @@ modulo.tipo.replaceChildren(
 const aggiornaCampoKm = () => {
   const corsa = TIPI_CORSA.includes(modulo.tipo.value);
   $("campo-km").hidden = !corsa;
+  $("campo-tratti").hidden = !corsa;
   modulo.km.required = corsa;
   aggiornaCampoRitmo();
+  aggiornaTratti();
 };
 
 // I ritmi della fase in cui cade la data scelta; quelli che la fase non ha restano visibili ma spenti.
@@ -290,7 +295,88 @@ function aggiornaCampoRitmo() {
   if (modulo.ritmo.value !== scelto) modulo.ritmo.value = "";
 }
 modulo.tipo.addEventListener("change", aggiornaCampoKm);
-modulo.data.addEventListener("change", aggiornaCampoRitmo);
+modulo.data.addEventListener("change", () => { aggiornaCampoRitmo(); aggiornaTratti(); });
+
+// ---------- Tratti km per km ----------
+
+const righeTratti = $("righe-tratti");
+const numeroKm = (v) => parseFloat(String(v).replace(",", "."));
+
+// I ritmi della fase della data scelta, come per il ritmo obiettivo; più un ritmo preciso.
+function opzioniRitmoTratto(select, attuale) {
+  const p = stato.piano;
+  const n = modulo.data.value ? faseDi(p, settimanaDi(p, modulo.data.value)) : null;
+  const ritmi = p.fasi.find((f) => f.fase === n)?.ritmi ?? {};
+  select.replaceChildren(
+    h("option", { value: "" }, "Ritmo: nessuno"),
+    ...RITMI.map((k) => {
+      const r = ritmi[k];
+      const valori = r ? ` · ${r.min === r.max ? r.min : `${r.min}–${r.max}`}` : ` · non in fase ${n ?? "?"}`;
+      return h("option", { value: k, disabled: r || attuale === k ? null : "" }, NOMI_RITMO_FASE[k] + valori);
+    }),
+    h("option", { value: "preciso" }, "Ritmo preciso…"),
+  );
+  select.value = attuale ?? "";
+}
+
+function rigaTratto(t = { km: 1, tipo: "corsa" }) {
+  const preciso = typeof t.ritmo === "string" && t.ritmo.includes(":");
+  const kmInput = h("input", { type: "number", class: "km", min: "0.1", step: "0.1", inputmode: "decimal", required: true });
+  kmInput.value = t.km;
+  const tipo = h("select", { class: "tipo" }, TIPI_TRATTO.map((x) => h("option", { value: x }, NOMI_TRATTO[x])));
+  tipo.value = t.tipo;
+  const ritmo = h("select", { class: "ritmo" });
+  const testo = h("input", { type: "text", class: "preciso", placeholder: "6:05 oppure 5:45-5:50", inputmode: "text" });
+  testo.value = preciso ? t.ritmo : "";
+  const riga = h("div", { class: "riga-tratto" }, kmInput, tipo, ritmo,
+    h("button", { type: "button", class: "togli", title: "Togli il tratto", onclick: () => { riga.remove(); aggiornaTratti(); } }, "✕"),
+    testo);
+  riga.attuale = preciso ? "preciso" : t.ritmo ?? "";
+  ritmo.addEventListener("change", () => { riga.attuale = ritmo.value; aggiornaTratti(); });
+  kmInput.addEventListener("input", aggiornaTratti);
+  return riga;
+}
+
+// Etichette, ritmi della fase e somma dei km; con i tratti la distanza è la loro somma.
+function aggiornaTratti() {
+  const righe = [...righeTratti.children];
+  righe.forEach((r, i) => {
+    const [kmInput, tipo, ritmo, togli, testo] = r.children;
+    kmInput.setAttribute("aria-label", `Km del tratto ${i + 1}`);
+    tipo.setAttribute("aria-label", `Tipo del tratto ${i + 1}`);
+    ritmo.setAttribute("aria-label", `Ritmo del tratto ${i + 1}`);
+    togli.setAttribute("aria-label", `Togli il tratto ${i + 1}`);
+    testo.setAttribute("aria-label", `Ritmo preciso del tratto ${i + 1}`);
+    opzioniRitmoTratto(ritmo, r.attuale);
+    testo.hidden = r.attuale !== "preciso";
+  });
+  const somma = righe.reduce((t, r) => t + (numeroKm(r.children[0].value) || 0), 0);
+  modulo.km.disabled = righe.length > 0;
+  if (righe.length) modulo.km.value = Math.round(somma * 10) / 10;
+  $("somma-tratti").textContent = righe.length ? `In tutto ${km(somma * 1000)} km` : "La corsa intera, senza dettagli";
+}
+
+$("aggiungi-tratto").addEventListener("click", () => {
+  righeTratti.append(rigaTratto());
+  aggiornaTratti();
+  righeTratti.lastElementChild.querySelector("input").focus();
+});
+
+// I tratti del dialogo, null se non ce ne sono, o un testo d'errore.
+function leggiTratti() {
+  const righe = [...righeTratti.children];
+  if (!righe.length) return null;
+  const tratti = [];
+  for (const [i, r] of righe.entries()) {
+    const [kmInput, tipo, , , testo] = r.children;
+    const k = Math.round(numeroKm(kmInput.value) * 10) / 10;
+    if (!(k > 0)) return `Il tratto ${i + 1} ha bisogno dei km.`;
+    const ritmo = r.attuale === "preciso" ? testo.value.trim().replace(/\s+/g, "").replace("–", "-") : r.attuale;
+    if (r.attuale === "preciso" && !ritmo) return `Scrivi il ritmo del tratto ${i + 1}, per esempio 6:05.`;
+    tratti.push({ km: k, tipo: tipo.value, ...(ritmo ? { ritmo } : {}) });
+  }
+  return tratti;
+}
 
 function apriDialogo(id, data) {
   const s = id ? stato.piano.sedute.find((s) => s.id === id) : null;
@@ -302,6 +388,7 @@ function apriDialogo(id, data) {
   modulo.tipo.value = s?.tipo ?? "facile";
   modulo.descrizione.value = s?.descrizione ?? "";
   modulo.km.value = s?.distanza_m ? s.distanza_m / 1000 : "";
+  righeTratti.replaceChildren(...(s?.tratti ?? []).map((t) => rigaTratto(t)));
   $("elimina").hidden = !s;
   $("dialogo-errore").hidden = true;
   aggiornaCampoKm();
@@ -316,7 +403,13 @@ function apriDialogo(id, data) {
 modulo.addEventListener("submit", (e) => {
   if (e.submitter?.value !== "ok") return;
   const corsa = TIPI_CORSA.includes(modulo.tipo.value);
-  const distanza = corsa ? Math.round(parseFloat(String(modulo.km.value).replace(",", ".")) * 1000) : null;
+  const tratti = corsa ? leggiTratti() : null;
+  if (typeof tratti === "string") {
+    e.preventDefault();
+    mostraErrore(tratti);
+    return;
+  }
+  const distanza = corsa ? Math.round(numeroKm(modulo.km.value) * 1000) : null;
   if (corsa && !(distanza > 0)) {
     e.preventDefault();
     mostraErrore("Una corsa ha bisogno della distanza.");
@@ -337,12 +430,14 @@ modulo.addEventListener("submit", (e) => {
       Object.assign(s, valori);
       if (ritmo) s.ritmo = ritmo;
       else delete s.ritmo;
+      if (tratti) s.tratti = tratti;
+      else delete s.tratti;
       if (nuovaData) {
         p.sedute = p.sedute.filter((x) => x !== s);
         p.sedute.push(s);
       }
     } else {
-      p.sedute.push({ id: nuovoId(p, valori.data), ...valori, ...(ritmo ? { ritmo } : {}) });
+      p.sedute.push({ id: nuovoId(p, valori.data), ...valori, ...(ritmo ? { ritmo } : {}), ...(tratti ? { tratti } : {}) });
     }
   });
 });

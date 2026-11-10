@@ -1,7 +1,8 @@
 """Crea i dati di esempio in sito/esempio/: un piano finto di 12 settimane per una 10 km
 e le attività fino a metà della settimana 11, con qualche seduta spostata, saltata o in più.
-Le corse hanno i giri di Strava (uno per km); i due test sui 5 km hanno riscaldamento e
-defaticamento, così il report deve trovare il tratto del test.
+Le corse hanno i giri di Strava (uno per km). I test, alcune qualità e un lungo hanno i
+tratti km per km: i due test sui 5 km hanno riscaldamento e defaticamento, così il report
+deve trovare il tratto del test, e le qualità hanno l'esito di ogni tratto.
 
 Servono per provare le pagine senza dati propri e come base dei test. Si rigenerano con:
     python3 scripts/crea_esempio.py
@@ -42,13 +43,31 @@ NOTA = {1: "Ritmo da conversazione, anche se ti sembra lentissimo.",
         6: "Domenica il test: 5 km a tutta, dopo 2 km di riscaldamento.",
         10: "Domenica il secondo test sui 5 km: si vede quanto sei migliorato."}
 # km di lunedì (facile), giovedì (facile o qualità) e domenica (lungo, test o gara)
-KM = {1: (4, 4, 6), 2: (4, 4.5, 7), 3: (4.5, 5, 8), 4: (4, 4, 6), 5: (5, 6, 9), 6: (5, 5, 5),
-      7: (5, 6, 10), 8: (4, 5, 7), 9: (5, 7, 11), 10: (5, 7, 5), 11: (5, 6, 12), 12: (4, 5, 10)}
+KM = {1: (4, 4, 6), 2: (4, 4.5, 7), 3: (4.5, 5, 8), 4: (4, 4, 6), 5: (5, 6, 9), 6: (5, 5, 8),
+      7: (5, 6, 10), 8: (4, 5, 7), 9: (5, 7, 11), 10: (5, 7, 8), 11: (5, 6, 12), 12: (4, 5, 10)}
 # qualità del giovedì: descrizione e ritmo della fase che vale (None: nessuno)
 QUALITA = {5: ("6 km con 3 km a ritmo medio", "soglia"), 6: ("5 km con 5 allunghi", None),
            7: ("6 km con 5 × 1000 m", "ripetute"), 8: ("5 km con 2 km a ritmo medio", "soglia"),
            9: ("7 km con 6 × 1000 m", "ripetute"), 10: ("7 km con 4 km a ritmo gara", "gara"),
            11: ("6 km con 3 km a ritmo gara", "gara"), 12: ("5 km con 2 km a ritmo gara", "gara")}
+
+
+# I tratti km per km: (km, tipo, ritmo). Il ritmo è uno della fase o "m:ss", anche "m:ss-m:ss".
+RISCALDA, DEFATICA = (2, "riscaldamento", "facile_lungo"), (1, "defaticamento", "facile_lungo")
+TRATTI = {
+    "w5s3": [RISCALDA, (3, "corsa", "soglia"), DEFATICA],
+    "w6s5": [RISCALDA, (5, "test", None), DEFATICA],
+    "w8s3": [RISCALDA, (2, "corsa", "soglia"), DEFATICA],
+    "w9s5": [(8, "corsa", "facile_lungo"), (3, "corsa", "6:05")],
+    "w10s3": [RISCALDA, (4, "corsa", "gara"), DEFATICA],
+    "w10s5": [RISCALDA, (5, "test", None), DEFATICA],
+    "w11s3": [RISCALDA, (3, "corsa", "gara"), DEFATICA],
+    "w11s5": [(9, "corsa", "facile_lungo"), (3, "corsa", "5:45-5:50")],
+}
+
+
+def tratti(chiave):
+    return [{"km": k, "tipo": t, **({"ritmo": r} if r else {})} for k, t, r in TRATTI[chiave]]
 
 
 def km(x):
@@ -65,7 +84,11 @@ def piano():
             (1, "volley", "Gioco di squadra", None),
             (3, "qualita" if n in QUALITA else "facile", QUALITA.get(n, (f"{km(q)} km facili con allunghi",))[0], q),
             (4, "forza", "Forza, 45 minuti" if n not in TIPO else "Forza leggera, 30 minuti", None),
-            (6, *{6: ("test", "Test 5 km"), 10: ("test", "Test 5 km"), 12: ("gara", "Gara di 10 km")}.get(n, ("lungo", f"Lungo di {km(d)} km")), d),
+            (6, *{6: ("test", "Test 5 km: 2 km di riscaldamento, 5 km a tutta, 1 km sciolto"),
+                  10: ("test", "Test 5 km: 2 km di riscaldamento, 5 km a tutta, 1 km sciolto"),
+                  9: ("lungo", "Lungo di 11 km, gli ultimi 3 a 6:05"),
+                  11: ("lungo", "Lungo di 12 km, gli ultimi 3 a ritmo gara"),
+                  12: ("gara", "Gara di 10 km")}.get(n, ("lungo", f"Lungo di {km(d)} km")), d),
         ]
         if n == 12:  # niente forza a due giorni dalla gara: mobilità
             giorni[3] = (4, "mobilita", "Mobilità, 20 minuti", None)
@@ -74,6 +97,8 @@ def piano():
                       "descrizione": descrizione, "distanza_m": round(distanza * 1000) if distanza else None}
             if tipo == "qualita" and QUALITA[n][1]:
                 seduta["ritmo"] = QUALITA[n][1]
+            if seduta["id"] in TRATTI:
+                seduta["tratti"] = tratti(seduta["id"])
             sedute.append(seduta)
     base = {
         "versione": 1,
@@ -114,13 +139,12 @@ def attivita(p):
             d += dt.timedelta(days=1)
         if s["corsa"]:
             nome, tipo = f"{s['numero_piano']}/{p['totale_corse']}", "Run"
-            if s["tipo"] == "test":  # 2 km di riscaldamento, il test, 1 km di defaticamento
-                ritmo_test = TEST[s["id"]]
-                tratti = [(2000, 415), (s["distanza_m"], ritmo_test), (1000, 425)]
+            if s.get("tratti"):  # un ritmo per tratto: quello del test, della fase o del tratto
+                pezzi = [(round(t["km"] * 1000), ritmo_tratto(p, s, t)) for t in s["tratti"]]
             else:
                 ritmo = {"qualita": 372}.get(s["tipo"], 410) + caso.randint(-25, 15)
-                tratti = [(s["distanza_m"] + caso.randint(-150, 250), ritmo)]
-            giri = [g for m, r in tratti for g in giri_di(m, r, caso)]
+                pezzi = [(s["distanza_m"] + caso.randint(-150, 250), ritmo)]
+            giri = [g for m, r in pezzi for g in giri_di(m, r, caso)]
         else:
             nome, tipo, giri = s["descrizione"], sport[s["tipo"]], None
         fatte.append((d, nome, tipo, giri))
@@ -140,6 +164,24 @@ def attivita(p):
 
 # Ritmo dei due test sui 5 km, in secondi al km: il secondo è più veloce.
 TEST = {"w6s5": 332, "w10s5": 320}
+# Tratti fatti fuori dal ritmo previsto, per vedere gli esiti: secondi al km in più.
+FUORI = {"w8s3": 12, "w9s5": -15}
+
+
+def ritmo_tratto(p, s, t):
+    """Il ritmo di un tratto nell'esempio: a metà della fascia prevista, o quello del test."""
+    if t["tipo"] == "test":
+        return TEST[s["id"]]
+    r = t.get("ritmo") or "facile_lungo"
+    if r in P.RITMI:
+        r = next(f for f in p["fasi"] if f["fase"] == s["fase"])["ritmi"][r]
+        da, a = P.secondi_km(r["min"]), P.secondi_km(r["max"])
+    else:
+        da, *resto = (P.secondi_km(x) for x in r.split("-"))
+        a = resto[0] if resto else da
+    if t["tipo"] != "corsa":  # riscaldamento e defaticamento un po' più lenti
+        return (da + a) // 2 + 10
+    return (da + a) // 2 + (FUORI.get(s["id"], 0) if t.get("ritmo") != "facile_lungo" else 0)
 
 
 def giri_di(metri, ritmo, caso):

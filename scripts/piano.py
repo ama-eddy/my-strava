@@ -36,8 +36,11 @@ RITMI = ("facile_lungo", "soglia", "ripetute", "gara")
 # Il campo facoltativo `ritmo` di una seduta: quale ritmo della fase vale per qualità, test e gara.
 RITMI_SEDUTA = ("soglia", "ripetute", "gara")
 TIPI_CON_RITMO = {"qualita", "test", "gara"}
+# Il campo facoltativo `tratti` di una corsa: la corsa km per km, a blocchi.
+TIPI_TRATTO = ("riscaldamento", "corsa", "test", "defaticamento")
 GIORNI = ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"]
 RITMO = re.compile(r"^\d{1,2}:[0-5]\d$")
+RITMO_TRATTO = re.compile(r"^(\d{1,2}:[0-5]\d)(?:-(\d{1,2}:[0-5]\d))?$")
 
 
 def carica(path=PIANO):
@@ -64,6 +67,11 @@ def fase_di(piano, settimana):
         if a <= settimana <= b:
             return f["fase"]
     return None
+
+
+def distanza_tratti(tratti):
+    """I metri di una corsa con i tratti: la somma dei km dei tratti."""
+    return round(sum(t["km"] for t in tratti) * 1000)
 
 
 def salva(piano, path=PIANO):
@@ -97,6 +105,10 @@ def espandi(piano):
         }
         if s.get("ritmo") is not None:  # solo se c'è, così i piani senza ritmo non cambiano
             seduta["ritmo"] = s["ritmo"]
+        if s.get("tratti") is not None:  # come ritmo; con i tratti la distanza è la loro somma
+            seduta["tratti"] = [_km_intero(t) for t in s["tratti"]] if isinstance(s["tratti"], list) else s["tratti"]
+            if s["tratti"] and _tratti_validi(s["tratti"]):
+                seduta["distanza_m"] = distanza_tratti(s["tratti"])
         sedute.append(seduta)
     settimane = []
     for w in piano["settimane"]:
@@ -122,6 +134,57 @@ def espandi(piano):
         "settimana_tipo": piano.get("settimana_tipo", []),
         "regole": piano.get("regole", []),
     }
+
+
+def _km_intero(t):
+    """Un tratto con i km interi scritti senza decimale (12, non 12.0), come in JavaScript."""
+    if isinstance(t, dict) and isinstance(t.get("km"), float) and t["km"].is_integer():
+        return {**t, "km": int(t["km"])}
+    return t
+
+
+def _km_valido(x):
+    return (isinstance(x, (int, float)) and not isinstance(x, bool) and x > 0
+            and abs(x * 10 - round(x * 10)) < 1e-9)
+
+
+def _tratti_validi(tratti):
+    return isinstance(tratti, list) and all(isinstance(t, dict) and _km_valido(t.get("km")) for t in tratti)
+
+
+def _controlla_tratti(piano, s, sid, err):
+    tratti = s["tratti"]
+    if s.get("tipo") not in TIPI_CORSA:
+        err(f"{sid}: solo le corse hanno i tratti")
+        return
+    if not isinstance(tratti, list) or not tratti:
+        err(f"{sid}: tratti vuoti o non validi")
+        return
+    n = fase_di(piano, settimana_di(piano, s["data"]))
+    fase = next((f for f in piano["fasi"] if f.get("fase") == n), None)
+    for i, t in enumerate(tratti, 1):
+        if not isinstance(t, dict):
+            err(f"{sid}: tratto {i} non valido")
+            continue
+        if not _km_valido(t.get("km")):
+            err(f"{sid}: tratto {i}: km deve essere positivo, al massimo con un decimale")
+        if t.get("tipo") not in TIPI_TRATTO:
+            err(f"{sid}: tratto {i}: tipo '{t.get('tipo')}' non valido")
+        r = t.get("ritmo")
+        if r is None:
+            continue
+        if r in RITMI:
+            if fase is not None and not fase.get("ritmi", {}).get(r):
+                err(f"{sid}: tratto {i}: la fase {n} non ha il ritmo {r}")
+            continue
+        m = RITMO_TRATTO.match(r) if isinstance(r, str) else None
+        if not m or (m.group(2) and secondi_km(m.group(1)) > secondi_km(m.group(2))):
+            err(f"{sid}: tratto {i}: ritmo '{r}' non valido")
+    test = sum(1 for t in tratti if isinstance(t, dict) and t.get("tipo") == "test")
+    if test and s.get("tipo") != "test":
+        err(f"{sid}: solo i test hanno un tratto di test")
+    elif test > 1:
+        err(f"{sid}: più di un tratto di test")
 
 
 def controlla(piano):
@@ -213,6 +276,8 @@ def controlla(piano):
                 err(f"{sid}: ritmo '{r}' non valido")
             elif fase is not None and not fase.get("ritmi", {}).get(r):
                 err(f"{sid}: la fase {n} non ha il ritmo {r}")
+        if s.get("tratti") is not None:
+            _controlla_tratti(piano, s, sid, err)
 
     if not any(s["tipo"] == "gara" and s["data"] == piano["gara"]["data"] for s in piano["sedute"]):
         err(f"nessuna seduta di tipo gara il {piano['gara']['data']}")

@@ -135,7 +135,7 @@
       "tipo": "test",
       "dal": "2027-02-08",
       "al": "2027-02-14",
-      "distanza_m": 15000,
+      "distanza_m": 18000,
       "nota": "Domenica il test: 5 km a tutta, dopo 2 km di riscaldamento."
     },
     {
@@ -171,7 +171,7 @@
       "tipo": "test",
       "dal": "2027-03-08",
       "al": "2027-03-14",
-      "distanza_m": 17000,
+      "distanza_m": 20000,
       "nota": "Domenica il secondo test sui 5 km: si vede quanto sei migliorato."
     },
     {
@@ -492,7 +492,24 @@
       "corsa": true,
       "numero_piano": 14,
       "distanza_m": 6000,
-      "ritmo": "soglia"
+      "ritmo": "soglia",
+      "tratti": [
+        {
+          "km": 2,
+          "tipo": "riscaldamento",
+          "ritmo": "facile_lungo"
+        },
+        {
+          "km": 3,
+          "tipo": "corsa",
+          "ritmo": "soglia"
+        },
+        {
+          "km": 1,
+          "tipo": "defaticamento",
+          "ritmo": "facile_lungo"
+        }
+      ]
     },
     {
       "id": "w5s4",
@@ -580,10 +597,26 @@
       "fase": 2,
       "tipo_settimana": "test",
       "tipo": "test",
-      "descrizione": "Test 5 km",
+      "descrizione": "Test 5 km: 2 km di riscaldamento, 5 km a tutta, 1 km sciolto",
       "corsa": true,
       "numero_piano": 18,
-      "distanza_m": 5000
+      "distanza_m": 8000,
+      "tratti": [
+        {
+          "km": 2,
+          "tipo": "riscaldamento",
+          "ritmo": "facile_lungo"
+        },
+        {
+          "km": 5,
+          "tipo": "test"
+        },
+        {
+          "km": 1,
+          "tipo": "defaticamento",
+          "ritmo": "facile_lungo"
+        }
+      ]
     },
     {
       "id": "w7s1",
@@ -689,7 +722,24 @@
       "corsa": true,
       "numero_piano": 23,
       "distanza_m": 5000,
-      "ritmo": "soglia"
+      "ritmo": "soglia",
+      "tratti": [
+        {
+          "km": 2,
+          "tipo": "riscaldamento",
+          "ritmo": "facile_lungo"
+        },
+        {
+          "km": 2,
+          "tipo": "corsa",
+          "ritmo": "soglia"
+        },
+        {
+          "km": 1,
+          "tipo": "defaticamento",
+          "ritmo": "facile_lungo"
+        }
+      ]
     },
     {
       "id": "w8s4",
@@ -778,10 +828,22 @@
       "fase": 2,
       "tipo_settimana": null,
       "tipo": "lungo",
-      "descrizione": "Lungo di 11 km",
+      "descrizione": "Lungo di 11 km, gli ultimi 3 a 6:05",
       "corsa": true,
       "numero_piano": 27,
-      "distanza_m": 11000
+      "distanza_m": 11000,
+      "tratti": [
+        {
+          "km": 8,
+          "tipo": "corsa",
+          "ritmo": "facile_lungo"
+        },
+        {
+          "km": 3,
+          "tipo": "corsa",
+          "ritmo": "6:05"
+        }
+      ]
     },
     {
       "id": "w10s1",
@@ -821,7 +883,24 @@
       "corsa": true,
       "numero_piano": 29,
       "distanza_m": 7000,
-      "ritmo": "gara"
+      "ritmo": "gara",
+      "tratti": [
+        {
+          "km": 2,
+          "tipo": "riscaldamento",
+          "ritmo": "facile_lungo"
+        },
+        {
+          "km": 4,
+          "tipo": "corsa",
+          "ritmo": "gara"
+        },
+        {
+          "km": 1,
+          "tipo": "defaticamento",
+          "ritmo": "facile_lungo"
+        }
+      ]
     },
     {
       "id": "w10s4",
@@ -844,10 +923,26 @@
       "fase": 3,
       "tipo_settimana": "test",
       "tipo": "test",
-      "descrizione": "Test 5 km",
+      "descrizione": "Test 5 km: 2 km di riscaldamento, 5 km a tutta, 1 km sciolto",
       "corsa": true,
       "numero_piano": 30,
-      "distanza_m": 5000
+      "distanza_m": 8000,
+      "tratti": [
+        {
+          "km": 2,
+          "tipo": "riscaldamento",
+          "ritmo": "facile_lungo"
+        },
+        {
+          "km": 5,
+          "tipo": "test"
+        },
+        {
+          "km": 1,
+          "tipo": "defaticamento",
+          "ritmo": "facile_lungo"
+        }
+      ]
     },
     {
       "id": "w11s1",
@@ -887,7 +982,24 @@
       "corsa": true,
       "numero_piano": 32,
       "distanza_m": 6000,
-      "ritmo": "gara"
+      "ritmo": "gara",
+      "tratti": [
+        {
+          "km": 2,
+          "tipo": "riscaldamento",
+          "ritmo": "facile_lungo"
+        },
+        {
+          "km": 3,
+          "tipo": "corsa",
+          "ritmo": "gara"
+        },
+        {
+          "km": 1,
+          "tipo": "defaticamento",
+          "ritmo": "facile_lungo"
+        }
+      ]
     },
     {
       "id": "w11s4",
@@ -910,10 +1022,22 @@
       "fase": 3,
       "tipo_settimana": null,
       "tipo": "lungo",
-      "descrizione": "Lungo di 12 km",
+      "descrizione": "Lungo di 12 km, gli ultimi 3 a ritmo gara",
       "corsa": true,
       "numero_piano": 33,
-      "distanza_m": 12000
+      "distanza_m": 12000,
+      "tratti": [
+        {
+          "km": 9,
+          "tipo": "corsa",
+          "ritmo": "facile_lungo"
+        },
+        {
+          "km": 3,
+          "tipo": "corsa",
+          "ritmo": "5:45-5:50"
+        }
+      ]
     },
     {
       "id": "w12s1",

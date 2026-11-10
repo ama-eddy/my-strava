@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   sync:
-    uses: ama-eddy/my-strava/.github/workflows/sync.yml@v1
+    uses: ama-eddy/my-strava/.github/workflows/sync.yml@v2
     with:
       completo: ${{ inputs.completo == true }}
     secrets: inherit
