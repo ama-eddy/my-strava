@@ -41,7 +41,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 | 9 | **Sync completo a richiesta**: la casella **completo** in *Run workflow* riscarica tutte le attività, per quelle inserite su Strava con più di due settimane di ritardo. Le corse vecchie che hanno già i giri non li riscaricano. Serve per le attività di ottobre al passo 4 | Fatto ([#8]) |
 | 10 | **Niente attività da CSV**: tutte passano da Strava, anche quelle senza orologio. Via `attivita_manuali.csv` e il campo `origine` | Fatto ([#10]) |
 | 11 | **Forza come Workout**: il report riconosce come forza sia Workout sia Weight Training | Fatto ([#11]) |
-| 12 | **Versioni**: un tag `v1`; `modello/` e i repo di dati richiamano i workflow `@v1` invece di `@main`, così un cambio su `main` non arriva subito al sync di nessuno. Per passare a una versione nuova si cambia una riga. Il sito segue sempre `main`, quindi deve continuare a leggere i piani e le attività delle versioni precedenti | Da fare, prima del 22 novembre |
+| 12 | **Versioni**: un tag `v1`; `modello/` e i repo di dati richiamano i workflow `@v1` invece di `@main`, così un cambio su `main` non arriva subito al sync di nessuno. Per passare a una versione nuova si cambia una riga. Il sito segue sempre `main`, quindi deve continuare a leggere i piani e le attività delle versioni precedenti | Fatto ([#15]); strava-database usa `@v1` |
 | 13 | **Token di Strava su qualsiasi computer**: `strava_auth.py`, solo libreria standard, al posto di `strava_auth.ps1`. Apre il browser e prende da solo il codice di autorizzazione | Da fare |
 | 14 | **Repo di dati in un clic**: un repo pubblico di modello segnato come *template* (lo crea l'utente a mano: il proxy blocca le impostazioni dei repo), con il contenuto di `modello/`. `setup.md` diventa una procedura passo passo per chi non sviluppa | Da fare |
 | 15 | **Tipi di seduta definiti nel piano**: `piano.json` può elencare i suoi tipi di seduta con nome e sport di Strava (per esempio nuoto → Swim). Li leggono `piano.py`, `piano.js`, report ed editor; senza il campo valgono i cinque tipi di oggi, così i piani esistenti non cambiano | Da fare, dopo il 22 novembre |
@@ -57,6 +57,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 [#8]: https://github.com/ama-eddy/my-strava/pull/8
 [#10]: https://github.com/ama-eddy/my-strava/pull/10
 [#11]: https://github.com/ama-eddy/my-strava/pull/11
+[#15]: https://github.com/ama-eddy/my-strava/pull/15
 [i5]: https://github.com/ama-eddy/my-strava/issues/5
 
 **La prima versione è pronta.** Il repo di dati è collegato:
@@ -67,7 +68,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 **Prossimo passo: il primo test del piano vero, il 22 novembre 2026.** Sull'orologio vanno attivati i giri automatici ogni km: il report trova il tratto del test nei giri.
 
 **Poi: my-strava usabile da pochi amici**, passi 12–18, prima di nuove funzioni come il passo 8. Le persone sono poche e le si può aiutare, quindi resta tutto in italiano. L'ordine:
-1. il passo 12 subito, perché protegge il sync vero mentre si lavora su `main`;
+1. ~~il passo 12~~, fatto: il sync vero usa `v1`, e le modifiche su `main` non lo toccano;
 2. i passi 13, 14 e 17;
 3. il 15 dopo il test, poi il 16, che lo usa;
 4. il 18 per ultimo.
