@@ -11,7 +11,10 @@ Piano di allenamento per la corsa, attività di Strava e due pagine, report ed e
 | `training-plan-editor`, `training-report` | Vecchi repo, il cui codice ora è qui. Vanno archiviati con l'issue #5 |
 
 - **In my-strava non entrano mai dati personali:** né il piano vero, né le attività, né coordinate o nomi. Si lavora sui dati finti di `sito/esempio/`.
-- **Le modifiche fatte qui arrivano subito al sync vero e a Check Piano**, perché strava-database richiama i workflow di `main`. Prima di unire una PR che tocca `scripts/` o `.github/workflows/`, provala su una copia dei dati veri, fuori da questo repo.
+- **I repo di dati usano una versione**, cioè un tag `vN`, non `main`: le modifiche fatte qui arrivano al sync vero solo con una versione nuova. Come si fa è in *Versioni* in `setup.md`.
+  - Prima di una versione nuova, prova il codice su una copia dei dati veri, fuori da questo repo.
+  - Il tag lo metti solo quando l'utente lo chiede, e non lo sposti mai.
+- **Le pagine invece seguono `main`**, e quindi sono le stesse per tutti i repo di dati: devono leggere i piani e i dati di tutte le versioni.
 - **Nei testi di my-strava** (codice, commit, PR, issue) non vanno date, nomi o numeri delle attività vere: i dettagli del repo di dati si scrivono solo lì.
 
 ## Come si lavora

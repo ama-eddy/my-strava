@@ -11,9 +11,11 @@ on:
         type: string
         default: ama-eddy/my-strava
       ref:
+        # Uguale alla versione del tag: chi richiama il workflow @v1 usa anche gli
+        # script di v1. Vedi "Versioni" in setup.md.
         description: Branch, tag o commit del codice
         type: string
-        default: main
+        default: v1
       completo:
         description: Riscarica tutte le attività, non solo quelle delle ultime due settimane
         type: boolean
