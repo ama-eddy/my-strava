@@ -48,7 +48,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 | 16 | **Primo piano con un'intervista di Claude**: un prompt pronto con lo schema di `piano.json` e le regole del piano. Chi lo usa risponde alle domande di Claude (gara, data, livello, giorni liberi, altri sport) e riceve il piano. L'editor lo carica, lo controlla e lo salva anche in un repo di dati che non ha ancora `data/piano.json` | Da fare, dopo il passo 15 |
 | 17 | **Guida d'uso** per chi usa le pagine e non sviluppa: titoli `N/totale` delle corse, sport su Strava, giri automatici, sync completo, come leggere il report | Da fare |
 | 18 | **Prova da zero**: rifare tutto il percorso come una persona nuova, con un repo di prova e i dati di esempio, e correggere dove ci si blocca. Poi la prova di un amico vero | Da fare, per ultimo |
-| 19 | **Tratti km per km**: un campo facoltativo `tratti` sulle corse, a blocchi di km con tipo (riscaldamento, corsa, test, defaticamento) e ritmo, della fase o preciso. Si compila nell'editor. Il report misura ogni tratto con i giri di Strava e ne dà l'esito, e il test si misura sul suo tratto e non sull'intera corsa. È una prima parte del passo 8, per i tratti in km. Arriva nei repo di dati con la versione `v2` | In corso |
+| 19 | **Tratti km per km**: un campo facoltativo `tratti` sulle corse, a blocchi di km con tipo (riscaldamento, corsa, test, defaticamento) e ritmo, della fase o preciso. Si compila nell'editor. Il report misura ogni tratto con i giri di Strava e ne dà l'esito, e il test si misura sul suo tratto e non sull'intera corsa. È una prima parte del passo 8, per i tratti in km. Arriva nei repo di dati con la versione `v2` | Fatto ([#17]); strava-database usa `@v2` |
 
 [#1]: https://github.com/ama-eddy/my-strava/pull/1
 [#2]: https://github.com/ama-eddy/my-strava/pull/2
@@ -59,6 +59,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 [#10]: https://github.com/ama-eddy/my-strava/pull/10
 [#11]: https://github.com/ama-eddy/my-strava/pull/11
 [#15]: https://github.com/ama-eddy/my-strava/pull/15
+[#17]: https://github.com/ama-eddy/my-strava/pull/17
 [i5]: https://github.com/ama-eddy/my-strava/issues/5
 
 **La prima versione è pronta.** Il repo di dati è collegato:
