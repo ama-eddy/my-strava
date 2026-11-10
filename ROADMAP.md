@@ -41,6 +41,13 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 | 9 | **Sync completo a richiesta**: la casella **completo** in *Run workflow* riscarica tutte le attività, per quelle inserite su Strava con più di due settimane di ritardo. Le corse vecchie che hanno già i giri non li riscaricano. Serve per le attività di ottobre al passo 4 | Fatto ([#8]) |
 | 10 | **Niente attività da CSV**: tutte passano da Strava, anche quelle senza orologio. Via `attivita_manuali.csv` e il campo `origine` | Fatto ([#10]) |
 | 11 | **Forza come Workout**: il report riconosce come forza sia Workout sia Weight Training | Fatto ([#11]) |
+| 12 | **Versioni**: un tag `v1`; `modello/` e i repo di dati richiamano i workflow `@v1` invece di `@main`, così un cambio su `main` non arriva subito al sync di nessuno. Per passare a una versione nuova si cambia una riga. Il sito segue sempre `main`, quindi deve continuare a leggere i piani e le attività delle versioni precedenti | Da fare, prima del 22 novembre |
+| 13 | **Token di Strava su qualsiasi computer**: `strava_auth.py`, solo libreria standard, al posto di `strava_auth.ps1`. Apre il browser e prende da solo il codice di autorizzazione | Da fare |
+| 14 | **Repo di dati in un clic**: un repo pubblico di modello segnato come *template* (lo crea l'utente a mano: il proxy blocca le impostazioni dei repo), con il contenuto di `modello/`. `setup.md` diventa una procedura passo passo per chi non sviluppa | Da fare |
+| 15 | **Tipi di seduta definiti nel piano**: `piano.json` può elencare i suoi tipi di seduta con nome e sport di Strava (per esempio nuoto → Swim). Li leggono `piano.py`, `piano.js`, report ed editor; senza il campo valgono i cinque tipi di oggi, così i piani esistenti non cambiano | Da fare, dopo il 22 novembre |
+| 16 | **Primo piano con un'intervista di Claude**: un prompt pronto con lo schema di `piano.json` e le regole del piano. Chi lo usa risponde alle domande di Claude (gara, data, livello, giorni liberi, altri sport) e riceve il piano. L'editor lo carica, lo controlla e lo salva anche in un repo di dati che non ha ancora `data/piano.json` | Da fare, dopo il passo 15 |
+| 17 | **Guida d'uso** per chi usa le pagine e non sviluppa: titoli `N/totale` delle corse, sport su Strava, giri automatici, sync completo, come leggere il report | Da fare |
+| 18 | **Prova da zero**: rifare tutto il percorso come una persona nuova, con un repo di prova e i dati di esempio, e correggere dove ci si blocca. Poi la prova di un amico vero | Da fare, per ultimo |
 
 [#1]: https://github.com/ama-eddy/my-strava/pull/1
 [#2]: https://github.com/ama-eddy/my-strava/pull/2
@@ -57,7 +64,13 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 - strava-database contiene solo `data/` e i due workflow;
 - report ed editor leggono e salvano i dati veri con il token della pagina Collega.
 
-**Prossimo passo: il primo test del piano vero, il 22 novembre 2026.** Sull'orologio vanno attivati i giri automatici ogni km: il report trova il tratto del test nei giri. Poi viene il passo 8.
+**Prossimo passo: il primo test del piano vero, il 22 novembre 2026.** Sull'orologio vanno attivati i giri automatici ogni km: il report trova il tratto del test nei giri.
+
+**Poi: my-strava usabile da pochi amici**, passi 12–18, prima di nuove funzioni come il passo 8. Le persone sono poche e le si può aiutare, quindi resta tutto in italiano. L'ordine:
+1. il passo 12 subito, perché protegge il sync vero mentre si lavora su `main`;
+2. i passi 13, 14 e 17;
+3. il 15 dopo il test, poi il 16, che lo usa;
+4. il 18 per ultimo.
 
 ## Fatto finora nel report e nell'editor
 
@@ -89,4 +102,7 @@ data/piano.json, data/attivita.json ◄────► sito/ su GitHub Pages: re
 - **Le attività vanno su Strava entro due settimane.** Il sync riscarica solo gli ultimi 14 giorni: quelle inserite più tardi con una data vecchia arrivano solo con un sync lanciato a mano con **completo** spuntato.
 - **Niente attività fuori da Strava.** Il vecchio `attivita_manuali.csv` non c'è più. Un'attività dimenticata o con dati stimati si inserisce su Strava come attività manuale, e una inserita in ritardo arriva con il sync **completo**.
 - **Facili e lunghi si confrontano con la fascia `facile_lungo` della fase, senza tolleranza.** La gara del piano si confronta con `gara.obiettivo_ritmo`.
+- **my-strava è per pochi amici italiani**, che si possono aiutare se si bloccano: niente traduzioni. Ognuno usa il sito pubblicato e collega il proprio repo privato di dati: niente fork.
+- **Il primo piano lo prepara un'intervista con Claude**, non un generatore scritto nel codice: le regole del piano stanno nel prompt, e l'editor controlla il risultato.
+- **I tipi di seduta li definisce il piano**, non il codice: così valgono per qualsiasi sport.
 - **Una seduta non fatta si mostra come saltata.** Se la recuperi, rinomini l'attività con il numero della corsa, oppure sposti la seduta nell'editor.
