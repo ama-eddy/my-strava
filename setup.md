@@ -56,9 +56,9 @@ export STRAVA_REFRESH_TOKEN=...
 python3 ../my-strava/scripts/strava_sync.py   # dalla radice del repo di dati
 ```
 
-## 4. Sync settimanale
+## 4. Sync di ogni mattina
 
-Ogni **lunedì alle 07:03 UTC** (08:03 d'inverno, 09:03 d'estate) il workflow **Sync Strava** del repo di dati richiama quello di my-strava, che:
+Ogni **mattina alle 05:07 UTC** (06:07 in Italia d'inverno, 07:07 d'estate) il workflow **Sync Strava** del repo di dati richiama quello di my-strava, che:
 
 1. lancia `strava_sync.py`;
 2. lancia `build_dati.py`;

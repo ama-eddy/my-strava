@@ -7,7 +7,7 @@ my-strava mette a confronto un piano di allenamento con le attività di Strava. 
 ```
 REPO DI DATI (privato)                     MY-STRAVA (pubblico)
 
-Sync Strava, ogni lunedì ────────────────► sync.yml: strava_sync.py ► build_dati.py ► piano.py collega
+Sync Strava, ogni mattina ───────────────► sync.yml: strava_sync.py ► build_dati.py ► piano.py collega
   commit di data/ ◄──────────────────────┘
 
 Check Piano, a ogni push di data/ ───────► piano.yml: piano.py controlla e collega, confronto con l'editor
